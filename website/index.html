@@ -182,34 +182,134 @@
           </div>
         </div>
 
-        <!-- 3D Interactive Architecture Visualizer & Simulator -->
-        <div class="hero-3d-stage" aria-label="Interactive 3D Pipeline Visualizer: WooCommerce to Cartix MCP to AI Agent">
-          <div class="pipeline-3d-card" id="pipeline-card">
-            <!-- Stage Top Bar & Scenario Triggers -->
-            <div class="pipeline-card-header">
-              <div class="pipeline-header-title">
-                <span class="pipeline-pulse-dot"></span>
-                <span>MCP LIVE DATA PIPELINE</span>
+        <!-- 3D Interactive MCP Protocol Inspector -->
+        <div class="hero-inspector-stage" aria-label="Interactive MCP Protocol Inspector">
+          <div class="inspector-card-3d" id="inspector-card">
+            <!-- Window Titlebar -->
+            <div class="inspector-titlebar">
+              <div class="titlebar-left">
+                <div class="traffic-dots">
+                  <span class="window-dot red"></span>
+                  <span class="window-dot yellow"></span>
+                  <span class="window-dot green"></span>
+                </div>
+                <span class="inspector-badge-live">
+                  <span class="pulse-beacon"></span>
+                  MCP LIVE PIPELINE
+                </span>
               </div>
-              <div class="pipeline-scenario-triggers">
-                <button class="scenario-btn active" data-scenario="orders">1. Orders</button>
-                <button class="scenario-btn" data-scenario="inventory">2. Inventory</button>
-                <button class="scenario-btn" data-scenario="security">3. PII Mask</button>
+              <div class="scenario-nav-tabs">
+                <button class="inspector-tab-btn active" data-scenario="orders">1. Orders & Delay</button>
+                <button class="inspector-tab-btn" data-scenario="inventory">2. Stock Alert</button>
+                <button class="inspector-tab-btn" data-scenario="security">3. PII Redactor</button>
               </div>
             </div>
 
-            <!-- Canvas Stage Viewport -->
-            <div class="stage-canvas-container">
-              <canvas id="pipeline-canvas"></canvas>
+            <!-- 3-Column Interconnected Stage Flow -->
+            <div class="inspector-body">
+              <!-- Column 1: WooCommerce Store -->
+              <div class="inspector-node node-woo">
+                <div class="node-header">
+                  <div class="node-icon-pill woo">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    WooCommerce
+                  </div>
+                  <span class="node-status-badge">REST v3</span>
+                </div>
+                <div class="node-code-box" id="woo-code-box">
+                  <div class="code-line"><span class="code-method">GET</span> <span class="code-path">/wc/v3/orders</span></div>
+                  <div class="code-payload">
+                    <span class="token-key">"status"</span>: <span class="token-str">"pending"</span>,<br>
+                    <span class="token-key">"limit"</span>: <span class="token-num">20</span>, <span class="token-key">"page"</span>: <span class="token-num">1</span>
+                  </div>
+                </div>
+                <div class="node-footer-meta">
+                  <span class="meta-tag">HTTPS Basic Auth</span>
+                  <span class="meta-tag">Read-Only</span>
+                </div>
+              </div>
+
+              <!-- Animated Data Beam 1 -->
+              <div class="connector-beam beam-left">
+                <div class="beam-line"></div>
+                <div class="beam-chip" id="beam-chip-1">
+                  <span>raw_order.json</span>
+                </div>
+              </div>
+
+              <!-- Column 2: Cartix MCP Core Engine -->
+              <div class="inspector-node node-cartix">
+                <div class="node-header">
+                  <div class="node-icon-pill cartix">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    Cartix MCP Core
+                  </div>
+                  <span class="node-status-badge active">Protocol Bridge</span>
+                </div>
+                <div class="cartix-guards-grid">
+                  <div class="guard-pill">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    <span>PII Masking</span>
+                  </div>
+                  <div class="guard-pill">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    <span>Rate Limiter</span>
+                  </div>
+                  <div class="guard-pill">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                    <span>&lt;15ms Latency</span>
+                  </div>
+                  <div class="guard-pill">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--accent-rose)" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <span>Zero Mutation</span>
+                  </div>
+                </div>
+                <div class="cartix-tool-callout" id="cartix-tool-callout">
+                  <span class="tool-label">Active Schema</span>
+                  <code class="tool-name">search_orders()</code>
+                </div>
+              </div>
+
+              <!-- Animated Data Beam 2 -->
+              <div class="connector-beam beam-right">
+                <div class="beam-line"></div>
+                <div class="beam-chip" id="beam-chip-2">
+                  <span>sanitized_ctx</span>
+                </div>
+              </div>
+
+              <!-- Column 3: AI Agent / LLM Consumer -->
+              <div class="inspector-node node-agent">
+                <div class="node-header">
+                  <div class="node-icon-pill agent">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a10 10 0 0 1 10 10c0 5.523-4.477 10-10 10a10 10 0 0 1-10-10C2 6.477 6.477 2 12 2z"></path><path d="m9 12 2 2 4-4"></path></svg>
+                    AI Agent
+                  </div>
+                  <span class="node-status-badge">Claude / Gemini</span>
+                </div>
+                <div class="node-code-box" id="agent-code-box">
+                  <div class="code-line"><span class="code-method agent-reason">REASONING INSIGHT</span></div>
+                  <div class="agent-insight-text" id="agent-insight-text">
+                    "Found 3 pending orders. 2 orders (#1002, #1005) delayed >24h awaiting merchant fulfillment."
+                  </div>
+                </div>
+                <div class="node-footer-meta">
+                  <span class="meta-tag">Bounded Context</span>
+                  <span class="meta-tag">Zero Leakage</span>
+                </div>
+              </div>
             </div>
 
-            <!-- Live Telemetry Log Terminal -->
-            <div class="pipeline-telemetry" id="pipeline-telemetry">
-              <div class="telemetry-event">
-                <span class="telemetry-tag">[MCP:search_orders]</span>
-                <span class="telemetry-msg">Agent requested pending orders → Cartix sanitized 3 records</span>
+            <!-- Terminal Telemetry Bar -->
+            <div class="inspector-telemetry-bar">
+              <div class="telemetry-log-item" id="telemetry-log-item">
+                <span class="log-badge-cyan">[MCP:search_orders]</span>
+                <span class="log-text">Agent queried pending orders → Cartix redacted PII and filtered 2 delayed records</span>
               </div>
-              <span class="telemetry-latency">12ms</span>
+              <div class="telemetry-stats">
+                <span class="stat-pill"><span class="dot-green"></span> 200 OK</span>
+                <span class="stat-latency" id="telemetry-latency-val">11ms</span>
+              </div>
             </div>
           </div>
         </div>

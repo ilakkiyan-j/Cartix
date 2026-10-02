@@ -1,197 +1,89 @@
 /**
- * Cartix 3D Interactive Architecture Pipeline & Telemetry Controller
- * Visualizes: WooCommerce Store (Data) <-> Cartix MCP Core (Sanitize/Rate Limit) <-> AI Agent (Reasoning)
+ * Cartix Interactive 3D MCP Protocol Inspector & Stage Controller
+ * Drives the 3D perspective tilt, live scenario switching, and real-time telemetry streaming
  */
 
 (function () {
   'use strict';
 
-  // Live Scenario Simulation Datasets
-  const SCENARIOS = {
+  const INSPECTOR_SCENARIOS = {
     orders: {
-      name: 'Order Inspection & Delay Analysis',
-      packets: [
-        { from: 2, to: 1, label: 'search_orders(status="pending")', color: '#818cf8', dir: 'left' },
-        { from: 1, to: 0, label: 'GET /wc/v3/orders?status=pending', color: '#06b6d4', dir: 'left' },
-        { from: 0, to: 1, label: 'Raw JSON (3 Orders + Customer PII)', color: '#06b6d4', dir: 'right' },
-        { from: 1, to: 2, label: 'Sanitized Output (PII Masked, 2 Delayed >24h)', color: '#10b981', dir: 'right' },
-      ],
+      title: 'Orders & Delay Analysis',
+      wooMethod: 'GET',
+      wooPath: '/wc/v3/orders',
+      wooPayload: `<span class="token-key">"status"</span>: <span class="token-str">"pending"</span>,<br><span class="token-key">"limit"</span>: <span class="token-num">20</span>, <span class="token-key">"page"</span>: <span class="token-num">1</span>`,
+      toolName: 'search_orders()',
+      agentReason: '"Found 3 pending orders. 2 orders (#1002, #1005) delayed >24h awaiting merchant fulfillment."',
+      beam1: 'raw_order.json',
+      beam2: 'sanitized_ctx',
+      latency: '11ms',
       logs: [
-        { tag: '[AGENT:INVOKE]', text: 'Agent requests pending orders awaiting fulfillment', latency: '2ms' },
-        { tag: '[CARTIX:GUARD]', text: 'Rate limiter verified (19/20 tokens) • Auth OK', latency: '4ms' },
-        { tag: '[WOO:FETCH]', text: 'HTTPS GET /wp-json/wc/v3/orders returned 3 items', latency: '8ms' },
-        { tag: '[CARTIX:PII]', text: 'Redacted emails, customer addresses, stripped metadata', latency: '11ms' },
-        { tag: '[AGENT:REASON]', text: 'Agent detected 2 orders delayed > 24 hours (#1002, #1005)', latency: '14ms' },
+        { tag: '[MCP:search_orders]', text: 'Agent queried pending orders → Cartix redacted PII and filtered 2 delayed records', latency: '11ms' },
+        { tag: '[CARTIX:RATE_LIMIT]', text: 'Token bucket consumed 1/20 token • Upstream burst capacity: 95%', latency: '3ms' },
+        { tag: '[WOO:FETCH_OK]', text: 'HTTPS GET /wp-json/wc/v3/orders returned 3 records with HTTP 200', latency: '8ms' },
+        { tag: '[AGENT:REASON]', text: 'Computed timestamp delta on created_at: Order #1002 delayed by 31.4 hours', latency: '14ms' },
       ]
     },
     inventory: {
-      name: 'Inventory Health & Stockout Scan',
-      packets: [
-        { from: 2, to: 1, label: 'get_inventory(low_stock_only=true)', color: '#818cf8', dir: 'left' },
-        { from: 1, to: 0, label: 'GET /wc/v3/products?stock_status=outofstock', color: '#06b6d4', dir: 'left' },
-        { from: 0, to: 1, label: 'Catalog Stock Status Payload', color: '#06b6d4', dir: 'right' },
-        { from: 1, to: 2, label: 'Low Stock Matrix (5 Out of Stock)', color: '#f59e0b', dir: 'right' },
-      ],
+      title: 'Stock Alert & Inventory Scan',
+      wooMethod: 'GET',
+      wooPath: '/wc/v3/products',
+      wooPayload: `<span class="token-key">"low_stock_only"</span>: <span class="token-str">true</span>,<br><span class="token-key">"threshold"</span>: <span class="token-num">5</span>, <span class="token-key">"limit"</span>: <span class="token-num">20</span>`,
+      toolName: 'get_inventory()',
+      agentReason: '"5 products out of stock. Stockout alert: Wireless Mechanical Keyboard (ID #87) blocks pending order #1004."',
+      beam1: 'stock_levels.json',
+      beam2: 'stockout_alerts',
+      latency: '14ms',
       logs: [
-        { tag: '[AGENT:INVOKE]', text: 'Agent scans store for depleted inventory items', latency: '3ms' },
-        { tag: '[CARTIX:FILTER]', text: 'Applied deterministic rule: stock_quantity <= 5', latency: '6ms' },
-        { tag: '[WOO:FETCH]', text: 'Retrieved 20 products from WooCommerce catalog', latency: '9ms' },
-        { tag: '[CARTIX:NORM]', text: 'Normalized pricing, SKUs, and variation metadata', latency: '12ms' },
-        { tag: '[AGENT:ALERT]', text: 'Agent flagged 5 stockouts affecting pending order #1004', latency: '15ms' },
+        { tag: '[MCP:get_inventory]', text: 'Catalog scanned with rule: stock_quantity <= 5 → 5 stockouts flagged', latency: '14ms' },
+        { tag: '[CARTIX:FILTER]', text: 'Applied deterministic low_stock rule: outofstock status identified', latency: '4ms' },
+        { tag: '[WOO:CATALOG]', text: 'Retrieved 20 products across categories with normalized inventory count', latency: '10ms' },
+        { tag: '[AGENT:CORRELATE]', text: 'Cross-referenced order #1004 items with stockout ID #87 → flagged to merchant', latency: '16ms' },
       ]
     },
     security: {
-      name: 'PII Scrubbing & Zero-Mutation Guard',
-      packets: [
-        { from: 2, to: 1, label: 'get_order(order_id=1004)', color: '#818cf8', dir: 'left' },
-        { from: 1, to: 0, label: 'GET /wc/v3/orders/1004', color: '#06b6d4', dir: 'left' },
-        { from: 0, to: 1, label: 'Contains Credit Card Token, Billing Addr', color: '#f43f5e', dir: 'right' },
-        { from: 1, to: 2, label: 'Clean Line Items • Zero PII Exposed', color: '#10b981', dir: 'right' },
-      ],
+      title: 'PII Redaction & Security Guard',
+      wooMethod: 'GET',
+      wooPath: '/wc/v3/orders/1004',
+      wooPayload: `<span class="token-key">"order_id"</span>: <span class="token-num">1004</span>,<br><span class="token-key">"mask_pii"</span>: <span class="token-str">true</span>, <span class="token-key">"read_only"</span>: <span class="token-str">true</span>`,
+      toolName: 'get_order()',
+      agentReason: '"Retrieved order #1004 line items safely. Customer email (j***@corp.com) and shipping address masked from LLM."',
+      beam1: 'raw_sensitive.json',
+      beam2: 'zero_pii_payload',
+      latency: '9ms',
       logs: [
-        { tag: '[AGENT:INVOKE]', text: 'Agent requests specific order payload for reasoning', latency: '2ms' },
-        { tag: '[CARTIX:AUTH]', text: 'Read-only key verified • Write operations blocked', latency: '5ms' },
-        { tag: '[CARTIX:SANITIZE]', text: 'Masked email (j***@corp.com), hashed phone, stripped IP', latency: '9ms' },
-        { tag: '[CARTIX:GUARD]', text: 'Blocked sensitive financial tokens from LLM context', latency: '12ms' },
-        { tag: '[AGENT:COMPLETE]', text: 'Safe line-item context delivered to agent context', latency: '14ms' },
+        { tag: '[MCP:get_order]', text: 'Customer email, phone, billing address scrubbed before LLM context ingestion', latency: '9ms' },
+        { tag: '[CARTIX:SCRUB]', text: 'Masked regex: [\\w.-]+@[\\w.-]+ → j***@corp.com • Stripped billing street', latency: '3ms' },
+        { tag: '[CARTIX:IMMUTABLE]', text: 'Write guard verified: Refund & update mutations rejected at MCP boundary', latency: '2ms' },
+        { tag: '[AGENT:CLEAN_CTX]', text: 'Zero PII passed to LLM inference window • Privacy guarantees enforced', latency: '12ms' },
       ]
     }
   };
 
-  class Cartix3DPipelineVisualizer {
+  class CartixInspectorController {
     constructor() {
-      this.card = document.getElementById('pipeline-card');
-      this.canvas = document.getElementById('pipeline-canvas');
-      this.telemetryEl = document.getElementById('pipeline-telemetry');
-      if (!this.canvas) return;
+      this.card = document.getElementById('inspector-card');
+      this.wooCodeBox = document.getElementById('woo-code-box');
+      this.cartixToolCallout = document.getElementById('cartix-tool-callout');
+      this.agentInsightText = document.getElementById('agent-insight-text');
+      this.beamChip1 = document.getElementById('beam-chip-1');
+      this.beamChip2 = document.getElementById('beam-chip-2');
+      this.telemetryLogItem = document.getElementById('telemetry-log-item');
+      this.telemetryLatencyVal = document.getElementById('telemetry-latency-val');
 
-      this.ctx = this.canvas.getContext('2d');
-      this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      this.activeScenario = 'orders';
-      this.time = 0;
+      this.currentScenario = 'orders';
       this.logIndex = 0;
-      this.logTimer = 0;
-      this.packets = [];
-      this.particles = [];
-      this.nodes = [];
+      this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      this.initDimensions();
-      this.initNodes();
-      this.initParticles();
-      this.bind3DTilt();
-      this.bindScenarioTriggers();
-      this.startPacketCycle();
-      this.animate();
+      this.init3DParallax();
+      this.initTabs();
+      this.startTelemetryLoop();
     }
 
-    initDimensions() {
-      const rect = this.canvas.parentElement.getBoundingClientRect();
-      this.dpr = Math.min(window.devicePixelRatio || 1, 2);
-      this.width = rect.width || 600;
-      this.height = rect.height || 360;
-      this.canvas.width = this.width * this.dpr;
-      this.canvas.height = this.height * this.dpr;
-      this.ctx.scale(this.dpr, this.dpr);
-    }
-
-    initNodes() {
-      const isMobile = this.width < 640;
-      const cy = this.height * 0.48;
-
-      if (isMobile) {
-        this.nodes = [
-          {
-            id: 'woo',
-            title: 'WooCommerce',
-            sub: 'Store REST API',
-            badge: 'DATA SOURCE',
-            x: this.width * 0.5,
-            y: this.height * 0.18,
-            radius: 34,
-            color: '#06b6d4',
-            glow: 'rgba(6, 182, 212, 0.45)',
-          },
-          {
-            id: 'cartix',
-            title: 'Cartix MCP',
-            sub: 'Secure Connector',
-            badge: 'MCP PROTOCOL',
-            x: this.width * 0.5,
-            y: this.height * 0.50,
-            radius: 46,
-            color: '#6366f1',
-            glow: 'rgba(99, 102, 241, 0.65)',
-          },
-          {
-            id: 'agent',
-            title: 'AI Agent',
-            sub: 'LLM Reasoning',
-            badge: 'REASONING',
-            x: this.width * 0.5,
-            y: this.height * 0.82,
-            radius: 34,
-            color: '#10b981',
-            glow: 'rgba(16, 185, 129, 0.45)',
-          },
-        ];
-      } else {
-        this.nodes = [
-          {
-            id: 'woo',
-            title: 'WooCommerce Store',
-            sub: 'REST API v3 (Read-Only)',
-            badge: 'COMMERCE SOURCE',
-            x: this.width * 0.18,
-            y: cy,
-            radius: 44,
-            color: '#06b6d4',
-            glow: 'rgba(6, 182, 212, 0.45)',
-          },
-          {
-            id: 'cartix',
-            title: 'Cartix MCP Core',
-            sub: 'PII Sanitizer • Rate Limiter',
-            badge: 'SECURE MCP BRIDGE',
-            x: this.width * 0.50,
-            y: cy,
-            radius: 58,
-            color: '#6366f1',
-            glow: 'rgba(99, 102, 241, 0.7)',
-          },
-          {
-            id: 'agent',
-            title: 'AI Agent Terminal',
-            sub: 'LLM Reasoning Loop',
-            badge: 'TOOL CONSUMER',
-            x: this.width * 0.82,
-            y: cy,
-            radius: 44,
-            color: '#10b981',
-            glow: 'rgba(16, 185, 129, 0.45)',
-          },
-        ];
-      }
-    }
-
-    initParticles() {
-      this.particles = [];
-      const count = this.width < 640 ? 20 : 36;
-      for (let i = 0; i < count; i++) {
-        this.particles.push({
-          x: Math.random() * this.width,
-          y: Math.random() * this.height,
-          radius: Math.random() * 1.5 + 0.5,
-          vx: (Math.random() - 0.5) * 0.3,
-          vy: (Math.random() - 0.5) * 0.3,
-          alpha: Math.random() * 0.4 + 0.1,
-        });
-      }
-    }
-
-    bind3DTilt() {
+    init3DParallax() {
       if (!this.card) return;
 
-      const handleMove = (e) => {
+      const onMouseMove = (e) => {
         if (this.reducedMotion) return;
         const rect = this.card.getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -200,268 +92,113 @@
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
 
-        const tiltX = ((y - centerY) / centerY) * -7;
-        const tiltY = ((x - centerX) / centerX) * 7;
+        const rotateX = ((y - centerY) / centerY) * -5.5;
+        const rotateY = ((x - centerX) / centerX) * 5.5;
 
-        this.card.style.transform = `perspective(1000px) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) scale3d(1.01, 1.01, 1.01)`;
+        this.card.style.transform = `perspective(1200px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.008, 1.008, 1.008)`;
         this.card.style.setProperty('--mouse-x', `${((x / rect.width) * 100).toFixed(1)}%`);
         this.card.style.setProperty('--mouse-y', `${((y / rect.height) * 100).toFixed(1)}%`);
       };
 
-      const handleLeave = () => {
-        this.card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      const onMouseLeave = () => {
+        this.card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
         this.card.style.setProperty('--mouse-x', '50%');
         this.card.style.setProperty('--mouse-y', '30%');
       };
 
-      this.card.addEventListener('mousemove', handleMove);
-      this.card.addEventListener('mouseleave', handleLeave);
-
-      window.addEventListener('resize', () => {
-        this.initDimensions();
-        this.initNodes();
-      });
+      this.card.addEventListener('mousemove', onMouseMove);
+      this.card.addEventListener('mouseleave', onMouseLeave);
     }
 
-    bindScenarioTriggers() {
-      const btns = document.querySelectorAll('.scenario-btn');
-      btns.forEach((btn) => {
+    initTabs() {
+      const tabBtns = document.querySelectorAll('.inspector-tab-btn');
+      tabBtns.forEach((btn) => {
         btn.addEventListener('click', () => {
           const scenarioKey = btn.getAttribute('data-scenario');
-          if (!scenarioKey || !SCENARIOS[scenarioKey]) return;
+          if (!scenarioKey || !INSPECTOR_SCENARIOS[scenarioKey]) return;
 
-          btns.forEach((b) => b.classList.remove('active'));
+          tabBtns.forEach((b) => b.classList.remove('active'));
           btn.classList.add('active');
 
-          this.activeScenario = scenarioKey;
-          this.logIndex = 0;
-          this.packets = [];
-          this.triggerPacketBurst();
-          this.updateTelemetry();
+          this.switchScenario(scenarioKey);
         });
       });
     }
 
-    triggerPacketBurst() {
-      const scenario = SCENARIOS[this.activeScenario];
-      scenario.packets.forEach((p, idx) => {
-        setTimeout(() => {
-          const fromNode = this.nodes[p.from];
-          const toNode = this.nodes[p.to];
-          if (fromNode && toNode) {
-            this.packets.push({
-              from: fromNode,
-              to: toNode,
-              progress: 0,
-              speed: 0.012 + Math.random() * 0.004,
-              label: p.label,
-              color: p.color,
-            });
-          }
-        }, idx * 450);
-      });
-    }
+    switchScenario(key) {
+      this.currentScenario = key;
+      this.logIndex = 0;
+      const data = INSPECTOR_SCENARIOS[key];
 
-    startPacketCycle() {
-      setInterval(() => {
-        if (!document.hidden && this.packets.length < 8) {
-          this.triggerPacketBurst();
-        }
-      }, 4000);
+      // Morph Woo Box
+      if (this.wooCodeBox) {
+        this.wooCodeBox.style.opacity = '0';
+        setTimeout(() => {
+          this.wooCodeBox.innerHTML = `
+            <div class="code-line"><span class="code-method">${data.wooMethod}</span> <span class="code-path">${data.wooPath}</span></div>
+            <div class="code-payload">${data.wooPayload}</div>
+          `;
+          this.wooCodeBox.style.opacity = '1';
+        }, 120);
+      }
+
+      // Morph Cartix Callout
+      if (this.cartixToolCallout) {
+        this.cartixToolCallout.style.opacity = '0';
+        setTimeout(() => {
+          this.cartixToolCallout.innerHTML = `
+            <span class="tool-label">Active Schema</span>
+            <code class="tool-name">${data.toolName}</code>
+          `;
+          this.cartixToolCallout.style.opacity = '1';
+        }, 120);
+      }
+
+      // Morph Agent Insight
+      if (this.agentInsightText) {
+        this.agentInsightText.style.opacity = '0';
+        setTimeout(() => {
+          this.agentInsightText.textContent = data.agentReason;
+          this.agentInsightText.style.opacity = '1';
+        }, 120);
+      }
+
+      // Morph Beam Chips
+      if (this.beamChip1) this.beamChip1.innerHTML = `<span>${data.beam1}</span>`;
+      if (this.beamChip2) this.beamChip2.innerHTML = `<span>${data.beam2}</span>`;
+
+      // Update Telemetry
+      this.updateTelemetry();
     }
 
     updateTelemetry() {
-      if (!this.telemetryEl) return;
-      const scenario = SCENARIOS[this.activeScenario];
-      const log = scenario.logs[this.logIndex % scenario.logs.length];
+      if (!this.telemetryLogItem || !this.telemetryLatencyVal) return;
+      const data = INSPECTOR_SCENARIOS[this.currentScenario];
+      const log = data.logs[this.logIndex % data.logs.length];
 
-      this.telemetryEl.innerHTML = `
-        <div class="telemetry-event" style="animation: fadeIn 0.25s ease;">
-          <span class="telemetry-tag">${log.tag}</span>
-          <span class="telemetry-msg">${log.text}</span>
-        </div>
-        <span class="telemetry-latency">${log.latency}</span>
-      `;
+      this.telemetryLogItem.style.opacity = '0';
+      setTimeout(() => {
+        this.telemetryLogItem.innerHTML = `
+          <span class="log-badge-cyan">${log.tag}</span>
+          <span class="log-text">${log.text}</span>
+        `;
+        this.telemetryLatencyVal.textContent = log.latency;
+        this.telemetryLogItem.style.opacity = '1';
+      }, 100);
     }
 
-    drawConnection(nodeA, nodeB) {
-      const ctx = this.ctx;
-      ctx.beginPath();
-      ctx.moveTo(nodeA.x, nodeA.y);
-      ctx.lineTo(nodeB.x, nodeB.y);
-
-      // Base line
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-
-      // Animated glowing data beam
-      ctx.save();
-      ctx.strokeStyle = 'rgba(99, 102, 241, 0.35)';
-      ctx.lineWidth = 2.5;
-      ctx.setLineDash([8, 14]);
-      ctx.lineDashOffset = -this.time * 24;
-      ctx.stroke();
-      ctx.restore();
-    }
-
-    drawHexagon(x, y, r, color, glowColor) {
-      const ctx = this.ctx;
-      ctx.save();
-      ctx.beginPath();
-      for (let i = 0; i < 6; i++) {
-        const angle = (Math.PI / 3) * i + (this.time * 0.15);
-        const hx = x + r * Math.cos(angle);
-        const hy = y + r * Math.sin(angle);
-        if (i === 0) ctx.moveTo(hx, hy);
-        else ctx.lineTo(hx, hy);
-      }
-      ctx.closePath();
-
-      ctx.fillStyle = 'rgba(18, 24, 36, 0.92)';
-      ctx.fill();
-
-      ctx.shadowColor = glowColor;
-      ctx.shadowBlur = 24;
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 2.5;
-      ctx.stroke();
-      ctx.restore();
-    }
-
-    drawNode(node) {
-      const ctx = this.ctx;
-      const pulse = Math.sin(this.time * 2.5 + (node.id === 'cartix' ? 1.2 : 0)) * 2.5;
-      const r = node.radius + pulse;
-
-      ctx.save();
-      ctx.shadowColor = node.glow;
-      ctx.shadowBlur = node.id === 'cartix' ? 32 : 20;
-
-      if (node.id === 'cartix') {
-        // Hexagonal dominant core
-        this.drawHexagon(node.x, node.y, r, node.color, node.glow);
-
-        // Concentric outer pulsing ring
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, r + 16, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(99, 102, 241, 0.25)';
-        ctx.lineWidth = 1.5;
-        ctx.setLineDash([5, 9]);
-        ctx.lineDashOffset = this.time * 18;
-        ctx.stroke();
-      } else {
-        // Rounded node
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(18, 24, 36, 0.9)';
-        ctx.fill();
-        ctx.strokeStyle = node.color;
-        ctx.lineWidth = 2;
-        ctx.stroke();
-      }
-      ctx.restore();
-
-      // Node Typography
-      ctx.save();
-      ctx.textAlign = 'center';
-      ctx.fillStyle = '#ffffff';
-      ctx.font = `700 ${node.id === 'cartix' ? 13 : 11}px 'Plus Jakarta Sans', sans-serif`;
-      ctx.fillText(node.title, node.x, node.y - 4);
-
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-      ctx.font = `500 ${node.id === 'cartix' ? 9.5 : 8.5}px 'JetBrains Mono', monospace`;
-      ctx.fillText(node.sub, node.x, node.y + 12);
-
-      // Node Pill Badge
-      ctx.fillStyle = node.color;
-      ctx.font = `700 7.5px 'JetBrains Mono', monospace`;
-      ctx.fillText(`• ${node.badge} •`, node.x, node.y + (node.id === 'cartix' ? 26 : 22));
-      ctx.restore();
-    }
-
-    drawPackets() {
-      const ctx = this.ctx;
-      for (let i = this.packets.length - 1; i >= 0; i--) {
-        const p = this.packets[i];
-        p.progress += p.speed;
-
-        if (p.progress >= 1) {
-          this.packets.splice(i, 1);
-          continue;
+    startTelemetryLoop() {
+      setInterval(() => {
+        if (!document.hidden) {
+          this.logIndex++;
+          this.updateTelemetry();
         }
-
-        const currX = p.from.x + (p.to.x - p.from.x) * p.progress;
-        const currY = p.from.y + (p.to.y - p.from.y) * p.progress;
-
-        // Glowing packet bullet
-        ctx.save();
-        ctx.shadowColor = p.color;
-        ctx.shadowBlur = 14;
-        ctx.beginPath();
-        ctx.arc(currX, currY, 4.5, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.fill();
-
-        // Packet tag label
-        ctx.font = `600 8.5px 'JetBrains Mono', monospace`;
-        ctx.fillStyle = '#f8fafc';
-        ctx.textAlign = 'center';
-        ctx.fillText(p.label, currX, currY - 9);
-        ctx.restore();
-      }
-    }
-
-    drawParticles() {
-      const ctx = this.ctx;
-      for (const pt of this.particles) {
-        pt.x += pt.vx;
-        pt.y += pt.vy;
-        if (pt.x < 0) pt.x = this.width;
-        if (pt.x > this.width) pt.x = 0;
-        if (pt.y < 0) pt.y = this.height;
-        if (pt.y > this.height) pt.y = 0;
-
-        ctx.beginPath();
-        ctx.arc(pt.x, pt.y, pt.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(165, 180, 252, ${pt.alpha})`;
-        ctx.fill();
-      }
-    }
-
-    animate() {
-      this.ctx.clearRect(0, 0, this.width, this.height);
-      this.time += 0.016;
-
-      // Update telemetry periodically
-      this.logTimer += 0.016;
-      if (this.logTimer > 2.2) {
-        this.logTimer = 0;
-        this.logIndex++;
-        this.updateTelemetry();
-      }
-
-      this.drawParticles();
-
-      // Connections between nodes
-      if (this.nodes.length >= 3) {
-        this.drawConnection(this.nodes[0], this.nodes[1]);
-        this.drawConnection(this.nodes[1], this.nodes[2]);
-      }
-
-      this.drawPackets();
-
-      // Nodes
-      for (const node of this.nodes) {
-        this.drawNode(node);
-      }
-
-      requestAnimationFrame(() => this.animate());
+      }, 3200);
     }
   }
 
-  // Initialize visualizer on DOM load
+  // Initialize on DOM ready
   document.addEventListener('DOMContentLoaded', () => {
-    new Cartix3DPipelineVisualizer();
+    new CartixInspectorController();
   });
 })();
