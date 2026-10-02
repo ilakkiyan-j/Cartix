@@ -5,187 +5,199 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cartix — Secure Model Context Protocol (MCP) Connector for WooCommerce</title>
   <meta name="description" content="Cartix is an open-source, read-only Model Context Protocol (MCP) connector that enables AI agents to securely query, inspect, and reason over WooCommerce store data.">
-  
-  <!-- Favicon / Brand Asset -->
+  <meta property="og:title" content="Cartix — Secure MCP Connector for WooCommerce">
+  <meta property="og:description" content="Open-source MCP connector enabling AI agents to securely query WooCommerce data with built-in PII redaction and rate limiting.">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="./assets/cartix_logo.png">
-  
-  <!-- Google Fonts Preconnect -->
+
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap" rel="stylesheet">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="./css/style.css?v=1.2.0">
+  <link rel="stylesheet" href="./css/style.css?v=2.0.0">
 </head>
 <body>
-  <!-- Background Ambient Glow Layer -->
+  <!-- Background Ambient Atmosphere -->
   <div class="bg-glow-layer" aria-hidden="true"></div>
+  <div class="bg-grid-layer" aria-hidden="true"></div>
 
-  <!-- Header & Navigation -->
-  <header class="site-header">
+  <!-- ═══════════════════════════════════════
+       HEADER & NAVIGATION
+       ═══════════════════════════════════════ -->
+  <header class="site-header" id="site-header">
     <div class="container nav-container">
-      <!-- High-Contrast Vector Brand Logo -->
+
+      <!-- Brand Logo using actual PNG asset -->
       <a href="./index.html" class="brand-logo-link" aria-label="Cartix Home">
         <div class="brand-logo-mark">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="32" height="32" rx="8" fill="url(#cartix-logo-bg-nav)" stroke="url(#cartix-logo-stroke-nav)" stroke-width="1.5"/>
-            <path d="M21 11H13.5C11.567 11 10 12.567 10 14.5V17.5C10 19.433 11.567 21 13.5 21H21" stroke="url(#cartix-logo-stroke-nav)" stroke-width="2.6" stroke-linecap="round"/>
-            <circle cx="21" cy="11" r="2.2" fill="#818cf8"/>
-            <circle cx="21" cy="21" r="2.2" fill="#06b6d4"/>
-            <path d="M14 16H22" stroke="url(#cartix-logo-stroke-nav)" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 2.5"/>
-            <defs>
-              <linearGradient id="cartix-logo-bg-nav" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#6366f1" stop-opacity="0.3"/>
-                <stop offset="1" stop-color="#06b6d4" stop-opacity="0.15"/>
-              </linearGradient>
-              <linearGradient id="cartix-logo-stroke-nav" x1="8" y1="8" x2="26" y2="24" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#818cf8"/>
-                <stop offset="0.5" stop-color="#6366f1"/>
-                <stop offset="1" stop-color="#06b6d4"/>
-              </linearGradient>
-            </defs>
-          </svg>
+          <img src="./assets/cartix_logo.png" alt="Cartix Logo" width="32" height="32" class="logo-img">
         </div>
         <span class="brand-logo-text">Cartix</span>
-        <span class="brand-logo-badge">MCP</span>
+        <span class="brand-version-pill">
+          <span class="version-dot"></span>
+          v0.1.0
+        </span>
       </a>
 
-      <!-- Desktop Navigation Links -->
-      <ul class="nav-links">
-        <li><a href="#architecture" class="nav-link">Architecture</a></li>
-        <li><a href="#mcp-tools" class="nav-link">MCP Tools</a></li>
-        <li><a href="#security" class="nav-link">Security</a></li>
-        <li><a href="#quickstart" class="nav-link">Quick Start</a></li>
-        <li><a href="./docs.html" class="nav-link">Docs</a></li>
-      </ul>
+      <!-- Desktop Navigation -->
+      <nav aria-label="Primary navigation">
+        <ul class="nav-links">
+          <li><a href="#architecture" class="nav-link">Architecture</a></li>
+          <li><a href="#mcp-tools" class="nav-link">MCP Tools</a></li>
+          <li><a href="#security" class="nav-link">Security</a></li>
+          <li><a href="#quickstart" class="nav-link">Quick Start</a></li>
+          <li><a href="./docs.html" class="nav-link">Docs</a></li>
+        </ul>
+      </nav>
 
-      <!-- Navbar Action Controls -->
+      <!-- Action Controls -->
       <div class="nav-actions">
-        <button class="search-trigger-btn" aria-label="Search documentation">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <button class="search-trigger-btn" aria-label="Search documentation" id="search-trigger-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
           <span>Search</span>
           <kbd class="search-shortcut-badge">⌘K</kbd>
         </button>
 
-        <button class="theme-toggle-btn" aria-label="Toggle theme">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <button class="theme-toggle-btn" aria-label="Toggle theme" id="theme-toggle-btn">
+          <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
         </button>
 
-        <a href="https://github.com/ilakkiyan-j/Cartix" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" aria-label="View Cartix on GitHub">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        <a href="https://github.com/ilakkiyan-j/Cartix" target="_blank" rel="noopener noreferrer" class="btn btn-ghost-sm" aria-label="View on GitHub">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
           <span>GitHub</span>
         </a>
 
-        <button class="mobile-menu-btn" aria-label="Open mobile menu">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        <a href="#quickstart" class="btn btn-primary btn-sm">
+          Deploy Now
+        </a>
+
+        <button class="mobile-menu-btn" aria-label="Open mobile menu" id="mobile-menu-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Mobile Drawer Backdrop -->
+  <!-- Mobile Drawer -->
   <div class="mobile-drawer-backdrop" aria-hidden="true"></div>
-
-  <!-- Mobile Navigation Drawer -->
   <aside class="mobile-docs-drawer" aria-label="Mobile Navigation">
-    <div style="margin-bottom: var(--space-6); display: flex; align-items: center; justify-content: space-between;">
+    <div class="mobile-drawer-header">
       <a href="./index.html" class="brand-logo-link" aria-label="Cartix Home">
         <div class="brand-logo-mark">
-          <svg width="26" height="26" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="32" height="32" rx="8" fill="url(#cartix-logo-bg-drw)" stroke="url(#cartix-logo-stroke-drw)" stroke-width="1.5"/>
-            <path d="M21 11H13.5C11.567 11 10 12.567 10 14.5V17.5C10 19.433 11.567 21 13.5 21H21" stroke="url(#cartix-logo-stroke-drw)" stroke-width="2.6" stroke-linecap="round"/>
-            <circle cx="21" cy="11" r="2.2" fill="#818cf8"/>
-            <circle cx="21" cy="21" r="2.2" fill="#06b6d4"/>
-            <defs>
-              <linearGradient id="cartix-logo-bg-drw" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#6366f1" stop-opacity="0.3"/>
-                <stop offset="1" stop-color="#06b6d4" stop-opacity="0.15"/>
-              </linearGradient>
-              <linearGradient id="cartix-logo-stroke-drw" x1="8" y1="8" x2="26" y2="24" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#818cf8"/>
-                <stop offset="0.5" stop-color="#6366f1"/>
-                <stop offset="1" stop-color="#06b6d4"/>
-              </linearGradient>
-            </defs>
-          </svg>
+          <img src="./assets/cartix_logo.png" alt="Cartix" width="26" height="26" class="logo-img">
         </div>
-        <span class="brand-logo-text" style="font-size: 1.15rem;">Cartix</span>
+        <span class="brand-logo-text">Cartix</span>
       </a>
-      <span class="badge badge-indigo">v0.1.0</span>
+      <button class="mobile-drawer-close" aria-label="Close menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
     </div>
-    <ul class="sidebar-nav-list" style="margin-bottom: var(--space-6);">
+    <ul class="sidebar-nav-list">
       <li><a href="./index.html" class="sidebar-nav-link active">Home</a></li>
       <li><a href="#architecture" class="sidebar-nav-link">Architecture</a></li>
       <li><a href="#mcp-tools" class="sidebar-nav-link">MCP Tools</a></li>
-      <li><a href="#security" class="sidebar-nav-link">Security Model</a></li>
+      <li><a href="#security" class="sidebar-nav-link">Security</a></li>
       <li><a href="#quickstart" class="sidebar-nav-link">Quick Start</a></li>
       <li><a href="./docs.html" class="sidebar-nav-link">Full Documentation</a></li>
     </ul>
+    <div class="mobile-drawer-footer">
+      <a href="https://github.com/ilakkiyan-j/Cartix" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="width:100%; justify-content:center;">View on GitHub</a>
+    </div>
   </aside>
 
-  <!-- Command Palette / Search Modal (⌘K) -->
-  <div class="search-modal-backdrop" role="dialog" aria-modal="true" aria-label="Documentation search">
+  <!-- Command Palette / Search Modal -->
+  <div class="search-modal-backdrop" role="dialog" aria-modal="true" aria-label="Documentation search" id="search-modal">
     <div class="search-modal-dialog">
       <div class="search-input-box">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted);"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <input type="text" class="search-input" placeholder="Search Cartix tools, schemas, architecture..." autocomplete="off">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-muted);flex-shrink:0"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" class="search-input" id="search-input" placeholder="Search tools, schemas, architecture..." autocomplete="off">
         <kbd class="search-shortcut-badge">ESC</kbd>
       </div>
-      <div class="search-results-list"></div>
+      <div class="search-results-list" id="search-results"></div>
       <div class="search-footer">
-        <span>Navigation: <kbd class="search-shortcut-badge">↑</kbd> <kbd class="search-shortcut-badge">↓</kbd> to navigate, <kbd class="search-shortcut-badge">↵</kbd> to select</span>
+        <span>Navigate: <kbd class="search-shortcut-badge">↑</kbd> <kbd class="search-shortcut-badge">↓</kbd> &nbsp; Select: <kbd class="search-shortcut-badge">↵</kbd></span>
         <span>Cartix Developer Docs</span>
       </div>
     </div>
   </div>
 
   <main>
-    <!-- HERO SECTION with 3D Architecture Visualizer -->
-    <section class="hero-section">
+
+    <!-- ═══════════════════════════════════════
+         HERO SECTION
+         ═══════════════════════════════════════ -->
+    <section class="hero-section" id="home">
       <div class="container hero-grid">
+
+        <!-- Left: Hero Copy -->
         <div class="hero-content">
-          <div class="hero-tag">
-            <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--accent-emerald);"></span>
-            Model Context Protocol • Production Ready
+          <div class="hero-eyebrow">
+            <span class="eyebrow-dot"></span>
+            <span>Model Context Protocol &nbsp;·&nbsp; Production Ready</span>
           </div>
+
           <h1 class="hero-title">
-            WooCommerce → AI,<br>
-            <span class="gradient-text">securely.</span>
+            WooCommerce<br>
+            to AI — <span class="gradient-text">securely.</span>
           </h1>
+
           <p class="hero-description">
-            Cartix is a high-performance, strictly read-only MCP connector that provides AI agents with structured, safe, and normalized access to WooCommerce merchant data.
+            Cartix is a strictly read-only MCP connector giving AI agents structured, safe, normalized access to WooCommerce merchant data. Zero mutations. Zero PII leaks.
           </p>
 
+          <!-- Install snippet -->
+          <div class="hero-install-strip">
+            <code class="hero-install-code" id="install-cmd">$ npx @cartix/mcp-server@latest</code>
+            <button class="install-copy-btn" onclick="copyInstallCmd()" aria-label="Copy install command">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </button>
+          </div>
+
+          <!-- CTA Buttons -->
           <div class="hero-actions">
-            <a href="./docs.html" class="btn btn-primary">
+            <a href="./docs.html" class="btn btn-primary btn-lg">
               <span>Read the Docs</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </a>
-            <a href="#quickstart" class="btn btn-secondary">
-              <span>Quick Start</span>
+            <a href="https://github.com/ilakkiyan-j/Cartix" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-lg">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              <span>View on GitHub</span>
             </a>
           </div>
 
-          <div class="hero-stats-strip">
-            <div class="hero-stat-item">
-              <span class="hero-stat-value">5 Tools</span>
-              <span class="hero-stat-label">Orders, Products, Inventory</span>
+          <!-- Trust Metrics -->
+          <div class="hero-trust-row">
+            <div class="trust-metric">
+              <span class="trust-val">5</span>
+              <span class="trust-label">MCP Tools</span>
             </div>
-            <div class="hero-stat-item">
-              <span class="hero-stat-value">100%</span>
-              <span class="hero-stat-label">Read-Only Guardrails</span>
+            <div class="trust-divider"></div>
+            <div class="trust-metric">
+              <span class="trust-val">100%</span>
+              <span class="trust-label">Read-Only</span>
             </div>
-            <div class="hero-stat-item">
-              <span class="hero-stat-value">&lt;15ms</span>
-              <span class="hero-stat-label">MCP Serialization</span>
+            <div class="trust-divider"></div>
+            <div class="trust-metric">
+              <span class="trust-val">&lt;15ms</span>
+              <span class="trust-label">Serialization</span>
+            </div>
+            <div class="trust-divider"></div>
+            <div class="trust-metric">
+              <span class="trust-val">60/60</span>
+              <span class="trust-label">Tests Passing</span>
             </div>
           </div>
         </div>
 
-        <!-- 3D Interactive Protocol Studio (Unified Developer Workbench) -->
+        <!-- Right: Interactive Protocol Studio -->
         <div class="hero-studio-stage" aria-label="Interactive Cartix Protocol Studio">
           <div class="studio-window" id="studio-window">
-            <!-- Window Titlebar -->
+
+            <!-- Window Chrome -->
             <div class="studio-titlebar">
               <div class="titlebar-left">
                 <div class="traffic-dots">
@@ -199,50 +211,50 @@
                   <span class="version-tag">MCP v1.0</span>
                 </div>
               </div>
-              <!-- Scenario Selector Tabs -->
+              <!-- Scenario Tabs -->
               <div class="studio-scenario-tabs" role="tablist" aria-label="Scenario Selection">
-                <button class="studio-tab-btn active" data-scenario="products" role="tab" aria-selected="true">
+                <button class="studio-tab-btn active" data-scenario="products" role="tab" aria-selected="true" id="tab-products">
                   <span class="tab-icon">⚡</span>
                   <span class="tab-title">Catalog Query</span>
                 </button>
-                <button class="studio-tab-btn" data-scenario="orders" role="tab" aria-selected="false">
+                <button class="studio-tab-btn" data-scenario="orders" role="tab" aria-selected="false" id="tab-orders">
                   <span class="tab-icon">📦</span>
-                  <span class="tab-title">Orders & PII Mask</span>
+                  <span class="tab-title">Orders & PII</span>
                 </button>
-                <button class="studio-tab-btn" data-scenario="inventory" role="tab" aria-selected="false">
+                <button class="studio-tab-btn" data-scenario="inventory" role="tab" aria-selected="false" id="tab-inventory">
                   <span class="tab-icon">⚠️</span>
-                  <span class="tab-title">Low Stock Alert</span>
+                  <span class="tab-title">Stock Alert</span>
                 </button>
               </div>
             </div>
 
-            <!-- Flow Breadcrumb Ribbon -->
+            <!-- Flow Breadcrumb -->
             <div class="studio-flow-ribbon">
               <div class="flow-step">
                 <span class="flow-step-icon">🤖</span>
-                <span class="flow-step-text">AI Agent Prompt</span>
+                <span class="flow-step-text">AI Agent</span>
               </div>
-              <div class="flow-divider">
-                <span class="flow-arrow">➔</span>
-                <span class="flow-label">JSON-RPC 2.0</span>
+              <div class="flow-connector">
+                <div class="flow-line"></div>
+                <span class="flow-protocol">JSON-RPC 2.0</span>
               </div>
               <div class="flow-step active-flow">
                 <span class="flow-step-icon">🛡️</span>
-                <span class="flow-step-text">Cartix Gateway (Guardrails)</span>
+                <span class="flow-step-text">Cartix Gateway</span>
               </div>
-              <div class="flow-divider">
-                <span class="flow-arrow">➔</span>
-                <span class="flow-label">REST v3</span>
+              <div class="flow-connector">
+                <div class="flow-line"></div>
+                <span class="flow-protocol">REST v3</span>
               </div>
               <div class="flow-step">
                 <span class="flow-step-icon">🏬</span>
-                <span class="flow-step-text">WooCommerce Store</span>
+                <span class="flow-step-text">WooCommerce</span>
               </div>
             </div>
 
-            <!-- Balanced 2-Pane Split Workbench -->
+            <!-- 2-Pane Workbench -->
             <div class="studio-workbench">
-              <!-- Left Pane: AI Agent & MCP Tool Invocation -->
+              <!-- Left Pane: Request -->
               <div class="workbench-pane pane-request">
                 <div class="pane-header">
                   <div class="pane-title-group">
@@ -251,19 +263,15 @@
                   </div>
                   <span class="protocol-badge" id="request-method-badge">tools/call</span>
                 </div>
-
                 <div class="pane-inner">
-                  <!-- Prompt Card -->
                   <div class="prompt-box">
                     <span class="prompt-prefix">Agent Query</span>
                     <p class="prompt-text" id="agent-prompt-text">"Find wireless mechanical keyboards with high customer ratings and check current pricing."</p>
                   </div>
-
-                  <!-- Code block: MCP JSON-RPC Payload -->
                   <div class="code-editor-box">
                     <div class="editor-header">
                       <span>JSON-RPC Request</span>
-                      <span class="code-lang">json</span>
+                      <span class="code-lang-badge">json</span>
                     </div>
                     <pre class="code-content"><code id="mcp-payload-code">{
   "jsonrpc": "2.0",
@@ -281,38 +289,34 @@
                 </div>
               </div>
 
-              <!-- Right Pane: Cartix Gateway & Normalized Output -->
+              <!-- Right Pane: Response -->
               <div class="workbench-pane pane-response">
                 <div class="pane-header">
                   <div class="pane-title-group">
                     <span class="pane-indicator success-dot"></span>
                     <span class="pane-title" id="response-pane-title">Normalized Merchant Data</span>
                   </div>
-                  <span class="protocol-badge success" id="response-status-badge">200 OK • 11ms</span>
+                  <span class="protocol-badge success" id="response-status-badge">200 OK · 11ms</span>
                 </div>
-
                 <div class="pane-inner">
-                  <!-- Security & Guardrail Checkpoints Bar -->
                   <div class="guardrails-status-bar" id="guardrails-bar">
                     <div class="guard-check-item active" id="guard-item-1">
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
                       <span id="guard-label-1">Zod Schema Validated</span>
                     </div>
                     <div class="guard-check-item active" id="guard-item-2">
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
                       <span id="guard-label-2">Rate Limit: 98/100</span>
                     </div>
                     <div class="guard-check-item active" id="guard-item-3">
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
                       <span id="guard-label-3">Zero Mutation Enforced</span>
                     </div>
                   </div>
-
-                  <!-- Output Preview -->
                   <div class="code-editor-box">
                     <div class="editor-header">
-                      <span>Sanitized Response Payload</span>
-                      <span class="code-lang">json</span>
+                      <span>Sanitized Response</span>
+                      <span class="code-lang-badge">json</span>
                     </div>
                     <pre class="code-content"><code id="mcp-response-code">{
   "status": "success",
@@ -339,16 +343,16 @@
               </div>
             </div>
 
-            <!-- Studio Telemetry Footer -->
+            <!-- Studio Footer Telemetry -->
             <div class="studio-footer-telemetry">
-              <div class="telemetry-live-stream">
+              <div class="telemetry-live">
                 <span class="telemetry-pill" id="footer-tool-pill">MCP:search_products</span>
-                <span class="telemetry-msg" id="footer-telemetry-msg">Agent tool call executed cleanly → 2 products normalized with 0 token overhead</span>
+                <span class="telemetry-msg" id="footer-telemetry-msg">Tool call executed cleanly → 2 products normalized, 0 PII tokens</span>
               </div>
               <div class="telemetry-metrics">
-                <span class="metric-item"><span class="dot-green"></span> Upstream: WC REST v3</span>
-                <span class="metric-item" id="footer-latency-val">Latency: 11.8ms</span>
-                <span class="metric-item" id="footer-pii-val">PII Leaks: 0</span>
+                <span class="metric-item"><span class="dot-green"></span>WC REST v3</span>
+                <span class="metric-item" id="footer-latency-val">11.8ms</span>
+                <span class="metric-item" id="footer-pii-val">PII: 0</span>
               </div>
             </div>
           </div>
@@ -356,101 +360,109 @@
       </div>
     </section>
 
-    <!-- TRUST & ARCHITECTURAL PILLARS STRIP -->
-    <section class="trust-strip">
-      <div class="container pillars-grid">
-        <div class="pillar-item">
-          <div class="pillar-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+    <!-- ═══════════════════════════════════════
+         ARCHITECTURAL PILLARS STRIP
+         ═══════════════════════════════════════ -->
+    <section class="pillars-strip" aria-label="Key architectural pillars">
+      <div class="container">
+        <div class="pillars-inner">
+          <div class="pillar-item">
+            <div class="pillar-icon-wrap">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            </div>
+            <div>
+              <h4>Strictly Read-Only</h4>
+              <p>Zero write tool definitions. Impossible to mutate orders or inventory.</p>
+            </div>
           </div>
-          <div class="pillar-text">
-            <h4>Strictly Read-Only</h4>
-            <p>Impossible to mutate orders, delete inventory, or issue unapproved refunds.</p>
+          <div class="pillar-sep"></div>
+          <div class="pillar-item">
+            <div class="pillar-icon-wrap">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <div>
+              <h4>PII Sanitization</h4>
+              <p>Customer emails auto-masked, names hashed, addresses stripped.</p>
+            </div>
           </div>
-        </div>
-
-        <div class="pillar-item">
-          <div class="pillar-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <div class="pillar-sep"></div>
+          <div class="pillar-item">
+            <div class="pillar-icon-wrap">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </div>
+            <div>
+              <h4>Token Bucket & Jitter</h4>
+              <p>Built-in rate limiting with exponential backoff and 429 parsing.</p>
+            </div>
           </div>
-          <div class="pillar-text">
-            <h4>PII Sanitization</h4>
-            <p>Automatic customer email masking, name hashing, and address stripping.</p>
-          </div>
-        </div>
-
-        <div class="pillar-item">
-          <div class="pillar-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-          </div>
-          <div class="pillar-text">
-            <h4>Token Bucket & Jitter</h4>
-            <p>Proactive rate limiting, 429 Retry-After parsing, and exponential backoff.</p>
-          </div>
-        </div>
-
-        <div class="pillar-item">
-          <div class="pillar-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-          </div>
-          <div class="pillar-text">
-            <h4>Bounded Pagination</h4>
-            <p>Hard-capped 100 item limits preventing memory exhaustion and LLM context blowup.</p>
+          <div class="pillar-sep"></div>
+          <div class="pillar-item">
+            <div class="pillar-icon-wrap">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            </div>
+            <div>
+              <h4>Bounded Pagination</h4>
+              <p>Hard-capped 100-item limits prevent LLM context blowup.</p>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- THE PROBLEM & SOLUTION SECTION -->
+    <!-- ═══════════════════════════════════════
+         PROBLEM vs SOLUTION
+         ═══════════════════════════════════════ -->
     <section class="section" id="problem-solution">
       <div class="container">
         <div class="section-header">
-          <span class="section-tag">Integration Gap</span>
-          <h2 class="section-title">The Challenge with Merchant AI Reasoning</h2>
-          <p class="section-subtitle">Why connecting LLMs directly to raw WooCommerce REST APIs fails in production environments.</p>
+          <span class="section-eyebrow">Integration Gap</span>
+          <h2 class="section-title">Why Direct WooCommerce Access Breaks Production</h2>
+          <p class="section-subtitle">Connecting LLMs directly to raw WooCommerce REST APIs creates three critical failure modes.</p>
         </div>
 
-        <div class="problem-solution-grid">
-          <div class="problem-card">
-            <div class="card-header-badge">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-              <span>WITHOUT CARTIX</span>
+        <div class="comparison-grid">
+          <!-- Without Cartix -->
+          <div class="comparison-card danger-card">
+            <div class="comparison-badge danger-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+              WITHOUT CARTIX
             </div>
             <h3>Fragile, Unsafe Direct Access</h3>
-            <ul class="bullet-list">
-              <li>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-rose)" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                <span><strong>Security Risk:</strong> API keys exposed in agent prompts; danger of unintended write actions or order tampering.</span>
+            <ul class="comparison-list">
+              <li class="danger-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-rose)" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                <span><strong>Security Risk:</strong> API keys exposed in agent prompts; unintended write actions are possible.</span>
               </li>
-              <li>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-rose)" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                <span><strong>Context Window Bloat:</strong> Raw WooCommerce JSON contains hundreds of useless metadata keys and unhashed PII.</span>
+              <li class="danger-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-rose)" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                <span><strong>Context Bloat:</strong> Raw WooCommerce JSON contains hundreds of metadata fields and unhashed PII.</span>
               </li>
-              <li>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-rose)" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                <span><strong>Rate Limit Crashes:</strong> Unchecked agent loops trigger upstream 429 blocks and bring down store APIs.</span>
+              <li class="danger-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-rose)" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                <span><strong>Rate Limit Crashes:</strong> Unchecked agent loops trigger 429 blocks and bring down store APIs.</span>
               </li>
             </ul>
           </div>
 
-          <div class="solution-card">
-            <div class="card-header-badge">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-              <span>WITH CARTIX MCP CONNECTOR</span>
+          <!-- With Cartix -->
+          <div class="comparison-card success-card">
+            <div class="comparison-badge success-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              WITH CARTIX MCP
             </div>
             <h3>Structured, Guarded Operations</h3>
-            <ul class="bullet-list">
-              <li>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span><strong>Strict Read-Only Enforcement:</strong> Server-side credentials and zero write tool definitions guarantee immutable operations.</span>
+            <ul class="comparison-list">
+              <li class="success-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>Read-Only Enforcement:</strong> Server-side credentials. Zero write tool definitions guarantee immutability.</span>
               </li>
-              <li>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span><strong>Sanitized Schemas:</strong> Zod-validated payloads normalize products and orders, automatically redacting customer PII.</span>
+              <li class="success-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>Sanitized Schemas:</strong> Zod-validated payloads normalize data and automatically redact customer PII.</span>
               </li>
-              <li>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span><strong>Resilient Token Bucket:</strong> Built-in rate limiting and jittered retries absorb spikes seamlessly.</span>
+              <li class="success-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span><strong>Resilient Bucket:</strong> Built-in rate limiting and jittered retries absorb traffic spikes seamlessly.</span>
               </li>
             </ul>
           </div>
@@ -458,93 +470,156 @@
       </div>
     </section>
 
-    <!-- ARCHITECTURE PIPELINE SECTION -->
-    <section class="section" id="architecture" style="background: var(--bg-primary);">
+    <!-- ═══════════════════════════════════════
+         ARCHITECTURE PIPELINE
+         ═══════════════════════════════════════ -->
+    <section class="section section-alt" id="architecture">
       <div class="container">
         <div class="section-header">
-          <span class="section-tag">System Topology</span>
+          <span class="section-eyebrow">System Topology</span>
           <h2 class="section-title">End-to-End Execution Flow</h2>
-          <p class="section-subtitle">How Cartix isolates agent reasoning from upstream WooCommerce infrastructure.</p>
+          <p class="section-subtitle">How Cartix isolates AI agent reasoning from upstream WooCommerce infrastructure.</p>
         </div>
 
-        <div class="arch-diagram-wrapper">
-          <div class="arch-flow-grid">
-            <div class="arch-step-card">
-              <span class="arch-step-num">01 / INITIATION</span>
+        <div class="arch-pipeline">
+          <div class="arch-step">
+            <div class="arch-step-number">01</div>
+            <div class="arch-step-body">
+              <div class="arch-step-label">INITIATION</div>
               <h4>Merchant & Agent</h4>
-              <p>User asks an operational question in natural language. The agent inspects MCP tool definitions and emits a tool call.</p>
-              <span class="arch-tech-badge">JSON-RPC 2.0</span>
+              <p>User asks a question in natural language. Agent inspects MCP tool definitions and emits a structured tool call.</p>
+              <span class="arch-tech-chip">JSON-RPC 2.0</span>
             </div>
-
-            <div class="arch-step-card highlight">
-              <span class="arch-step-num">02 / MCP PROTOCOL</span>
+          </div>
+          <div class="arch-connector">
+            <div class="arch-connector-line"></div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </div>
+          <div class="arch-step arch-step-highlight">
+            <div class="arch-step-number">02</div>
+            <div class="arch-step-body">
+              <div class="arch-step-label">MCP PROTOCOL</div>
               <h4>Cartix Dispatcher</h4>
-              <p>Validates parameters against Zod schemas, enforces bounded pagination, and consumes rate-limiter tokens.</p>
-              <span class="arch-tech-badge">Model Context Protocol</span>
+              <p>Validates parameters with Zod schemas, enforces bounded pagination, and consumes rate-limiter tokens before dispatch.</p>
+              <span class="arch-tech-chip">Model Context Protocol</span>
             </div>
-
-            <div class="arch-step-card">
-              <span class="arch-step-num">03 / UPSTREAM ADAPTER</span>
+          </div>
+          <div class="arch-connector">
+            <div class="arch-connector-line"></div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </div>
+          <div class="arch-step">
+            <div class="arch-step-number">03</div>
+            <div class="arch-step-body">
+              <div class="arch-step-label">UPSTREAM ADAPTER</div>
               <h4>WooCommerce Client</h4>
-              <p>Authenticates via Basic Auth over HTTPS, executes request with jittered retry logic, and parses pagination headers.</p>
-              <span class="arch-tech-badge">WooCommerce REST v3</span>
+              <p>Authenticates via Basic Auth over HTTPS, executes with jittered retry logic, and parses X-WP-TotalPages headers.</p>
+              <span class="arch-tech-chip">WC REST v3</span>
             </div>
-
-            <div class="arch-step-card">
-              <span class="arch-step-num">04 / NORMALIZATION</span>
+          </div>
+          <div class="arch-connector">
+            <div class="arch-connector-line"></div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </div>
+          <div class="arch-step">
+            <div class="arch-step-number">04</div>
+            <div class="arch-step-body">
+              <div class="arch-step-label">NORMALIZATION</div>
               <h4>Sanitized Response</h4>
-              <p>Redacts PII, masks emails, strips unneeded metadata, and returns clean structured data to the agent for final reasoning.</p>
-              <span class="arch-tech-badge">Normalized Output</span>
+              <p>Redacts PII, masks emails, strips metadata, and returns clean structured data to the agent for final reasoning.</p>
+              <span class="arch-tech-chip">Normalized JSON</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 5 CORE MCP TOOLS SHOWCASE (INTERACTIVE TABS) -->
+    <!-- ═══════════════════════════════════════
+         MCP TOOL REGISTRY (INTERACTIVE)
+         ═══════════════════════════════════════ -->
     <section class="section" id="mcp-tools">
       <div class="container">
         <div class="section-header">
-          <span class="section-tag">Tool Registry</span>
+          <span class="section-eyebrow">Tool Registry</span>
           <h2 class="section-title">5 Production MCP Tools</h2>
-          <p class="section-subtitle">Standardized, type-safe Model Context Protocol tools implemented in Cartix.</p>
+          <p class="section-subtitle">Standardized, type-safe Model Context Protocol tools ready for Claude Desktop, Cursor, and autonomous agents.</p>
         </div>
 
-        <div class="tools-showcase-box">
-          <nav class="tools-tab-nav" aria-label="MCP Tools Tabs">
-            <button class="tool-tab-btn active" data-tool="search_orders">search_orders</button>
-            <button class="tool-tab-btn" data-tool="get_order">get_order</button>
-            <button class="tool-tab-btn" data-tool="search_products">search_products</button>
-            <button class="tool-tab-btn" data-tool="get_product">get_product</button>
-            <button class="tool-tab-btn" data-tool="get_inventory">get_inventory</button>
+        <div class="tools-explorer">
+          <!-- Tool Sidebar -->
+          <nav class="tools-sidebar" aria-label="MCP Tools list">
+            <button class="tool-sidebar-btn active" data-tool="search_orders" id="tool-btn-search_orders">
+              <div class="tool-btn-icon orders">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </div>
+              <div class="tool-btn-meta">
+                <span class="tool-btn-name">search_orders</span>
+                <span class="tool-btn-desc">Filter & paginate orders</span>
+              </div>
+            </button>
+            <button class="tool-sidebar-btn" data-tool="get_order" id="tool-btn-get_order">
+              <div class="tool-btn-icon order">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              </div>
+              <div class="tool-btn-meta">
+                <span class="tool-btn-name">get_order</span>
+                <span class="tool-btn-desc">Single order by ID</span>
+              </div>
+            </button>
+            <button class="tool-sidebar-btn" data-tool="search_products" id="tool-btn-search_products">
+              <div class="tool-btn-icon products">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </div>
+              <div class="tool-btn-meta">
+                <span class="tool-btn-name">search_products</span>
+                <span class="tool-btn-desc">Catalog search by keyword/SKU</span>
+              </div>
+            </button>
+            <button class="tool-sidebar-btn" data-tool="get_product" id="tool-btn-get_product">
+              <div class="tool-btn-icon product">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 7V5a2 2 0 0 0-4 0v2"></path></svg>
+              </div>
+              <div class="tool-btn-meta">
+                <span class="tool-btn-name">get_product</span>
+                <span class="tool-btn-desc">Full spec by product ID</span>
+              </div>
+            </button>
+            <button class="tool-sidebar-btn" data-tool="get_inventory" id="tool-btn-get_inventory">
+              <div class="tool-btn-icon inventory">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              </div>
+              <div class="tool-btn-meta">
+                <span class="tool-btn-name">get_inventory</span>
+                <span class="tool-btn-desc">Stock levels & low-stock alerts</span>
+              </div>
+            </button>
           </nav>
 
-          <!-- TAB 1: search_orders -->
-          <div class="tools-tab-content-panel active" id="panel-search_orders">
-            <div class="tool-detail-grid">
-              <div class="tool-info-col">
-                <h3>search_orders</h3>
-                <p>Searches and filters WooCommerce orders with pagination, status filtering, and sanitized customer records.</p>
-                
-                <h4>Parameters</h4>
-                <table class="tool-params-table">
-                  <thead>
-                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-                  </thead>
-                  <tbody>
-                    <tr><td><code>status</code></td><td>string</td><td>pending, processing, on-hold, completed, cancelled</td></tr>
-                    <tr><td><code>after</code></td><td>string</td><td>ISO 8601 date cutoff (e.g. 2026-10-01T00:00:00Z)</td></tr>
-                    <tr><td><code>page</code></td><td>number</td><td>Page number (default: 1)</td></tr>
-                    <tr><td><code>limit</code></td><td>number</td><td>Results per page (1–100, default: 20)</td></tr>
-                  </tbody>
-                </table>
-              </div>
+          <!-- Tool Detail Panel -->
+          <div class="tools-detail-panel">
 
+            <!-- Panel: search_orders -->
+            <div class="tool-panel active" id="panel-search_orders">
+              <div class="tool-panel-header">
+                <h3 class="tool-panel-name">search_orders</h3>
+                <span class="tool-panel-badge read-only">READ-ONLY</span>
+              </div>
+              <p class="tool-panel-desc">Searches and filters WooCommerce orders with pagination, status filtering, and automatically sanitized customer records.</p>
+              <h4 class="tool-param-heading">Parameters</h4>
+              <table class="tool-params-table">
+                <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                <tbody>
+                  <tr><td><code>status</code></td><td>string</td><td>pending, processing, on-hold, completed, cancelled</td></tr>
+                  <tr><td><code>after</code></td><td>string</td><td>ISO 8601 date cutoff (e.g. 2026-10-01T00:00:00Z)</td></tr>
+                  <tr><td><code>page</code></td><td>number</td><td>Page number (default: 1)</td></tr>
+                  <tr><td><code>limit</code></td><td>number</td><td>Results per page (1–100, default: 20)</td></tr>
+                </tbody>
+              </table>
               <div class="code-window">
                 <div class="code-window-header">
-                  <div class="window-dots"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span></div>
+                  <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
                   <span class="code-window-title">Tool Response Payload (Sanitized)</span>
-                  <button class="copy-code-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+                  <button class="copy-code-btn" onclick="copyCode(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
                 </div>
                 <pre><code>{
   "orders": [
@@ -554,46 +629,34 @@
       "total": "49.99",
       "currency": "USD",
       "created_at": "2026-10-01T14:20:00Z",
-      "customer": {
-        "email": "a***e@example.com"
-      },
+      "customer": { "email": "a***e@example.com" },
       "item_count": 2
     }
   ],
-  "pagination": {
-    "page": 1,
-    "limit": 20,
-    "total": 1,
-    "total_pages": 1
-  }
+  "pagination": { "page": 1, "limit": 20, "total": 1 }
 }</code></pre>
               </div>
             </div>
-          </div>
 
-          <!-- TAB 2: get_order -->
-          <div class="tools-tab-content-panel" id="panel-get_order">
-            <div class="tool-detail-grid">
-              <div class="tool-info-col">
-                <h3>get_order</h3>
-                <p>Retrieves a single order by ID with line items, financial breakdown, and sanitized billing details.</p>
-                
-                <h4>Parameters</h4>
-                <table class="tool-params-table">
-                  <thead>
-                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-                  </thead>
-                  <tbody>
-                    <tr><td><code>order_id</code></td><td>number</td><td>Exact WooCommerce order ID (required)</td></tr>
-                  </tbody>
-                </table>
+            <!-- Panel: get_order -->
+            <div class="tool-panel" id="panel-get_order">
+              <div class="tool-panel-header">
+                <h3 class="tool-panel-name">get_order</h3>
+                <span class="tool-panel-badge read-only">READ-ONLY</span>
               </div>
-
+              <p class="tool-panel-desc">Retrieves a single order by ID with full line items, financial breakdown, and sanitized billing details.</p>
+              <h4 class="tool-param-heading">Parameters</h4>
+              <table class="tool-params-table">
+                <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                <tbody>
+                  <tr><td><code>order_id</code></td><td>number</td><td>WooCommerce order ID (required)</td></tr>
+                </tbody>
+              </table>
               <div class="code-window">
                 <div class="code-window-header">
-                  <div class="window-dots"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span></div>
+                  <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
                   <span class="code-window-title">get_order Response</span>
-                  <button class="copy-code-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+                  <button class="copy-code-btn" onclick="copyCode(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
                 </div>
                 <pre><code>{
   "id": 1004,
@@ -601,94 +664,64 @@
   "currency": "USD",
   "total": "129.50",
   "line_items": [
-    {
-      "id": 88,
-      "product_id": 45,
-      "name": "Mechanical Keyboard RGB",
-      "quantity": 1,
-      "price": "129.50"
-    }
+    { "id": 88, "product_id": 45, "name": "Mechanical Keyboard RGB", "quantity": 1, "price": "129.50" }
   ],
-  "customer": {
-    "email": "j***n@company.org"
-  }
+  "customer": { "email": "j***n@company.org" }
 }</code></pre>
               </div>
             </div>
-          </div>
 
-          <!-- TAB 3: search_products -->
-          <div class="tools-tab-content-panel" id="panel-search_products">
-            <div class="tool-detail-grid">
-              <div class="tool-info-col">
-                <h3>search_products</h3>
-                <p>Searches store catalog by keyword, SKU, or category with bounded pagination.</p>
-                
-                <h4>Parameters</h4>
-                <table class="tool-params-table">
-                  <thead>
-                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-                  </thead>
-                  <tbody>
-                    <tr><td><code>query</code></td><td>string</td><td>Search term (e.g. "keyboard", "cable")</td></tr>
-                    <tr><td><code>sku</code></td><td>string</td><td>Exact SKU code</td></tr>
-                    <tr><td><code>stock_status</code></td><td>string</td><td>instock, outofstock, onbackorder</td></tr>
-                    <tr><td><code>limit</code></td><td>number</td><td>Results per page (1–100, default: 20)</td></tr>
-                  </tbody>
-                </table>
+            <!-- Panel: search_products -->
+            <div class="tool-panel" id="panel-search_products">
+              <div class="tool-panel-header">
+                <h3 class="tool-panel-name">search_products</h3>
+                <span class="tool-panel-badge read-only">READ-ONLY</span>
               </div>
-
+              <p class="tool-panel-desc">Searches the store catalog by keyword, SKU, or category with bounded pagination and normalized output.</p>
+              <h4 class="tool-param-heading">Parameters</h4>
+              <table class="tool-params-table">
+                <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                <tbody>
+                  <tr><td><code>query</code></td><td>string</td><td>Search term (e.g. "keyboard", "cable")</td></tr>
+                  <tr><td><code>sku</code></td><td>string</td><td>Exact SKU code</td></tr>
+                  <tr><td><code>stock_status</code></td><td>string</td><td>instock, outofstock, onbackorder</td></tr>
+                  <tr><td><code>limit</code></td><td>number</td><td>Results per page (1–100, default: 20)</td></tr>
+                </tbody>
+              </table>
               <div class="code-window">
                 <div class="code-window-header">
-                  <div class="window-dots"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span></div>
+                  <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
                   <span class="code-window-title">search_products Response</span>
-                  <button class="copy-code-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+                  <button class="copy-code-btn" onclick="copyCode(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
                 </div>
                 <pre><code>{
   "products": [
-    {
-      "id": 87,
-      "name": "Ergonomic Wireless Mechanical Keyboard",
-      "sku": "KB-001",
-      "price": "49.99",
-      "stock_status": "instock",
-      "stock_quantity": 45
-    }
+    { "id": 87, "name": "Ergonomic Wireless Mechanical Keyboard", "sku": "KB-001", "price": "49.99", "stock_status": "instock", "stock_quantity": 45 }
   ],
-  "pagination": {
-    "page": 1,
-    "limit": 20,
-    "total": 1,
-    "total_pages": 1
-  }
+  "pagination": { "page": 1, "limit": 20, "total": 1 }
 }</code></pre>
               </div>
             </div>
-          </div>
 
-          <!-- TAB 4: get_product -->
-          <div class="tools-tab-content-panel" id="panel-get_product">
-            <div class="tool-detail-grid">
-              <div class="tool-info-col">
-                <h3>get_product</h3>
-                <p>Fetches full product specifications, SKU, pricing, and stock status for a specific product ID.</p>
-                
-                <h4>Parameters</h4>
-                <table class="tool-params-table">
-                  <thead>
-                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-                  </thead>
-                  <tbody>
-                    <tr><td><code>product_id</code></td><td>number</td><td>WooCommerce product ID (required)</td></tr>
-                  </tbody>
-                </table>
+            <!-- Panel: get_product -->
+            <div class="tool-panel" id="panel-get_product">
+              <div class="tool-panel-header">
+                <h3 class="tool-panel-name">get_product</h3>
+                <span class="tool-panel-badge read-only">READ-ONLY</span>
               </div>
-
+              <p class="tool-panel-desc">Fetches full product specifications including SKU, pricing, stock status, and description for a specific product ID.</p>
+              <h4 class="tool-param-heading">Parameters</h4>
+              <table class="tool-params-table">
+                <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                <tbody>
+                  <tr><td><code>product_id</code></td><td>number</td><td>WooCommerce product ID (required)</td></tr>
+                </tbody>
+              </table>
               <div class="code-window">
                 <div class="code-window-header">
-                  <div class="window-dots"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span></div>
+                  <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
                   <span class="code-window-title">get_product Response</span>
-                  <button class="copy-code-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+                  <button class="copy-code-btn" onclick="copyCode(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
                 </div>
                 <pre><code>{
   "id": 87,
@@ -699,65 +732,126 @@
   "sale_price": "49.99",
   "stock_status": "instock",
   "stock_quantity": 45,
-  "manage_stock": true,
-  "description": "RGB mechanical keyboard with tactile switches"
+  "manage_stock": true
 }</code></pre>
               </div>
             </div>
-          </div>
 
-          <!-- TAB 5: get_inventory -->
-          <div class="tools-tab-content-panel" id="panel-get_inventory">
-            <div class="tool-detail-grid">
-              <div class="tool-info-col">
-                <h3>get_inventory</h3>
-                <p>Retrieves store-wide inventory levels with deterministic low-stock detection (stock quantity &le; 5 or low stock threshold).</p>
-                
-                <h4>Parameters</h4>
-                <table class="tool-params-table">
-                  <thead>
-                    <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
-                  </thead>
-                  <tbody>
-                    <tr><td><code>low_stock_only</code></td><td>boolean</td><td>If true, filters to items with low stock or out of stock (default: false)</td></tr>
-                    <tr><td><code>page</code></td><td>number</td><td>Page number (default: 1)</td></tr>
-                    <tr><td><code>limit</code></td><td>number</td><td>Batch limit (1–100, default: 20)</td></tr>
-                  </tbody>
-                </table>
+            <!-- Panel: get_inventory -->
+            <div class="tool-panel" id="panel-get_inventory">
+              <div class="tool-panel-header">
+                <h3 class="tool-panel-name">get_inventory</h3>
+                <span class="tool-panel-badge read-only">READ-ONLY</span>
               </div>
-
+              <p class="tool-panel-desc">Retrieves store-wide inventory levels with deterministic low-stock detection (quantity ≤ 5 or below low-stock threshold).</p>
+              <h4 class="tool-param-heading">Parameters</h4>
+              <table class="tool-params-table">
+                <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                <tbody>
+                  <tr><td><code>low_stock_only</code></td><td>boolean</td><td>If true, filters to low-stock or out-of-stock items (default: false)</td></tr>
+                  <tr><td><code>page</code></td><td>number</td><td>Page number (default: 1)</td></tr>
+                  <tr><td><code>limit</code></td><td>number</td><td>Batch limit (1–100, default: 20)</td></tr>
+                </tbody>
+              </table>
               <div class="code-window">
                 <div class="code-window-header">
-                  <div class="window-dots"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span></div>
+                  <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
                   <span class="code-window-title">get_inventory Response</span>
-                  <button class="copy-code-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+                  <button class="copy-code-btn" onclick="copyCode(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
                 </div>
                 <pre><code>{
   "inventory": [
-    {
-      "product_id": 92,
-      "sku": "MC-011",
-      "name": "Studio Condenser Microphone with Arm",
-      "stock_quantity": 3,
-      "stock_status": "instock",
-      "is_low_stock": true
-    },
-    {
-      "product_id": 97,
-      "sku": "KC-016",
-      "name": "Custom Artisan Keycap Resin Galaxy",
-      "stock_quantity": 0,
-      "stock_status": "outofstock",
-      "is_low_stock": true
-    }
+    { "product_id": 92, "sku": "MC-011", "name": "Studio Condenser Microphone", "stock_quantity": 3, "is_low_stock": true },
+    { "product_id": 97, "sku": "KC-016", "name": "Artisan Keycap Resin Galaxy", "stock_quantity": 0, "stock_status": "outofstock", "is_low_stock": true }
   ],
-  "pagination": {
-    "page": 1,
-    "limit": 20,
-    "total": 2,
-    "total_pages": 1
-  }
+  "pagination": { "page": 1, "limit": 20, "total": 2 }
 }</code></pre>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         SECURITY BENTO GRID
+         ═══════════════════════════════════════ -->
+    <section class="section section-alt" id="security">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Security & Compliance</span>
+          <h2 class="section-title">Built-In Enterprise Guardrails</h2>
+          <p class="section-subtitle">Cartix protects merchant credentials and customer data by design — not configuration.</p>
+        </div>
+
+        <div class="security-bento">
+          <div class="bento-card bento-lg">
+            <div class="bento-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            </div>
+            <h4>Server-Side Credential Isolation</h4>
+            <p>API keys reside exclusively in server environment variables. Tool schemas expose zero credentials to LLM reasoning loops — the model never sees your WooCommerce keys.</p>
+            <div class="bento-code-chip">
+              <code>WOOCOMMERCE_CONSUMER_KEY=ck_... <span class="chip-comment"># server-side only</span></code>
+            </div>
+          </div>
+
+          <div class="bento-card">
+            <div class="bento-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <h4>Automatic PII Redaction</h4>
+            <p>Customer emails are masked (<code>j***n@corp.org</code>) and physical addresses are stripped before reaching the AI model.</p>
+          </div>
+
+          <div class="bento-card">
+            <div class="bento-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            </div>
+            <h4>Secret Redaction in Logs</h4>
+            <p>All loggers automatically intercept <code>ck_*</code> and <code>cs_*</code> patterns, replacing them with <code>[REDACTED]</code> before any log output.</p>
+          </div>
+
+          <div class="bento-card">
+            <div class="bento-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            </div>
+            <h4>Token Bucket Rate Limiting</h4>
+            <p>Proactive request throttling with 429 Retry-After header parsing and exponential jitter prevents store API saturation.</p>
+          </div>
+
+          <div class="bento-card bento-wide">
+            <div class="bento-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+            </div>
+            <div>
+              <h4>Explicit Operational Boundaries</h4>
+              <div class="boundary-two-col">
+                <div class="boundary-col-item supported">
+                  <div class="boundary-col-heading">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    What Cartix Does
+                  </div>
+                  <ul>
+                    <li>Read orders, products, and inventory levels</li>
+                    <li>Sanitize and redact customer PII automatically</li>
+                    <li>Rate-limit and back-off on upstream throttling</li>
+                    <li>Bound query pagination up to 100 records</li>
+                  </ul>
+                </div>
+                <div class="boundary-col-item rejected">
+                  <div class="boundary-col-heading">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-rose)" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    What Cartix Rejects
+                  </div>
+                  <ul>
+                    <li>Order creation, modification, or cancellation</li>
+                    <li>Refund issuance or payment capture</li>
+                    <li>Product creation or inventory mutations</li>
+                    <li>Unvalidated arbitrary REST requests</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -765,263 +859,229 @@
       </div>
     </section>
 
-    <!-- SECURITY & PRIVACY SECTION -->
-    <section class="section" id="security">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">Security & Compliance</span>
-          <h2 class="section-title">Built-In Enterprise Guardrails</h2>
-          <p class="section-subtitle">Cartix protects merchant credentials and customer data by design.</p>
-        </div>
-
-        <div class="security-grid">
-          <div class="security-card">
-            <div class="security-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-            </div>
-            <h4>Server-Side Isolation</h4>
-            <p>API keys reside exclusively in server environment variables. Tool schemas expose zero credentials to LLM reasoning loops.</p>
-          </div>
-
-          <div class="security-card">
-            <div class="security-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            </div>
-            <h4>Automatic PII Redaction</h4>
-            <p>Customer emails are masked (e.g. <code>j***n@corp.org</code>) and physical street addresses are stripped before reaching the AI model.</p>
-          </div>
-
-          <div class="security-card">
-            <div class="security-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-            </div>
-            <h4>Secret Redaction in Logs</h4>
-            <p>All loggers automatically intercept and redact <code>ck_*</code> and <code>cs_*</code> patterns with <code>[REDACTED]</code>.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- DEVELOPER QUICKSTART & CONFIGURATION -->
+    <!-- ═══════════════════════════════════════
+         QUICKSTART & INTEGRATIONS
+         ═══════════════════════════════════════ -->
     <section class="section" id="quickstart">
       <div class="container">
         <div class="section-header">
-          <span class="section-tag">Developer Setup</span>
+          <span class="section-eyebrow">Developer Setup</span>
           <h2 class="section-title">Get Started in Seconds</h2>
-          <p class="section-subtitle">Run Cartix locally, connect to Claude Desktop, or run containerized via Docker.</p>
+          <p class="section-subtitle">Run Cartix locally, connect to Claude Desktop, or containerize with Docker.</p>
         </div>
 
-        <div class="code-window" style="max-width: 800px; margin: 0 auto var(--space-8);">
-          <div class="code-window-header">
-            <div class="window-dots"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span></div>
-            <span class="code-window-title">bash — installation</span>
-            <button class="copy-code-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+        <div class="quickstart-layout">
+          <!-- Tab Nav -->
+          <div class="quickstart-tabs" role="tablist" aria-label="Integration options">
+            <button class="qs-tab active" data-qs="install" role="tab" aria-selected="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"></polyline><line x1="12" y1="12" x2="12" y2="21"></line><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"></path></svg>
+              Installation
+            </button>
+            <button class="qs-tab" data-qs="claude" role="tab" aria-selected="false">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              Claude Desktop
+            </button>
+            <button class="qs-tab" data-qs="cursor" role="tab" aria-selected="false">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+              Cursor / IDE
+            </button>
+            <button class="qs-tab" data-qs="docker" role="tab" aria-selected="false">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+              Docker
+            </button>
           </div>
-          <pre><code># 1. Clone repository & install dependencies
+
+          <!-- Tab Panels -->
+          <div class="qs-panel active" id="qs-install">
+            <div class="code-window">
+              <div class="code-window-header">
+                <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
+                <span class="code-window-title">bash — Installation</span>
+                <button class="copy-code-btn" onclick="copyCode(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+              </div>
+              <pre><code><span class="code-comment"># 1. Clone repository & install dependencies</span>
 git clone https://github.com/ilakkiyan-j/Cartix.git
-cd Cartix
-npm install
+cd Cartix && npm install
 
-# 2. Configure read-only WooCommerce credentials
+<span class="code-comment"># 2. Configure read-only WooCommerce credentials</span>
 cp .env.example .env
-# Edit .env: WOOCOMMERCE_URL, WOOCOMMERCE_CONSUMER_KEY, WOOCOMMERCE_CONSUMER_SECRET
+<span class="code-comment"># Edit .env: WOOCOMMERCE_URL, WOOCOMMERCE_CONSUMER_KEY, WOOCOMMERCE_CONSUMER_SECRET</span>
 
-# 3. Start Cartix MCP Server
+<span class="code-comment"># 3. Start Cartix MCP Server</span>
 npm start</code></pre>
-        </div>
-
-        <!-- Claude Desktop MCP Config Box -->
-        <div class="code-window" style="max-width: 800px; margin: 0 auto;">
-          <div class="code-window-header">
-            <div class="window-dots"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span></div>
-            <span class="code-window-title">claude_desktop_config.json</span>
-            <button class="copy-code-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+            </div>
           </div>
-          <pre><code>{
-  "mcpServers": {
-    "cartix": {
-      "command": "node",
-      "args": ["/path/to/cartix/dist/src/index.js"],
-      "env": {
-        "WOOCOMMERCE_URL": "https://store.example.com",
-        "WOOCOMMERCE_CONSUMER_KEY": "ck_...",
-        "WOOCOMMERCE_CONSUMER_SECRET": "cs_...",
-        "MCP_TRANSPORT": "stdio"
+
+          <div class="qs-panel" id="qs-claude">
+            <div class="code-window">
+              <div class="code-window-header">
+                <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
+                <span class="code-window-title">claude_desktop_config.json</span>
+                <button class="copy-code-btn" onclick="copyCode(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+              </div>
+              <pre><code>{
+  <span class="code-key">"mcpServers"</span>: {
+    <span class="code-key">"cartix"</span>: {
+      <span class="code-key">"command"</span>: <span class="code-string">"node"</span>,
+      <span class="code-key">"args"</span>: [<span class="code-string">"/path/to/cartix/dist/src/index.js"</span>],
+      <span class="code-key">"env"</span>: {
+        <span class="code-key">"WOOCOMMERCE_URL"</span>: <span class="code-string">"https://store.example.com"</span>,
+        <span class="code-key">"WOOCOMMERCE_CONSUMER_KEY"</span>: <span class="code-string">"ck_..."</span>,
+        <span class="code-key">"WOOCOMMERCE_CONSUMER_SECRET"</span>: <span class="code-string">"cs_..."</span>,
+        <span class="code-key">"MCP_TRANSPORT"</span>: <span class="code-string">"stdio"</span>
       }
     }
   }
 }</code></pre>
+            </div>
+          </div>
+
+          <div class="qs-panel" id="qs-cursor">
+            <div class="code-window">
+              <div class="code-window-header">
+                <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
+                <span class="code-window-title">.cursor/mcp.json</span>
+                <button class="copy-code-btn" onclick="copyCode(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+              </div>
+              <pre><code>{
+  <span class="code-key">"mcpServers"</span>: {
+    <span class="code-key">"cartix"</span>: {
+      <span class="code-key">"command"</span>: <span class="code-string">"node"</span>,
+      <span class="code-key">"args"</span>: [<span class="code-string">"./dist/src/index.js"</span>],
+      <span class="code-key">"env"</span>: {
+        <span class="code-key">"WOOCOMMERCE_URL"</span>: <span class="code-string">"${env:WOOCOMMERCE_URL}"</span>,
+        <span class="code-key">"WOOCOMMERCE_CONSUMER_KEY"</span>: <span class="code-string">"${env:WOOCOMMERCE_CONSUMER_KEY}"</span>,
+        <span class="code-key">"WOOCOMMERCE_CONSUMER_SECRET"</span>: <span class="code-string">"${env:WOOCOMMERCE_CONSUMER_SECRET}"</span>
+      }
+    }
+  }
+}</code></pre>
+            </div>
+          </div>
+
+          <div class="qs-panel" id="qs-docker">
+            <div class="code-window">
+              <div class="code-window-header">
+                <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
+                <span class="code-window-title">bash — Docker</span>
+                <button class="copy-code-btn" onclick="copyCode(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+              </div>
+              <pre><code><span class="code-comment"># Build and run with Docker</span>
+docker build -t cartix-mcp .
+docker run --rm \
+  -e WOOCOMMERCE_URL=https://store.example.com \
+  -e WOOCOMMERCE_CONSUMER_KEY=ck_... \
+  -e WOOCOMMERCE_CONSUMER_SECRET=cs_... \
+  cartix-mcp</code></pre>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- LIVE DEMO SCENARIOS -->
-    <section class="section" id="scenarios">
+    <!-- ═══════════════════════════════════════
+         DEMO SCENARIOS
+         ═══════════════════════════════════════ -->
+    <section class="section section-alt" id="scenarios">
       <div class="container">
         <div class="section-header">
-          <span class="section-tag">Tested Scenarios</span>
-          <h2 class="section-title">Operational Merchant Queries</h2>
-          <p class="section-subtitle">Real queries validated end-to-end against live stores via multi-turn MCP function calls.</p>
+          <span class="section-eyebrow">Tested Scenarios</span>
+          <h2 class="section-title">Real Merchant Queries, End-to-End</h2>
+          <p class="section-subtitle">Validated against live stores via multi-turn MCP function calls.</p>
         </div>
 
-        <div class="demo-scenarios-grid">
+        <div class="scenarios-grid">
           <div class="scenario-card">
-            <div class="scenario-prompt">
-              <span class="icon">💬</span>
-              <span class="text">"Which pending orders have been waiting for more than 24 hours?"</span>
+            <div class="scenario-query">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              <span>"Which pending orders have been waiting for more than 24 hours?"</span>
             </div>
-            <div class="scenario-flow">
-              <div class="scenario-step">
-                <span class="tag tool">TOOL CALL</span>
-                <code>search_orders({ status: "pending" })</code>
-              </div>
-              <div class="scenario-step">
-                <span class="tag res">REASONING</span>
-                <span>Agent compares <code>created_at</code> timestamps against current ISO date.</span>
-              </div>
+            <div class="scenario-steps">
+              <div class="scenario-step"><span class="step-tag tool-tag">TOOL CALL</span><code>search_orders({ status: "pending" })</code></div>
+              <div class="scenario-step"><span class="step-tag reason-tag">REASONING</span><span>Agent compares <code>created_at</code> timestamps against current ISO date.</span></div>
             </div>
           </div>
 
           <div class="scenario-card">
-            <div class="scenario-prompt">
-              <span class="icon">💬</span>
-              <span class="text">"Which products are out of stock or low in stock?"</span>
+            <div class="scenario-query">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              <span>"Which products are out of stock or critically low?"</span>
             </div>
-            <div class="scenario-flow">
-              <div class="scenario-step">
-                <span class="tag tool">TOOL CALL</span>
-                <code>get_inventory({ low_stock_only: true })</code>
-              </div>
-              <div class="scenario-step">
-                <span class="tag res">REASONING</span>
-                <span>Agent summarizes affected SKUs and critical stock levels.</span>
-              </div>
+            <div class="scenario-steps">
+              <div class="scenario-step"><span class="step-tag tool-tag">TOOL CALL</span><code>get_inventory({ low_stock_only: true })</code></div>
+              <div class="scenario-step"><span class="step-tag reason-tag">REASONING</span><span>Agent summarizes affected SKUs and critical stock levels.</span></div>
             </div>
           </div>
 
           <div class="scenario-card">
-            <div class="scenario-prompt">
-              <span class="icon">💬</span>
-              <span class="text">"Are any pending orders affected by out-of-stock products?"</span>
+            <div class="scenario-query">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              <span>"Are any pending orders affected by out-of-stock products?"</span>
             </div>
-            <div class="scenario-flow">
-              <div class="scenario-step">
-                <span class="tag tool">MULTI-TURN</span>
-                <code>search_orders() → get_inventory()</code>
-              </div>
-              <div class="scenario-step">
-                <span class="tag res">REASONING</span>
-                <span>Cross-references line item product IDs against stock levels.</span>
-              </div>
+            <div class="scenario-steps">
+              <div class="scenario-step"><span class="step-tag multi-tag">MULTI-TURN</span><code>search_orders() → get_inventory()</code></div>
+              <div class="scenario-step"><span class="step-tag reason-tag">REASONING</span><span>Cross-references line item product IDs against live stock levels.</span></div>
             </div>
           </div>
 
           <div class="scenario-card">
-            <div class="scenario-prompt">
-              <span class="icon">💬</span>
-              <span class="text">"Tell me about order #1004."</span>
+            <div class="scenario-query">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              <span>"Give me the full details for order #1004."</span>
             </div>
-            <div class="scenario-flow">
-              <div class="scenario-step">
-                <span class="tag tool">TOOL CALL</span>
-                <code>get_order({ order_id: 1004 })</code>
-              </div>
-              <div class="scenario-step">
-                <span class="tag res">REASONING</span>
-                <span>Formats ordered items, quantities, totals, and masked customer status.</span>
-              </div>
+            <div class="scenario-steps">
+              <div class="scenario-step"><span class="step-tag tool-tag">TOOL CALL</span><code>get_order({ order_id: 1004 })</code></div>
+              <div class="scenario-step"><span class="step-tag reason-tag">REASONING</span><span>Formats ordered items, quantities, totals, and masked customer status.</span></div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- EXPLICIT BOUNDARIES & TRANSPARENCY -->
-    <section class="section" id="boundaries">
-      <div class="container">
-        <div class="boundaries-card">
-          <div class="section-header" style="margin-bottom: var(--space-4);">
-            <span class="section-tag">Transparency</span>
-            <h2 class="section-title">Explicit Operational Boundaries</h2>
-            <p class="section-subtitle">Cartix is purposefully constrained to protect merchant stores from unintended mutations.</p>
-          </div>
-
-          <div class="boundaries-grid">
-            <div class="boundary-col supported">
-              <h4>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                What Cartix Does
-              </h4>
-              <ul class="boundary-list">
-                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Read orders, products, and inventory levels</li>
-                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Sanitize and redact customer PII</li>
-                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Handle token bucket rate limiting and backoff</li>
-                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg> Bound query pagination up to 100 records</li>
-              </ul>
-            </div>
-
-            <div class="boundary-col rejected">
-              <h4>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                What Cartix Explicitly Rejects
-              </h4>
-              <ul class="boundary-list">
-                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-rose)" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> No order creation, modification, or cancellation</li>
-                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-rose)" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> No refund issuance or payment capture</li>
-                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-rose)" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> No product creation or inventory mutations</li>
-                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-rose)" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> No unvalidated arbitrary REST requests</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CALL TO ACTION SECTION -->
+    <!-- ═══════════════════════════════════════
+         CALL TO ACTION
+         ═══════════════════════════════════════ -->
     <section class="cta-section">
       <div class="container">
-        <div class="cta-box">
+        <div class="cta-inner">
+          <div class="cta-glow-orb" aria-hidden="true"></div>
+          <div class="cta-logo">
+            <img src="./assets/cartix_logo.png" alt="Cartix" width="52" height="52" class="logo-img">
+          </div>
           <h2 class="cta-title">Connect Your Store to AI Today</h2>
-          <p class="cta-desc">Integrate Cartix with Claude Desktop, Cursor, or your autonomous agent fleet in under 5 minutes.</p>
-          <div style="display: flex; justify-content: center; gap: var(--space-4); flex-wrap: wrap;">
-            <a href="./docs.html" class="btn btn-primary">Read Full Documentation</a>
-            <a href="https://github.com/ilakkiyan-j/Cartix" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">View Repository on GitHub</a>
+          <p class="cta-desc">Integrate Cartix with Claude Desktop, Cursor, or your autonomous agent fleet in under 5 minutes. Free and open-source.</p>
+          <div class="cta-actions">
+            <a href="./docs.html" class="btn btn-primary btn-lg">Read Full Documentation</a>
+            <a href="https://github.com/ilakkiyan-j/Cartix" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-lg">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              View on GitHub
+            </a>
           </div>
         </div>
       </div>
     </section>
+
   </main>
 
-  <!-- DEVELOPER FOOTER -->
+  <!-- ═══════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════ -->
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <a href="./index.html" class="brand-logo-link" style="margin-bottom: var(--space-3);" aria-label="Cartix Home">
+          <a href="./index.html" class="brand-logo-link footer-brand-logo" aria-label="Cartix Home">
             <div class="brand-logo-mark">
-              <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="32" height="32" rx="8" fill="url(#cartix-logo-bg-ft)" stroke="url(#cartix-logo-stroke-ft)" stroke-width="1.5"/>
-                <path d="M21 11H13.5C11.567 11 10 12.567 10 14.5V17.5C10 19.433 11.567 21 13.5 21H21" stroke="url(#cartix-logo-stroke-ft)" stroke-width="2.6" stroke-linecap="round"/>
-                <circle cx="21" cy="11" r="2.2" fill="#818cf8"/>
-                <circle cx="21" cy="21" r="2.2" fill="#06b6d4"/>
-                <path d="M14 16H22" stroke="url(#cartix-logo-stroke-ft)" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 2.5"/>
-                <defs>
-                  <linearGradient id="cartix-logo-bg-ft" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#6366f1" stop-opacity="0.3"/>
-                    <stop offset="1" stop-color="#06b6d4" stop-opacity="0.15"/>
-                  </linearGradient>
-                  <linearGradient id="cartix-logo-stroke-ft" x1="8" y1="8" x2="26" y2="24" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#818cf8"/>
-                    <stop offset="0.5" stop-color="#6366f1"/>
-                    <stop offset="1" stop-color="#06b6d4"/>
-                  </linearGradient>
-                </defs>
-              </svg>
+              <img src="./assets/cartix_logo.png" alt="Cartix" width="28" height="28" class="logo-img">
             </div>
-            <span class="brand-logo-text" style="font-size: 1.25rem;">Cartix</span>
-            <span class="brand-logo-badge">MCP</span>
+            <span class="brand-logo-text">Cartix</span>
           </a>
-          <p>Secure, read-only Model Context Protocol connector for WooCommerce merchant data.</p>
+          <p>Secure, read-only Model Context Protocol connector for WooCommerce merchant data. Open-source and free.</p>
+          <div class="footer-badges">
+            <span class="footer-badge">Apache 2.0</span>
+            <span class="footer-badge emerald">60/60 Tests</span>
+            <span class="footer-badge cyan">MCP v1.0</span>
+          </div>
         </div>
 
         <div class="footer-col">
@@ -1035,7 +1095,7 @@ npm start</code></pre>
         </div>
 
         <div class="footer-col">
-          <h5>Integration</h5>
+          <h5>Integrations</h5>
           <ul class="footer-links">
             <li><a href="./docs.html#quickstart">Quick Start</a></li>
             <li><a href="./docs.html#claude-desktop">Claude Desktop</a></li>
@@ -1049,23 +1109,68 @@ npm start</code></pre>
           <ul class="footer-links">
             <li><a href="https://github.com/ilakkiyan-j/Cartix" target="_blank" rel="noopener noreferrer">GitHub Repository</a></li>
             <li><a href="./docs.html#testing">Test Suite (60/60)</a></li>
-            <li><a href="./docs.html#limitations">Limitations</a></li>
-            <li><a href="./docs.html#license">MIT License</a></li>
+            <li><a href="./docs.html#limitations">Known Limitations</a></li>
+            <li><a href="./docs.html#license">Apache 2.0 License</a></li>
           </ul>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <span>Cartix — Open Source Developer Infrastructure</span>
+        <span>© 2026 Cartix — Open Source Developer Infrastructure</span>
         <span>Built for Razorpay Forward-Deployed Engineer Assessment</span>
       </div>
     </div>
   </footer>
 
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" aria-live="polite"></div>
+
   <!-- Scripts -->
-  <script src="./js/navigation.js?v=1.2.0"></script>
-  <script src="./js/scene.js?v=1.2.0"></script>
-  <script src="./js/main.js?v=1.2.0"></script>
-  <script src="./js/docs.js?v=1.2.0"></script>
+  <script src="./js/navigation.js?v=2.0.0"></script>
+  <script src="./js/scene.js?v=2.0.0"></script>
+  <script src="./js/main.js?v=2.0.0"></script>
+
+  <script>
+    // ─── Quickstart Tabs ───────────────────────────────────────────
+    document.querySelectorAll('.qs-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.qs;
+        document.querySelectorAll('.qs-tab').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+        document.querySelectorAll('.qs-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        document.getElementById('qs-' + target)?.classList.add('active');
+      });
+    });
+
+    // ─── Tool Explorer Tabs ─────────────────────────────────────────
+    document.querySelectorAll('.tool-sidebar-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tool = btn.dataset.tool;
+        document.querySelectorAll('.tool-sidebar-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('panel-' + tool)?.classList.add('active');
+      });
+    });
+
+    // ─── Copy Helpers ───────────────────────────────────────────────
+    function copyCode(btn) {
+      const pre = btn.closest('.code-window')?.querySelector('pre');
+      if (!pre) return;
+      navigator.clipboard.writeText(pre.innerText).then(() => showToast('Copied to clipboard'));
+    }
+
+    function copyInstallCmd() {
+      navigator.clipboard.writeText('npx @cartix/mcp-server@latest').then(() => showToast('Copied!'));
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2200);
+    }
+  </script>
 </body>
 </html>
