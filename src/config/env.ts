@@ -5,12 +5,10 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const envSchema = z.object({
-  // WooCommerce Configuration
+  // WooCommerce Configuration (Strictly Read-Only)
   WOOCOMMERCE_URL: z.string().url({ message: 'WOOCOMMERCE_URL must be a valid URL (e.g., https://store.example.com)' }).optional().or(z.literal('')).default(''),
   WOOCOMMERCE_CONSUMER_KEY: z.string().optional().default(''),
   WOOCOMMERCE_CONSUMER_SECRET: z.string().optional().default(''),
-  WOOCOMMERCE_SEED_CONSUMER_KEY: z.string().optional().default(''),
-  WOOCOMMERCE_SEED_CONSUMER_SECRET: z.string().optional().default(''),
 
   // Server Configuration
   PORT: z.coerce.number().int().positive().default(3000),

@@ -21,7 +21,6 @@
   },
   "include": [
     "src/**/*",
-    "demo/**/*",
     "scripts/**/*",
     "tests/**/*"
   ],
