@@ -193,168 +193,93 @@
           </div>
         </div>
 
-        <!-- Right: Interactive Protocol Studio -->
-        <div class="hero-studio-stage" aria-label="Interactive Cartix Protocol Studio">
-          <div class="studio-window" id="studio-window">
+        <!-- Right: Clean Architecture Preview Card -->
+        <div class="hero-preview-stage" aria-label="Cartix Architecture Preview">
+          <div class="hero-preview-card">
 
-            <!-- Window Chrome -->
-            <div class="studio-titlebar">
-              <div class="titlebar-left">
-                <div class="traffic-dots">
-                  <span class="window-dot red"></span>
-                  <span class="window-dot yellow"></span>
-                  <span class="window-dot green"></span>
+            <!-- Card Header: Natural Language Query & Execution Status -->
+            <div class="preview-card-header">
+              <div class="preview-agent-query">
+                <div class="preview-agent-avatar">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4"></path><line x1="8" y1="16" x2="8" y2="16"></line><line x1="16" y1="16" x2="16" y2="16"></line></svg>
                 </div>
-                <div class="studio-app-badge">
-                  <span class="pulse-beacon"></span>
-                  <span class="studio-brand-title">Cartix Protocol Studio</span>
-                  <span class="version-tag">MCP v1.0</span>
-                </div>
+                <span class="preview-query-text">"Find wireless mechanical keyboards with high ratings and check pricing."</span>
               </div>
-              <!-- Scenario Tabs -->
-              <div class="studio-scenario-tabs" role="tablist" aria-label="Scenario Selection">
-                <button class="studio-tab-btn active" data-scenario="products" role="tab" aria-selected="true" id="tab-products">
-                  <span class="tab-icon">⚡</span>
-                  <span class="tab-title">Catalog Query</span>
-                </button>
-                <button class="studio-tab-btn" data-scenario="orders" role="tab" aria-selected="false" id="tab-orders">
-                  <span class="tab-icon">📦</span>
-                  <span class="tab-title">Orders & PII</span>
-                </button>
-                <button class="studio-tab-btn" data-scenario="inventory" role="tab" aria-selected="false" id="tab-inventory">
-                  <span class="tab-icon">⚠️</span>
-                  <span class="tab-title">Stock Alert</span>
-                </button>
+              <span class="preview-status-pill">
+                <span class="status-indicator-dot"></span>
+                200 OK · 11ms
+              </span>
+            </div>
+
+            <!-- Protocol Flow Connector Ribbon -->
+            <div class="preview-flow-strip">
+              <div class="flow-pill-item agent">
+                <span>AI Agent</span>
+              </div>
+              <div class="flow-arrow-connector">➔</div>
+              <div class="flow-pill-item gateway">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <span>Cartix Gateway</span>
+              </div>
+              <div class="flow-arrow-connector">➔</div>
+              <div class="flow-pill-item store">
+                <span>WooCommerce REST</span>
               </div>
             </div>
 
-            <!-- Flow Breadcrumb -->
-            <div class="studio-flow-ribbon">
-              <div class="flow-step">
-                <span class="flow-step-icon">🤖</span>
-                <span class="flow-step-text">AI Agent</span>
-              </div>
-              <div class="flow-connector">
-                <div class="flow-line"></div>
-                <span class="flow-protocol">JSON-RPC 2.0</span>
-              </div>
-              <div class="flow-step active-flow">
-                <span class="flow-step-icon">🛡️</span>
-                <span class="flow-step-text">Cartix Gateway</span>
-              </div>
-              <div class="flow-connector">
-                <div class="flow-line"></div>
-                <span class="flow-protocol">REST v3</span>
-              </div>
-              <div class="flow-step">
-                <span class="flow-step-icon">🏬</span>
-                <span class="flow-step-text">WooCommerce</span>
-              </div>
+            <!-- Active Guardrails Verification Strip -->
+            <div class="preview-guards-row">
+              <span class="guard-pill">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Read-Only Enforced
+              </span>
+              <span class="guard-pill">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                PII Redacted
+              </span>
+              <span class="guard-pill">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Rate Limit: 98/100
+              </span>
             </div>
 
-            <!-- 2-Pane Workbench -->
-            <div class="studio-workbench">
-              <!-- Left Pane: Request -->
-              <div class="workbench-pane pane-request">
-                <div class="pane-header">
-                  <div class="pane-title-group">
-                    <span class="pane-indicator agent-dot"></span>
-                    <span class="pane-title" id="request-pane-title">AI Tool Call: search_products</span>
-                  </div>
-                  <span class="protocol-badge" id="request-method-badge">tools/call</span>
-                </div>
-                <div class="pane-inner">
-                  <div class="prompt-box">
-                    <span class="prompt-prefix">Agent Query</span>
-                    <p class="prompt-text" id="agent-prompt-text">"Find wireless mechanical keyboards with high customer ratings and check current pricing."</p>
-                  </div>
-                  <div class="code-editor-box">
-                    <div class="editor-header">
-                      <span>JSON-RPC Request</span>
-                      <span class="code-lang-badge">json</span>
-                    </div>
-                    <pre class="code-content"><code id="mcp-payload-code">{
-  "jsonrpc": "2.0",
-  "id": "call_98a72",
-  "method": "tools/call",
-  "params": {
-    "name": "search_products",
-    "arguments": {
-      "query": "mechanical keyboard",
-      "limit": 5
-    }
-  }
-}</code></pre>
-                  </div>
-                </div>
+            <!-- Normalized JSON Output Code Block (Fit-to-Content, Zero Scrollbars) -->
+            <div class="preview-code-box">
+              <div class="preview-code-header">
+                <span class="code-header-title">Normalized MCP Response</span>
+                <span class="code-header-badge">JSON</span>
               </div>
-
-              <!-- Right Pane: Response -->
-              <div class="workbench-pane pane-response">
-                <div class="pane-header">
-                  <div class="pane-title-group">
-                    <span class="pane-indicator success-dot"></span>
-                    <span class="pane-title" id="response-pane-title">Normalized Merchant Data</span>
-                  </div>
-                  <span class="protocol-badge success" id="response-status-badge">200 OK · 11ms</span>
-                </div>
-                <div class="pane-inner">
-                  <div class="guardrails-status-bar" id="guardrails-bar">
-                    <div class="guard-check-item active" id="guard-item-1">
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                      <span id="guard-label-1">Zod Schema Validated</span>
-                    </div>
-                    <div class="guard-check-item active" id="guard-item-2">
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                      <span id="guard-label-2">Rate Limit: 98/100</span>
-                    </div>
-                    <div class="guard-check-item active" id="guard-item-3">
-                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                      <span id="guard-label-3">Zero Mutation Enforced</span>
-                    </div>
-                  </div>
-                  <div class="code-editor-box">
-                    <div class="editor-header">
-                      <span>Sanitized Response</span>
-                      <span class="code-lang-badge">json</span>
-                    </div>
-                    <pre class="code-content"><code id="mcp-response-code">{
-  "status": "success",
-  "total_results": 2,
-  "data": [
+              <pre class="preview-code-body"><code>{
+  <span class="code-key">"status"</span>: <span class="code-string">"success"</span>,
+  <span class="code-key">"total_results"</span>: <span class="code-number">2</span>,
+  <span class="code-key">"data"</span>: [
     {
-      "id": 87,
-      "name": "Keychron Q1 Pro Wireless",
-      "sku": "KEY-Q1P-RGB",
-      "price": "$199.00",
-      "stock_status": "instock"
+      <span class="code-key">"id"</span>: <span class="code-number">87</span>,
+      <span class="code-key">"name"</span>: <span class="code-string">"Keychron Q1 Pro Wireless"</span>,
+      <span class="code-key">"sku"</span>: <span class="code-string">"KEY-Q1P-RGB"</span>,
+      <span class="code-key">"price"</span>: <span class="code-string">"$199.00"</span>,
+      <span class="code-key">"stock_status"</span>: <span class="code-string">"instock"</span>
     },
     {
-      "id": 92,
-      "name": "NuPhy Air75 V2",
-      "sku": "NUP-AIR75-V2",
-      "price": "$119.95",
-      "stock_status": "instock"
+      <span class="code-key">"id"</span>: <span class="code-number">92</span>,
+      <span class="code-key">"name"</span>: <span class="code-string">"NuPhy Air75 V2"</span>,
+      <span class="code-key">"sku"</span>: <span class="code-string">"NUP-AIR75-V2"</span>,
+      <span class="code-key">"price"</span>: <span class="code-string">"$119.95"</span>,
+      <span class="code-key">"stock_status"</span>: <span class="code-string">"instock"</span>
     }
   ]
 }</code></pre>
-                  </div>
-                </div>
-              </div>
             </div>
 
-            <!-- Studio Footer Telemetry -->
-            <div class="studio-footer-telemetry">
-              <div class="telemetry-live">
-                <span class="telemetry-pill" id="footer-tool-pill">MCP:search_products</span>
-                <span class="telemetry-msg" id="footer-telemetry-msg">Tool call executed cleanly → 2 products normalized, 0 PII tokens</span>
+            <!-- Subtle Telemetry Status Footer -->
+            <div class="preview-card-footer">
+              <div class="preview-footer-info">
+                <span class="telemetry-dot"></span>
+                <span>MCP:search_products → 2 items formatted · 0 PII leaked</span>
               </div>
-              <div class="telemetry-metrics">
-                <span class="metric-item"><span class="dot-green"></span>WC REST v3</span>
-                <span class="metric-item" id="footer-latency-val">11.8ms</span>
-                <span class="metric-item" id="footer-pii-val">PII: 0</span>
-              </div>
+              <span class="preview-footer-tag">Type-Safe Zod</span>
             </div>
+
           </div>
         </div>
       </div>
