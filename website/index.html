@@ -182,133 +182,173 @@
           </div>
         </div>
 
-        <!-- 3D Interactive MCP Protocol Inspector -->
-        <div class="hero-inspector-stage" aria-label="Interactive MCP Protocol Inspector">
-          <div class="inspector-card-3d" id="inspector-card">
+        <!-- 3D Interactive Protocol Studio (Unified Developer Workbench) -->
+        <div class="hero-studio-stage" aria-label="Interactive Cartix Protocol Studio">
+          <div class="studio-window" id="studio-window">
             <!-- Window Titlebar -->
-            <div class="inspector-titlebar">
+            <div class="studio-titlebar">
               <div class="titlebar-left">
                 <div class="traffic-dots">
                   <span class="window-dot red"></span>
                   <span class="window-dot yellow"></span>
                   <span class="window-dot green"></span>
                 </div>
-                <span class="inspector-badge-live">
+                <div class="studio-app-badge">
                   <span class="pulse-beacon"></span>
-                  MCP LIVE PIPELINE
-                </span>
-              </div>
-              <div class="scenario-nav-tabs">
-                <button class="inspector-tab-btn active" data-scenario="orders">1. Orders & Delay</button>
-                <button class="inspector-tab-btn" data-scenario="inventory">2. Stock Alert</button>
-                <button class="inspector-tab-btn" data-scenario="security">3. PII Redactor</button>
-              </div>
-            </div>
-
-            <!-- 3-Column Interconnected Stage Flow -->
-            <div class="inspector-body">
-              <!-- Column 1: WooCommerce Store -->
-              <div class="inspector-node node-woo">
-                <div class="node-header">
-                  <div class="node-icon-pill woo">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                    WooCommerce
-                  </div>
-                  <span class="node-status-badge">REST v3</span>
-                </div>
-                <div class="node-code-box" id="woo-code-box">
-                  <div class="code-line"><span class="code-method">GET</span> <span class="code-path">/wc/v3/orders</span></div>
-                  <div class="code-payload">
-                    <span class="token-key">"status"</span>: <span class="token-str">"pending"</span>,<br>
-                    <span class="token-key">"limit"</span>: <span class="token-num">20</span>, <span class="token-key">"page"</span>: <span class="token-num">1</span>
-                  </div>
-                </div>
-                <div class="node-footer-meta">
-                  <span class="meta-tag">HTTPS Basic Auth</span>
-                  <span class="meta-tag">Read-Only</span>
+                  <span class="studio-brand-title">Cartix Protocol Studio</span>
+                  <span class="version-tag">MCP v1.0</span>
                 </div>
               </div>
-
-              <!-- Animated Data Beam 1 -->
-              <div class="connector-beam beam-left">
-                <div class="beam-line"></div>
-                <div class="beam-chip" id="beam-chip-1">
-                  <span>raw_order.json</span>
-                </div>
-              </div>
-
-              <!-- Column 2: Cartix MCP Core Engine -->
-              <div class="inspector-node node-cartix">
-                <div class="node-header">
-                  <div class="node-icon-pill cartix">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                    Cartix MCP Core
-                  </div>
-                  <span class="node-status-badge active">Protocol Bridge</span>
-                </div>
-                <div class="cartix-guards-grid">
-                  <div class="guard-pill">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                    <span>PII Masking</span>
-                  </div>
-                  <div class="guard-pill">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-                    <span>Rate Limiter</span>
-                  </div>
-                  <div class="guard-pill">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
-                    <span>&lt;15ms Latency</span>
-                  </div>
-                  <div class="guard-pill">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--accent-rose)" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                    <span>Zero Mutation</span>
-                  </div>
-                </div>
-                <div class="cartix-tool-callout" id="cartix-tool-callout">
-                  <span class="tool-label">Active Schema</span>
-                  <code class="tool-name">search_orders()</code>
-                </div>
-              </div>
-
-              <!-- Animated Data Beam 2 -->
-              <div class="connector-beam beam-right">
-                <div class="beam-line"></div>
-                <div class="beam-chip" id="beam-chip-2">
-                  <span>sanitized_ctx</span>
-                </div>
-              </div>
-
-              <!-- Column 3: AI Agent / LLM Consumer -->
-              <div class="inspector-node node-agent">
-                <div class="node-header">
-                  <div class="node-icon-pill agent">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a10 10 0 0 1 10 10c0 5.523-4.477 10-10 10a10 10 0 0 1-10-10C2 6.477 6.477 2 12 2z"></path><path d="m9 12 2 2 4-4"></path></svg>
-                    AI Agent
-                  </div>
-                  <span class="node-status-badge">Claude / Gemini</span>
-                </div>
-                <div class="node-code-box" id="agent-code-box">
-                  <div class="code-line"><span class="code-method agent-reason">REASONING INSIGHT</span></div>
-                  <div class="agent-insight-text" id="agent-insight-text">
-                    "Found 3 pending orders. 2 orders (#1002, #1005) delayed >24h awaiting merchant fulfillment."
-                  </div>
-                </div>
-                <div class="node-footer-meta">
-                  <span class="meta-tag">Bounded Context</span>
-                  <span class="meta-tag">Zero Leakage</span>
-                </div>
+              <!-- Scenario Selector Tabs -->
+              <div class="studio-scenario-tabs" role="tablist" aria-label="Scenario Selection">
+                <button class="studio-tab-btn active" data-scenario="products" role="tab" aria-selected="true">
+                  <span class="tab-icon">⚡</span>
+                  <span class="tab-title">Catalog Query</span>
+                </button>
+                <button class="studio-tab-btn" data-scenario="orders" role="tab" aria-selected="false">
+                  <span class="tab-icon">📦</span>
+                  <span class="tab-title">Orders & PII Mask</span>
+                </button>
+                <button class="studio-tab-btn" data-scenario="inventory" role="tab" aria-selected="false">
+                  <span class="tab-icon">⚠️</span>
+                  <span class="tab-title">Low Stock Alert</span>
+                </button>
               </div>
             </div>
 
-            <!-- Terminal Telemetry Bar -->
-            <div class="inspector-telemetry-bar">
-              <div class="telemetry-log-item" id="telemetry-log-item">
-                <span class="log-badge-cyan">[MCP:search_orders]</span>
-                <span class="log-text">Agent queried pending orders → Cartix redacted PII and filtered 2 delayed records</span>
+            <!-- Flow Breadcrumb Ribbon -->
+            <div class="studio-flow-ribbon">
+              <div class="flow-step">
+                <span class="flow-step-icon">🤖</span>
+                <span class="flow-step-text">AI Agent Prompt</span>
               </div>
-              <div class="telemetry-stats">
-                <span class="stat-pill"><span class="dot-green"></span> 200 OK</span>
-                <span class="stat-latency" id="telemetry-latency-val">11ms</span>
+              <div class="flow-divider">
+                <span class="flow-arrow">➔</span>
+                <span class="flow-label">JSON-RPC 2.0</span>
+              </div>
+              <div class="flow-step active-flow">
+                <span class="flow-step-icon">🛡️</span>
+                <span class="flow-step-text">Cartix Gateway (Guardrails)</span>
+              </div>
+              <div class="flow-divider">
+                <span class="flow-arrow">➔</span>
+                <span class="flow-label">REST v3</span>
+              </div>
+              <div class="flow-step">
+                <span class="flow-step-icon">🏬</span>
+                <span class="flow-step-text">WooCommerce Store</span>
+              </div>
+            </div>
+
+            <!-- Balanced 2-Pane Split Workbench -->
+            <div class="studio-workbench">
+              <!-- Left Pane: AI Agent & MCP Tool Invocation -->
+              <div class="workbench-pane pane-request">
+                <div class="pane-header">
+                  <div class="pane-title-group">
+                    <span class="pane-indicator agent-dot"></span>
+                    <span class="pane-title" id="request-pane-title">AI Tool Call: search_products</span>
+                  </div>
+                  <span class="protocol-badge" id="request-method-badge">tools/call</span>
+                </div>
+
+                <div class="pane-inner">
+                  <!-- Prompt Card -->
+                  <div class="prompt-box">
+                    <span class="prompt-prefix">Agent Query</span>
+                    <p class="prompt-text" id="agent-prompt-text">"Find wireless mechanical keyboards with high customer ratings and check current pricing."</p>
+                  </div>
+
+                  <!-- Code block: MCP JSON-RPC Payload -->
+                  <div class="code-editor-box">
+                    <div class="editor-header">
+                      <span>JSON-RPC Request</span>
+                      <span class="code-lang">json</span>
+                    </div>
+                    <pre class="code-content"><code id="mcp-payload-code">{
+  "jsonrpc": "2.0",
+  "id": "call_98a72",
+  "method": "tools/call",
+  "params": {
+    "name": "search_products",
+    "arguments": {
+      "query": "mechanical keyboard",
+      "limit": 5
+    }
+  }
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Pane: Cartix Gateway & Normalized Output -->
+              <div class="workbench-pane pane-response">
+                <div class="pane-header">
+                  <div class="pane-title-group">
+                    <span class="pane-indicator success-dot"></span>
+                    <span class="pane-title" id="response-pane-title">Normalized Merchant Data</span>
+                  </div>
+                  <span class="protocol-badge success" id="response-status-badge">200 OK • 11ms</span>
+                </div>
+
+                <div class="pane-inner">
+                  <!-- Security & Guardrail Checkpoints Bar -->
+                  <div class="guardrails-status-bar" id="guardrails-bar">
+                    <div class="guard-check-item active" id="guard-item-1">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                      <span id="guard-label-1">Zod Schema Validated</span>
+                    </div>
+                    <div class="guard-check-item active" id="guard-item-2">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                      <span id="guard-label-2">Rate Limit: 98/100</span>
+                    </div>
+                    <div class="guard-check-item active" id="guard-item-3">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                      <span id="guard-label-3">Zero Mutation Enforced</span>
+                    </div>
+                  </div>
+
+                  <!-- Output Preview -->
+                  <div class="code-editor-box">
+                    <div class="editor-header">
+                      <span>Sanitized Response Payload</span>
+                      <span class="code-lang">json</span>
+                    </div>
+                    <pre class="code-content"><code id="mcp-response-code">{
+  "status": "success",
+  "total_results": 2,
+  "data": [
+    {
+      "id": 87,
+      "name": "Keychron Q1 Pro Wireless",
+      "sku": "KEY-Q1P-RGB",
+      "price": "$199.00",
+      "stock_status": "instock"
+    },
+    {
+      "id": 92,
+      "name": "NuPhy Air75 V2",
+      "sku": "NUP-AIR75-V2",
+      "price": "$119.95",
+      "stock_status": "instock"
+    }
+  ]
+}</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Studio Telemetry Footer -->
+            <div class="studio-footer-telemetry">
+              <div class="telemetry-live-stream">
+                <span class="telemetry-pill" id="footer-tool-pill">MCP:search_products</span>
+                <span class="telemetry-msg" id="footer-telemetry-msg">Agent tool call executed cleanly → 2 products normalized with 0 token overhead</span>
+              </div>
+              <div class="telemetry-metrics">
+                <span class="metric-item"><span class="dot-green"></span> Upstream: WC REST v3</span>
+                <span class="metric-item" id="footer-latency-val">Latency: 11.8ms</span>
+                <span class="metric-item" id="footer-pii-val">PII Leaks: 0</span>
               </div>
             </div>
           </div>
