@@ -9,11 +9,13 @@
   <!-- Favicon / Brand Asset -->
   <link rel="icon" type="image/png" href="./assets/cartix_x_icon.png">
   
-  <!-- Stylesheets -->
+  <!-- Google Fonts Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
   <link rel="stylesheet" href="./css/style.css">
-  
-  <!-- Spline 3D Viewer Runtime (Progressively loaded) -->
-  <script type="module" src="https://unpkg.com/@splinetool/viewer@latest/build/spline-viewer.js" async></script>
 </head>
 <body>
   <!-- Background Ambient Glow Layer -->
@@ -22,10 +24,30 @@
   <!-- Header & Navigation -->
   <header class="site-header">
     <div class="container nav-container">
-      <!-- Brand Logo (Contains Cartix typography; no adjacent text) -->
+      <!-- High-Contrast Vector Brand Logo -->
       <a href="./index.html" class="brand-logo-link" aria-label="Cartix Home">
-        <img src="./assets/cartix_dark.png" alt="Cartix" class="brand-logo logo-dark">
-        <img src="./assets/cartix_light.png" alt="Cartix" class="brand-logo logo-light">
+        <div class="brand-logo-mark">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="32" height="32" rx="8" fill="url(#cartix-logo-bg-nav)" stroke="url(#cartix-logo-stroke-nav)" stroke-width="1.5"/>
+            <path d="M21 11H13.5C11.567 11 10 12.567 10 14.5V17.5C10 19.433 11.567 21 13.5 21H21" stroke="url(#cartix-logo-stroke-nav)" stroke-width="2.6" stroke-linecap="round"/>
+            <circle cx="21" cy="11" r="2.2" fill="#818cf8"/>
+            <circle cx="21" cy="21" r="2.2" fill="#06b6d4"/>
+            <path d="M14 16H22" stroke="url(#cartix-logo-stroke-nav)" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 2.5"/>
+            <defs>
+              <linearGradient id="cartix-logo-bg-nav" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#6366f1" stop-opacity="0.3"/>
+                <stop offset="1" stop-color="#06b6d4" stop-opacity="0.15"/>
+              </linearGradient>
+              <linearGradient id="cartix-logo-stroke-nav" x1="8" y1="8" x2="26" y2="24" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#818cf8"/>
+                <stop offset="0.5" stop-color="#6366f1"/>
+                <stop offset="1" stop-color="#06b6d4"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="brand-logo-text">Cartix</span>
+        <span class="brand-logo-badge">MCP</span>
       </a>
 
       <!-- Desktop Navigation Links -->
@@ -67,7 +89,28 @@
   <!-- Mobile Navigation Drawer -->
   <aside class="mobile-docs-drawer" aria-label="Mobile Navigation">
     <div style="margin-bottom: var(--space-6); display: flex; align-items: center; justify-content: space-between;">
-      <img src="./assets/cartix_dark.png" alt="Cartix" style="height: 26px;">
+      <a href="./index.html" class="brand-logo-link" aria-label="Cartix Home">
+        <div class="brand-logo-mark">
+          <svg width="26" height="26" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="32" height="32" rx="8" fill="url(#cartix-logo-bg-drw)" stroke="url(#cartix-logo-stroke-drw)" stroke-width="1.5"/>
+            <path d="M21 11H13.5C11.567 11 10 12.567 10 14.5V17.5C10 19.433 11.567 21 13.5 21H21" stroke="url(#cartix-logo-stroke-drw)" stroke-width="2.6" stroke-linecap="round"/>
+            <circle cx="21" cy="11" r="2.2" fill="#818cf8"/>
+            <circle cx="21" cy="21" r="2.2" fill="#06b6d4"/>
+            <defs>
+              <linearGradient id="cartix-logo-bg-drw" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#6366f1" stop-opacity="0.3"/>
+                <stop offset="1" stop-color="#06b6d4" stop-opacity="0.15"/>
+              </linearGradient>
+              <linearGradient id="cartix-logo-stroke-drw" x1="8" y1="8" x2="26" y2="24" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#818cf8"/>
+                <stop offset="0.5" stop-color="#6366f1"/>
+                <stop offset="1" stop-color="#06b6d4"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="brand-logo-text" style="font-size: 1.15rem;">Cartix</span>
+      </a>
       <span class="badge badge-indigo">v0.1.0</span>
     </div>
     <ul class="sidebar-nav-list" style="margin-bottom: var(--space-6);">
@@ -139,15 +182,35 @@
           </div>
         </div>
 
-        <!-- 3D Spline / Canvas Interactive Architecture Stage -->
+        <!-- 3D Interactive Architecture Visualizer & Simulator -->
         <div class="hero-3d-stage" aria-label="Interactive 3D Pipeline Visualizer: WooCommerce to Cartix MCP to AI Agent">
-          <div class="stage-canvas-container">
-            <canvas id="pipeline-canvas"></canvas>
-          </div>
-          <div class="stage-overlay-labels">
-            <span class="stage-node-pill woo">◆ WooCommerce Store</span>
-            <span class="stage-node-pill mcp">⬢ Cartix MCP Core</span>
-            <span class="stage-node-pill agent">▲ AI Agent Terminal</span>
+          <div class="pipeline-3d-card" id="pipeline-card">
+            <!-- Stage Top Bar & Scenario Triggers -->
+            <div class="pipeline-card-header">
+              <div class="pipeline-header-title">
+                <span class="pipeline-pulse-dot"></span>
+                <span>MCP LIVE DATA PIPELINE</span>
+              </div>
+              <div class="pipeline-scenario-triggers">
+                <button class="scenario-btn active" data-scenario="orders">1. Orders</button>
+                <button class="scenario-btn" data-scenario="inventory">2. Inventory</button>
+                <button class="scenario-btn" data-scenario="security">3. PII Mask</button>
+              </div>
+            </div>
+
+            <!-- Canvas Stage Viewport -->
+            <div class="stage-canvas-container">
+              <canvas id="pipeline-canvas"></canvas>
+            </div>
+
+            <!-- Live Telemetry Log Terminal -->
+            <div class="pipeline-telemetry" id="pipeline-telemetry">
+              <div class="telemetry-event">
+                <span class="telemetry-tag">[MCP:search_orders]</span>
+                <span class="telemetry-msg">Agent requested pending orders → Cartix sanitized 3 records</span>
+              </div>
+              <span class="telemetry-latency">12ms</span>
+            </div>
           </div>
         </div>
       </div>
@@ -794,8 +857,30 @@ npm start</code></pre>
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <img src="./assets/cartix_dark.png" alt="Cartix" class="brand-logo logo-dark" style="height: 28px;">
-          <img src="./assets/cartix_light.png" alt="Cartix" class="brand-logo logo-light" style="height: 28px;">
+          <a href="./index.html" class="brand-logo-link" style="margin-bottom: var(--space-3);" aria-label="Cartix Home">
+            <div class="brand-logo-mark">
+              <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="32" height="32" rx="8" fill="url(#cartix-logo-bg-ft)" stroke="url(#cartix-logo-stroke-ft)" stroke-width="1.5"/>
+                <path d="M21 11H13.5C11.567 11 10 12.567 10 14.5V17.5C10 19.433 11.567 21 13.5 21H21" stroke="url(#cartix-logo-stroke-ft)" stroke-width="2.6" stroke-linecap="round"/>
+                <circle cx="21" cy="11" r="2.2" fill="#818cf8"/>
+                <circle cx="21" cy="21" r="2.2" fill="#06b6d4"/>
+                <path d="M14 16H22" stroke="url(#cartix-logo-stroke-ft)" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 2.5"/>
+                <defs>
+                  <linearGradient id="cartix-logo-bg-ft" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#6366f1" stop-opacity="0.3"/>
+                    <stop offset="1" stop-color="#06b6d4" stop-opacity="0.15"/>
+                  </linearGradient>
+                  <linearGradient id="cartix-logo-stroke-ft" x1="8" y1="8" x2="26" y2="24" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#818cf8"/>
+                    <stop offset="0.5" stop-color="#6366f1"/>
+                    <stop offset="1" stop-color="#06b6d4"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <span class="brand-logo-text" style="font-size: 1.25rem;">Cartix</span>
+            <span class="brand-logo-badge">MCP</span>
+          </a>
           <p>Secure, read-only Model Context Protocol connector for WooCommerce merchant data.</p>
         </div>
 

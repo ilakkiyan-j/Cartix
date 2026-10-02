@@ -1,123 +1,173 @@
 /**
- * Cartix 3D Architecture Visualizer & Spline Scene Controller
- * Pipeline: WooCommerce -> Cartix MCP -> AI Agent
+ * Cartix 3D Interactive Architecture Pipeline & Telemetry Controller
+ * Visualizes: WooCommerce Store (Data) <-> Cartix MCP Core (Sanitize/Rate Limit) <-> AI Agent (Reasoning)
  */
 
 (function () {
   'use strict';
 
-  class CartixPipelineVisualizer {
-    constructor(canvasId) {
-      this.canvas = document.getElementById(canvasId);
+  // Live Scenario Simulation Datasets
+  const SCENARIOS = {
+    orders: {
+      name: 'Order Inspection & Delay Analysis',
+      packets: [
+        { from: 2, to: 1, label: 'search_orders(status="pending")', color: '#818cf8', dir: 'left' },
+        { from: 1, to: 0, label: 'GET /wc/v3/orders?status=pending', color: '#06b6d4', dir: 'left' },
+        { from: 0, to: 1, label: 'Raw JSON (3 Orders + Customer PII)', color: '#06b6d4', dir: 'right' },
+        { from: 1, to: 2, label: 'Sanitized Output (PII Masked, 2 Delayed >24h)', color: '#10b981', dir: 'right' },
+      ],
+      logs: [
+        { tag: '[AGENT:INVOKE]', text: 'Agent requests pending orders awaiting fulfillment', latency: '2ms' },
+        { tag: '[CARTIX:GUARD]', text: 'Rate limiter verified (19/20 tokens) • Auth OK', latency: '4ms' },
+        { tag: '[WOO:FETCH]', text: 'HTTPS GET /wp-json/wc/v3/orders returned 3 items', latency: '8ms' },
+        { tag: '[CARTIX:PII]', text: 'Redacted emails, customer addresses, stripped metadata', latency: '11ms' },
+        { tag: '[AGENT:REASON]', text: 'Agent detected 2 orders delayed > 24 hours (#1002, #1005)', latency: '14ms' },
+      ]
+    },
+    inventory: {
+      name: 'Inventory Health & Stockout Scan',
+      packets: [
+        { from: 2, to: 1, label: 'get_inventory(low_stock_only=true)', color: '#818cf8', dir: 'left' },
+        { from: 1, to: 0, label: 'GET /wc/v3/products?stock_status=outofstock', color: '#06b6d4', dir: 'left' },
+        { from: 0, to: 1, label: 'Catalog Stock Status Payload', color: '#06b6d4', dir: 'right' },
+        { from: 1, to: 2, label: 'Low Stock Matrix (5 Out of Stock)', color: '#f59e0b', dir: 'right' },
+      ],
+      logs: [
+        { tag: '[AGENT:INVOKE]', text: 'Agent scans store for depleted inventory items', latency: '3ms' },
+        { tag: '[CARTIX:FILTER]', text: 'Applied deterministic rule: stock_quantity <= 5', latency: '6ms' },
+        { tag: '[WOO:FETCH]', text: 'Retrieved 20 products from WooCommerce catalog', latency: '9ms' },
+        { tag: '[CARTIX:NORM]', text: 'Normalized pricing, SKUs, and variation metadata', latency: '12ms' },
+        { tag: '[AGENT:ALERT]', text: 'Agent flagged 5 stockouts affecting pending order #1004', latency: '15ms' },
+      ]
+    },
+    security: {
+      name: 'PII Scrubbing & Zero-Mutation Guard',
+      packets: [
+        { from: 2, to: 1, label: 'get_order(order_id=1004)', color: '#818cf8', dir: 'left' },
+        { from: 1, to: 0, label: 'GET /wc/v3/orders/1004', color: '#06b6d4', dir: 'left' },
+        { from: 0, to: 1, label: 'Contains Credit Card Token, Billing Addr', color: '#f43f5e', dir: 'right' },
+        { from: 1, to: 2, label: 'Clean Line Items • Zero PII Exposed', color: '#10b981', dir: 'right' },
+      ],
+      logs: [
+        { tag: '[AGENT:INVOKE]', text: 'Agent requests specific order payload for reasoning', latency: '2ms' },
+        { tag: '[CARTIX:AUTH]', text: 'Read-only key verified • Write operations blocked', latency: '5ms' },
+        { tag: '[CARTIX:SANITIZE]', text: 'Masked email (j***@corp.com), hashed phone, stripped IP', latency: '9ms' },
+        { tag: '[CARTIX:GUARD]', text: 'Blocked sensitive financial tokens from LLM context', latency: '12ms' },
+        { tag: '[AGENT:COMPLETE]', text: 'Safe line-item context delivered to agent context', latency: '14ms' },
+      ]
+    }
+  };
+
+  class Cartix3DPipelineVisualizer {
+    constructor() {
+      this.card = document.getElementById('pipeline-card');
+      this.canvas = document.getElementById('pipeline-canvas');
+      this.telemetryEl = document.getElementById('pipeline-telemetry');
       if (!this.canvas) return;
 
       this.ctx = this.canvas.getContext('2d');
       this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      this.mouse = { x: 0, y: 0, targetX: 0, targetY: 0, active: false };
+      this.activeScenario = 'orders';
       this.time = 0;
+      this.logIndex = 0;
+      this.logTimer = 0;
       this.packets = [];
       this.particles = [];
-      this.activeHoverNode = null;
+      this.nodes = [];
 
       this.initDimensions();
       this.initNodes();
       this.initParticles();
-      this.bindEvents();
+      this.bind3DTilt();
+      this.bindScenarioTriggers();
+      this.startPacketCycle();
       this.animate();
     }
 
     initDimensions() {
       const rect = this.canvas.parentElement.getBoundingClientRect();
       this.dpr = Math.min(window.devicePixelRatio || 1, 2);
-      this.width = rect.width;
-      this.height = rect.height;
+      this.width = rect.width || 600;
+      this.height = rect.height || 360;
       this.canvas.width = this.width * this.dpr;
       this.canvas.height = this.height * this.dpr;
       this.ctx.scale(this.dpr, this.dpr);
     }
 
     initNodes() {
-      const cy = this.height * 0.5;
       const isMobile = this.width < 640;
+      const cy = this.height * 0.48;
 
       if (isMobile) {
-        // Vertical stacked layout for small mobile screens
         this.nodes = [
           {
             id: 'woo',
-            name: 'WooCommerce',
+            title: 'WooCommerce',
             sub: 'Store REST API',
             badge: 'DATA SOURCE',
             x: this.width * 0.5,
-            y: this.height * 0.2,
-            radius: 36,
+            y: this.height * 0.18,
+            radius: 34,
             color: '#06b6d4',
-            glow: 'rgba(6, 182, 212, 0.35)',
-            items: ['Orders', 'Products', 'Inventory'],
+            glow: 'rgba(6, 182, 212, 0.45)',
           },
           {
             id: 'cartix',
-            name: 'Cartix Core',
-            sub: 'MCP Bridge',
-            badge: 'SECURE CONNECTOR',
+            title: 'Cartix MCP',
+            sub: 'Secure Connector',
+            badge: 'MCP PROTOCOL',
             x: this.width * 0.5,
-            y: this.height * 0.5,
-            radius: 52,
+            y: this.height * 0.50,
+            radius: 46,
             color: '#6366f1',
-            glow: 'rgba(99, 102, 241, 0.5)',
-            items: ['Read-Only Auth', 'Rate Limiter', 'PII Masking', 'Retry/Jitter'],
+            glow: 'rgba(99, 102, 241, 0.65)',
           },
           {
             id: 'agent',
-            name: 'AI Agent',
+            title: 'AI Agent',
             sub: 'LLM Reasoning',
-            badge: 'TOOL CONSUMER',
+            badge: 'REASONING',
             x: this.width * 0.5,
-            y: this.height * 0.8,
-            radius: 36,
+            y: this.height * 0.82,
+            radius: 34,
             color: '#10b981',
-            glow: 'rgba(16, 185, 129, 0.35)',
-            items: ['Claude', 'Cursor', 'Gemini'],
+            glow: 'rgba(16, 185, 129, 0.45)',
           },
         ];
       } else {
-        // Horizontal cinematic layout
         this.nodes = [
           {
             id: 'woo',
-            name: 'WooCommerce',
-            sub: 'REST API v3',
-            badge: 'DATA SOURCE',
+            title: 'WooCommerce Store',
+            sub: 'REST API v3 (Read-Only)',
+            badge: 'COMMERCE SOURCE',
             x: this.width * 0.18,
             y: cy,
-            radius: 46,
+            radius: 44,
             color: '#06b6d4',
-            glow: 'rgba(6, 182, 212, 0.4)',
-            items: ['Orders', 'Products', 'Inventory'],
+            glow: 'rgba(6, 182, 212, 0.45)',
           },
           {
             id: 'cartix',
-            name: 'Cartix Core',
-            sub: 'Model Context Protocol',
-            badge: 'SECURE MCP CONNECTOR',
-            x: this.width * 0.5,
+            title: 'Cartix MCP Core',
+            sub: 'PII Sanitizer • Rate Limiter',
+            badge: 'SECURE MCP BRIDGE',
+            x: this.width * 0.50,
             y: cy,
-            radius: 64,
-            color: '#818cf8',
-            glow: 'rgba(99, 102, 241, 0.6)',
-            items: ['Read-Only Enforcer', 'Token Bucket', 'PII Sanitizer', 'Retry Backoff'],
+            radius: 58,
+            color: '#6366f1',
+            glow: 'rgba(99, 102, 241, 0.7)',
           },
           {
             id: 'agent',
-            name: 'AI Agent',
-            sub: 'LLM Client',
-            badge: 'REASONING ENGINE',
+            title: 'AI Agent Terminal',
+            sub: 'LLM Reasoning Loop',
+            badge: 'TOOL CONSUMER',
             x: this.width * 0.82,
             y: cy,
-            radius: 46,
+            radius: 44,
             color: '#10b981',
-            glow: 'rgba(16, 185, 129, 0.4)',
-            items: ['Claude Desktop', 'Cursor MCP', 'Custom Agent'],
+            glow: 'rgba(16, 185, 129, 0.45)',
           },
         ];
       }
@@ -125,78 +175,113 @@
 
     initParticles() {
       this.particles = [];
-      const count = this.width < 640 ? 25 : 45;
+      const count = this.width < 640 ? 20 : 36;
       for (let i = 0; i < count; i++) {
         this.particles.push({
           x: Math.random() * this.width,
           y: Math.random() * this.height,
           radius: Math.random() * 1.5 + 0.5,
-          vx: (Math.random() - 0.5) * 0.25,
-          vy: (Math.random() - 0.5) * 0.25,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
           alpha: Math.random() * 0.4 + 0.1,
         });
       }
     }
 
-    bindEvents() {
+    bind3DTilt() {
+      if (!this.card) return;
+
+      const handleMove = (e) => {
+        if (this.reducedMotion) return;
+        const rect = this.card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const tiltX = ((y - centerY) / centerY) * -7;
+        const tiltY = ((x - centerX) / centerX) * 7;
+
+        this.card.style.transform = `perspective(1000px) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) scale3d(1.01, 1.01, 1.01)`;
+        this.card.style.setProperty('--mouse-x', `${((x / rect.width) * 100).toFixed(1)}%`);
+        this.card.style.setProperty('--mouse-y', `${((y / rect.height) * 100).toFixed(1)}%`);
+      };
+
+      const handleLeave = () => {
+        this.card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        this.card.style.setProperty('--mouse-x', '50%');
+        this.card.style.setProperty('--mouse-y', '30%');
+      };
+
+      this.card.addEventListener('mousemove', handleMove);
+      this.card.addEventListener('mouseleave', handleLeave);
+
       window.addEventListener('resize', () => {
         this.initDimensions();
         this.initNodes();
       });
+    }
 
-      this.canvas.addEventListener('mousemove', (e) => {
-        const rect = this.canvas.getBoundingClientRect();
-        this.mouse.x = e.clientX - rect.left;
-        this.mouse.y = e.clientY - rect.top;
-        this.mouse.active = true;
+    bindScenarioTriggers() {
+      const btns = document.querySelectorAll('.scenario-btn');
+      btns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const scenarioKey = btn.getAttribute('data-scenario');
+          if (!scenarioKey || !SCENARIOS[scenarioKey]) return;
 
-        // Check hover over nodes
-        this.activeHoverNode = null;
-        for (const node of this.nodes) {
-          const dx = this.mouse.x - node.x;
-          const dy = this.mouse.y - node.y;
-          if (Math.hypot(dx, dy) < node.radius + 10) {
-            this.activeHoverNode = node;
-            this.canvas.style.cursor = 'pointer';
-            break;
-          }
-        }
-        if (!this.activeHoverNode) {
-          this.canvas.style.cursor = 'default';
-        }
-      });
+          btns.forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
 
-      this.canvas.addEventListener('mouseleave', () => {
-        this.mouse.active = false;
-        this.activeHoverNode = null;
+          this.activeScenario = scenarioKey;
+          this.logIndex = 0;
+          this.packets = [];
+          this.triggerPacketBurst();
+          this.updateTelemetry();
+        });
       });
     }
 
-    spawnPackets() {
-      if (this.reducedMotion) return;
-      if (Math.random() < 0.04 && this.packets.length < 12) {
-        // Data packet from Woo -> Cartix
-        this.packets.push({
-          from: this.nodes[0],
-          to: this.nodes[1],
-          progress: 0,
-          speed: 0.006 + Math.random() * 0.004,
-          label: ['order #1042', 'stock: 45', 'product #87'][Math.floor(Math.random() * 3)],
-          color: '#38bdf8',
-        });
-      }
+    triggerPacketBurst() {
+      const scenario = SCENARIOS[this.activeScenario];
+      scenario.packets.forEach((p, idx) => {
+        setTimeout(() => {
+          const fromNode = this.nodes[p.from];
+          const toNode = this.nodes[p.to];
+          if (fromNode && toNode) {
+            this.packets.push({
+              from: fromNode,
+              to: toNode,
+              progress: 0,
+              speed: 0.012 + Math.random() * 0.004,
+              label: p.label,
+              color: p.color,
+            });
+          }
+        }, idx * 450);
+      });
+    }
 
-      if (Math.random() < 0.04 && this.packets.length < 12) {
-        // Tool call / Response from Cartix -> Agent
-        this.packets.push({
-          from: this.nodes[1],
-          to: this.nodes[2],
-          progress: 0,
-          speed: 0.007 + Math.random() * 0.004,
-          label: ['search_orders', 'get_inventory', 'sanitized_order'][Math.floor(Math.random() * 3)],
-          color: '#a5b4fc',
-        });
-      }
+    startPacketCycle() {
+      setInterval(() => {
+        if (!document.hidden && this.packets.length < 8) {
+          this.triggerPacketBurst();
+        }
+      }, 4000);
+    }
+
+    updateTelemetry() {
+      if (!this.telemetryEl) return;
+      const scenario = SCENARIOS[this.activeScenario];
+      const log = scenario.logs[this.logIndex % scenario.logs.length];
+
+      this.telemetryEl.innerHTML = `
+        <div class="telemetry-event" style="animation: fadeIn 0.25s ease;">
+          <span class="telemetry-tag">${log.tag}</span>
+          <span class="telemetry-msg">${log.text}</span>
+        </div>
+        <span class="telemetry-latency">${log.latency}</span>
+      `;
     }
 
     drawConnection(nodeA, nodeB) {
@@ -206,26 +291,26 @@
       ctx.lineTo(nodeB.x, nodeB.y);
 
       // Base line
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.07)';
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
       ctx.lineWidth = 2;
       ctx.stroke();
 
-      // Glowing dashed energy path
+      // Animated glowing data beam
       ctx.save();
-      ctx.strokeStyle = 'rgba(99, 102, 241, 0.25)';
-      ctx.lineWidth = 2;
-      ctx.setLineDash([6, 12]);
-      ctx.lineDashOffset = -this.time * 20;
+      ctx.strokeStyle = 'rgba(99, 102, 241, 0.35)';
+      ctx.lineWidth = 2.5;
+      ctx.setLineDash([8, 14]);
+      ctx.lineDashOffset = -this.time * 24;
       ctx.stroke();
       ctx.restore();
     }
 
-    drawHexagon(x, y, r, color, glowColor, filled = false) {
+    drawHexagon(x, y, r, color, glowColor) {
       const ctx = this.ctx;
       ctx.save();
       ctx.beginPath();
       for (let i = 0; i < 6; i++) {
-        const angle = (Math.PI / 3) * i + (this.time * 0.2);
+        const angle = (Math.PI / 3) * i + (this.time * 0.15);
         const hx = x + r * Math.cos(angle);
         const hy = y + r * Math.sin(angle);
         if (i === 0) ctx.moveTo(hx, hy);
@@ -233,46 +318,43 @@
       }
       ctx.closePath();
 
-      if (filled) {
-        ctx.fillStyle = 'rgba(18, 24, 36, 0.9)';
-        ctx.fill();
-      }
+      ctx.fillStyle = 'rgba(18, 24, 36, 0.92)';
+      ctx.fill();
 
       ctx.shadowColor = glowColor;
-      ctx.shadowBlur = 20;
+      ctx.shadowBlur = 24;
       ctx.strokeStyle = color;
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 2.5;
       ctx.stroke();
       ctx.restore();
     }
 
     drawNode(node) {
       const ctx = this.ctx;
-      const isHovered = this.activeHoverNode === node;
-      const pulse = Math.sin(this.time * 2 + (node.id === 'cartix' ? 1 : 0)) * 3;
-      const r = node.radius + (isHovered ? 4 : 0) + pulse;
+      const pulse = Math.sin(this.time * 2.5 + (node.id === 'cartix' ? 1.2 : 0)) * 2.5;
+      const r = node.radius + pulse;
 
-      // Glow shadow
       ctx.save();
       ctx.shadowColor = node.glow;
-      ctx.shadowBlur = isHovered ? 35 : 24;
+      ctx.shadowBlur = node.id === 'cartix' ? 32 : 20;
 
       if (node.id === 'cartix') {
         // Hexagonal dominant core
-        this.drawHexagon(node.x, node.y, r, node.color, node.glow, true);
-        // Outer concentric ring
+        this.drawHexagon(node.x, node.y, r, node.color, node.glow);
+
+        // Concentric outer pulsing ring
         ctx.beginPath();
-        ctx.arc(node.x, node.y, r + 14, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(99, 102, 241, 0.2)';
-        ctx.lineWidth = 1;
-        ctx.setLineDash([4, 8]);
-        ctx.lineDashOffset = this.time * 15;
+        ctx.arc(node.x, node.y, r + 16, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(99, 102, 241, 0.25)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5, 9]);
+        ctx.lineDashOffset = this.time * 18;
         ctx.stroke();
       } else {
-        // Circular nodes
+        // Rounded node
         ctx.beginPath();
         ctx.arc(node.x, node.y, r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(18, 24, 36, 0.85)';
+        ctx.fillStyle = 'rgba(18, 24, 36, 0.9)';
         ctx.fill();
         ctx.strokeStyle = node.color;
         ctx.lineWidth = 2;
@@ -284,12 +366,17 @@
       ctx.save();
       ctx.textAlign = 'center';
       ctx.fillStyle = '#ffffff';
-      ctx.font = `600 ${node.id === 'cartix' ? 13 : 11}px var(--font-sans)`;
-      ctx.fillText(node.name, node.x, node.y - 4);
+      ctx.font = `700 ${node.id === 'cartix' ? 13 : 11}px 'Plus Jakarta Sans', sans-serif`;
+      ctx.fillText(node.title, node.x, node.y - 4);
 
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.55)';
-      ctx.font = '10px var(--font-mono)';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+      ctx.font = `500 ${node.id === 'cartix' ? 9.5 : 8.5}px 'JetBrains Mono', monospace`;
       ctx.fillText(node.sub, node.x, node.y + 12);
+
+      // Node Pill Badge
+      ctx.fillStyle = node.color;
+      ctx.font = `700 7.5px 'JetBrains Mono', monospace`;
+      ctx.fillText(`• ${node.badge} •`, node.x, node.y + (node.id === 'cartix' ? 26 : 22));
       ctx.restore();
     }
 
@@ -307,20 +394,20 @@
         const currX = p.from.x + (p.to.x - p.from.x) * p.progress;
         const currY = p.from.y + (p.to.y - p.from.y) * p.progress;
 
-        // Packet glow & head
+        // Glowing packet bullet
         ctx.save();
         ctx.shadowColor = p.color;
-        ctx.shadowBlur = 12;
+        ctx.shadowBlur = 14;
         ctx.beginPath();
-        ctx.arc(currX, currY, 4, 0, Math.PI * 2);
+        ctx.arc(currX, currY, 4.5, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
         ctx.fill();
 
-        // Label above packet
-        ctx.font = '9px var(--font-mono)';
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+        // Packet tag label
+        ctx.font = `600 8.5px 'JetBrains Mono', monospace`;
+        ctx.fillStyle = '#f8fafc';
         ctx.textAlign = 'center';
-        ctx.fillText(p.label, currX, currY - 8);
+        ctx.fillText(p.label, currX, currY - 9);
         ctx.restore();
       }
     }
@@ -346,14 +433,22 @@
       this.ctx.clearRect(0, 0, this.width, this.height);
       this.time += 0.016;
 
+      // Update telemetry periodically
+      this.logTimer += 0.016;
+      if (this.logTimer > 2.2) {
+        this.logTimer = 0;
+        this.logIndex++;
+        this.updateTelemetry();
+      }
+
       this.drawParticles();
 
-      // Connections
-      this.drawConnection(this.nodes[0], this.nodes[1]);
-      this.drawConnection(this.nodes[1], this.nodes[2]);
+      // Connections between nodes
+      if (this.nodes.length >= 3) {
+        this.drawConnection(this.nodes[0], this.nodes[1]);
+        this.drawConnection(this.nodes[1], this.nodes[2]);
+      }
 
-      // Packets
-      this.spawnPackets();
       this.drawPackets();
 
       // Nodes
@@ -365,8 +460,8 @@
     }
   }
 
-  // Initialize visualizer on DOM ready
+  // Initialize visualizer on DOM load
   document.addEventListener('DOMContentLoaded', () => {
-    new CartixPipelineVisualizer('pipeline-canvas');
+    new Cartix3DPipelineVisualizer();
   });
 })();

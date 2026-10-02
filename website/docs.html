@@ -9,6 +9,11 @@
   <!-- Favicon / Brand Asset -->
   <link rel="icon" type="image/png" href="./assets/cartix_x_icon.png">
   
+  <!-- Google Fonts Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+
   <!-- Stylesheets -->
   <link rel="stylesheet" href="./css/style.css">
   <link rel="stylesheet" href="./css/docs.css">
@@ -18,8 +23,28 @@
   <header class="site-header">
     <div class="container nav-container">
       <a href="./index.html" class="brand-logo-link" aria-label="Cartix Home">
-        <img src="./assets/cartix_dark.png" alt="Cartix" class="brand-logo logo-dark">
-        <img src="./assets/cartix_light.png" alt="Cartix" class="brand-logo logo-light">
+        <div class="brand-logo-mark">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="32" height="32" rx="8" fill="url(#cartix-logo-bg-docs)" stroke="url(#cartix-logo-stroke-docs)" stroke-width="1.5"/>
+            <path d="M21 11H13.5C11.567 11 10 12.567 10 14.5V17.5C10 19.433 11.567 21 13.5 21H21" stroke="url(#cartix-logo-stroke-docs)" stroke-width="2.6" stroke-linecap="round"/>
+            <circle cx="21" cy="11" r="2.2" fill="#818cf8"/>
+            <circle cx="21" cy="21" r="2.2" fill="#06b6d4"/>
+            <path d="M14 16H22" stroke="url(#cartix-logo-stroke-docs)" stroke-width="2" stroke-linecap="round" stroke-dasharray="2 2.5"/>
+            <defs>
+              <linearGradient id="cartix-logo-bg-docs" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#6366f1" stop-opacity="0.3"/>
+                <stop offset="1" stop-color="#06b6d4" stop-opacity="0.15"/>
+              </linearGradient>
+              <linearGradient id="cartix-logo-stroke-docs" x1="8" y1="8" x2="26" y2="24" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#818cf8"/>
+                <stop offset="0.5" stop-color="#6366f1"/>
+                <stop offset="1" stop-color="#06b6d4"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="brand-logo-text">Cartix</span>
+        <span class="brand-logo-badge">Docs</span>
       </a>
 
       <ul class="nav-links">
@@ -31,7 +56,7 @@
 
       <div class="nav-actions">
         <button class="search-trigger-btn" aria-label="Search documentation">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
           <span>Search</span>
           <kbd class="search-shortcut-badge">⌘K</kbd>
         </button>
@@ -53,7 +78,28 @@
   <div class="mobile-drawer-backdrop" aria-hidden="true"></div>
   <aside class="mobile-docs-drawer" aria-label="Mobile Navigation">
     <div style="margin-bottom: var(--space-6); display: flex; align-items: center; justify-content: space-between;">
-      <img src="./assets/cartix_dark.png" alt="Cartix" style="height: 26px;">
+      <a href="./index.html" class="brand-logo-link" aria-label="Cartix Home">
+        <div class="brand-logo-mark">
+          <svg width="26" height="26" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="32" height="32" rx="8" fill="url(#cartix-logo-bg-drw-d)" stroke="url(#cartix-logo-stroke-drw-d)" stroke-width="1.5"/>
+            <path d="M21 11H13.5C11.567 11 10 12.567 10 14.5V17.5C10 19.433 11.567 21 13.5 21H21" stroke="url(#cartix-logo-stroke-drw-d)" stroke-width="2.6" stroke-linecap="round"/>
+            <circle cx="21" cy="11" r="2.2" fill="#818cf8"/>
+            <circle cx="21" cy="21" r="2.2" fill="#06b6d4"/>
+            <defs>
+              <linearGradient id="cartix-logo-bg-drw-d" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#6366f1" stop-opacity="0.3"/>
+                <stop offset="1" stop-color="#06b6d4" stop-opacity="0.15"/>
+              </linearGradient>
+              <linearGradient id="cartix-logo-stroke-drw-d" x1="8" y1="8" x2="26" y2="24" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#818cf8"/>
+                <stop offset="0.5" stop-color="#6366f1"/>
+                <stop offset="1" stop-color="#06b6d4"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="brand-logo-text" style="font-size: 1.15rem;">Cartix</span>
+      </a>
       <span class="badge badge-indigo">Docs v0.1.0</span>
     </div>
     <ul class="sidebar-nav-list">
