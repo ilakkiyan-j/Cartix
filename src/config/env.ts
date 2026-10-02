@@ -15,7 +15,7 @@ const envSchema = z.object({
   // Server Configuration
   PORT: z.coerce.number().int().positive().default(3000),
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
-  MCP_TRANSPORT: z.enum(['stdio', 'streamable-http', 'sse']).default('streamable-http'),
+  MCP_TRANSPORT: z.enum(['stdio', 'streamable-http', 'sse']).default('stdio'),
 
   // Reliability Configuration
   MAX_RETRIES: z.coerce.number().int().nonnegative().default(3),
@@ -25,10 +25,6 @@ const envSchema = z.object({
 
   // Observability Configuration
   LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).default('info'),
-
-  // Demo Agent Configuration (Optional)
-  LLM_API_KEY: z.string().optional().default(''),
-  LLM_MODEL: z.string().optional().default('gemini-3.8-flash'),
 });
 
 export type EnvConfig = z.infer<typeof envSchema>;

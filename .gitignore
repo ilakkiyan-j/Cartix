@@ -31,5 +31,6 @@ Thumbs.db
 *.sw?
 
 docs/
+demo/
 
 log.txt

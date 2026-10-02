@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { config } from '../src/config/env.js';
 
 async function main() {
-  const key = config.LLM_API_KEY;
+  const key = process.env.LLM_API_KEY || process.env.GEMINI_API_KEY || '';
   console.log('Testing Gemini API key:', key.substring(0, 8) + '...');
 
   try {

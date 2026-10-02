@@ -87,10 +87,10 @@
       snippet: 'JSON config snippet to connect Cartix MCP server to Claude Desktop app.',
     },
     {
-      title: 'AI Demo Agent & LLM Function Calling',
-      category: 'Demo',
-      hash: '#demo-agent',
-      snippet: 'Multi-turn agent powered by Gemini with offline deterministic fallback mode.',
+      title: 'Agent Studio & Client Integration',
+      category: 'Integrations',
+      hash: '#agent-integration',
+      snippet: 'Connect Razorpay Agent Studio, Claude Desktop, and autonomous pipelines via stdio or HTTP.',
     },
     {
       title: 'Testing & Quality Assurance',

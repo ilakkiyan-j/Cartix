@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js';
 import { createCartixMcpServer } from '../src/mcp/server.js';
-import { config } from '../src/config/env.js';
 import { logger } from '../src/utils/logger.js';
 
 interface GeminiFunctionDeclaration {
@@ -19,7 +18,7 @@ export class CartixDemoAgent {
   private availableTools: any[] = [];
 
   constructor() {
-    this.apiKey = config.LLM_API_KEY || process.env.GEMINI_API_KEY || '';
+    this.apiKey = process.env.LLM_API_KEY || process.env.GEMINI_API_KEY || '';
     this.mcpServer = createCartixMcpServer();
     this.mcpClient = new Client(
       {
@@ -101,7 +100,7 @@ Be concise, accurate, and professional.`,
 
     const tools = [{ functionDeclarations: this.getGeminiFunctionDeclarations() }];
     const modelsToTry = [
-      config.LLM_MODEL,
+      process.env.LLM_MODEL || 'gemini-2.5-flash',
       'gemini-3.8-flash',
       'gemini-3.7-flash',
       'gemini-3.5-flash',

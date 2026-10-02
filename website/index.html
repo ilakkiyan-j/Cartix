@@ -49,19 +49,12 @@
           <li><a href="#architecture" class="nav-link">Architecture</a></li>
           <li><a href="#mcp-tools" class="nav-link">MCP Tools</a></li>
           <li><a href="#security" class="nav-link">Security</a></li>
-          <li><a href="#quickstart" class="nav-link">Quick Start</a></li>
           <li><a href="./docs.html" class="nav-link">Docs</a></li>
         </ul>
       </nav>
 
       <!-- Action Controls -->
       <div class="nav-actions">
-        <button class="search-trigger-btn" aria-label="Search documentation" id="search-trigger-btn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          <span>Search</span>
-          <kbd class="search-shortcut-badge">⌘K</kbd>
-        </button>
-
         <button class="theme-toggle-btn" aria-label="Toggle theme" id="theme-toggle-btn">
           <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
         </button>
@@ -109,179 +102,70 @@
     </div>
   </aside>
 
-  <!-- Command Palette / Search Modal -->
-  <div class="search-modal-backdrop" role="dialog" aria-modal="true" aria-label="Documentation search" id="search-modal">
-    <div class="search-modal-dialog">
-      <div class="search-input-box">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-muted);flex-shrink:0"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <input type="text" class="search-input" id="search-input" placeholder="Search tools, schemas, architecture..." autocomplete="off">
-        <kbd class="search-shortcut-badge">ESC</kbd>
-      </div>
-      <div class="search-results-list" id="search-results"></div>
-      <div class="search-footer">
-        <span>Navigate: <kbd class="search-shortcut-badge">↑</kbd> <kbd class="search-shortcut-badge">↓</kbd> &nbsp; Select: <kbd class="search-shortcut-badge">↵</kbd></span>
-        <span>Cartix Developer Docs</span>
-      </div>
-    </div>
-  </div>
-
   <main>
 
     <!-- ═══════════════════════════════════════
-         HERO SECTION
+         HERO SECTION (CLEAN & CENTERED)
          ═══════════════════════════════════════ -->
     <section class="hero-section" id="home">
-      <div class="container hero-grid">
+      <div class="container hero-centered">
 
-        <!-- Left: Hero Copy -->
-        <div class="hero-content">
-          <div class="hero-eyebrow">
-            <span class="eyebrow-dot"></span>
-            <span>Model Context Protocol &nbsp;·&nbsp; Production Ready</span>
+        <div class="hero-eyebrow">
+          <span class="eyebrow-dot"></span>
+          <span>Model Context Protocol &nbsp;·&nbsp; Production Ready</span>
+        </div>
+
+        <h1 class="hero-title">
+          WooCommerce to AI — <span class="gradient-text">safely.</span>
+        </h1>
+
+        <p class="hero-description">
+          Cartix is a strictly read-only MCP connector giving AI agents (Agent Studio, Claude, Cursor) structured, safe, normalized access to WooCommerce merchant data. Zero mutations. Zero PII leaks.
+        </p>
+
+        <!-- Install snippet -->
+        <div class="hero-install-strip">
+          <code class="hero-install-code" id="install-cmd">$ git clone https://github.com/ilakkiyan-j/Cartix.git</code>
+          <button class="install-copy-btn" onclick="copyInstallCmd()" aria-label="Copy install command">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          </button>
+        </div>
+
+        <!-- CTA Buttons -->
+        <div class="hero-actions">
+          <a href="./docs.html" class="btn btn-primary btn-lg">
+            <span>Read the Docs</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+          <a href="https://github.com/ilakkiyan-j/Cartix" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-lg">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            <span>View on GitHub</span>
+          </a>
+        </div>
+
+        <!-- Trust Metrics -->
+        <div class="hero-trust-row">
+          <div class="trust-metric">
+            <span class="trust-val">5</span>
+            <span class="trust-label">MCP Tools</span>
           </div>
-
-          <h1 class="hero-title">
-            WooCommerce<br>
-            to AI — <span class="gradient-text">securely.</span>
-          </h1>
-
-          <p class="hero-description">
-            Cartix is a strictly read-only MCP connector giving AI agents structured, safe, normalized access to WooCommerce merchant data. Zero mutations. Zero PII leaks.
-          </p>
-
-          <!-- Install snippet -->
-          <div class="hero-install-strip">
-            <code class="hero-install-code" id="install-cmd">$ git clone https://github.com/ilakkiyan-j/Cartix.git</code>
-            <button class="install-copy-btn" onclick="copyInstallCmd()" aria-label="Copy install command">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-            </button>
+          <div class="trust-divider"></div>
+          <div class="trust-metric">
+            <span class="trust-val">100%</span>
+            <span class="trust-label">Read-Only</span>
           </div>
-
-          <!-- CTA Buttons -->
-          <div class="hero-actions">
-            <a href="./docs.html" class="btn btn-primary btn-lg">
-              <span>Read the Docs</span>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </a>
-            <a href="https://github.com/ilakkiyan-j/Cartix" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-lg">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              <span>View on GitHub</span>
-            </a>
+          <div class="trust-divider"></div>
+          <div class="trust-metric">
+            <span class="trust-val">&lt;15ms</span>
+            <span class="trust-label">Serialization</span>
           </div>
-
-          <!-- Trust Metrics -->
-          <div class="hero-trust-row">
-            <div class="trust-metric">
-              <span class="trust-val">5</span>
-              <span class="trust-label">MCP Tools</span>
-            </div>
-            <div class="trust-divider"></div>
-            <div class="trust-metric">
-              <span class="trust-val">100%</span>
-              <span class="trust-label">Read-Only</span>
-            </div>
-            <div class="trust-divider"></div>
-            <div class="trust-metric">
-              <span class="trust-val">&lt;15ms</span>
-              <span class="trust-label">Serialization</span>
-            </div>
-            <div class="trust-divider"></div>
-            <div class="trust-metric">
-              <span class="trust-val">60/60</span>
-              <span class="trust-label">Tests Passing</span>
-            </div>
+          <div class="trust-divider"></div>
+          <div class="trust-metric">
+            <span class="trust-val">60/60</span>
+            <span class="trust-label">Tests Passing</span>
           </div>
         </div>
 
-        <!-- Right: Clean Architecture Preview Card -->
-        <div class="hero-preview-stage" aria-label="Cartix Architecture Preview">
-          <div class="hero-preview-card">
-
-            <!-- Card Header: Natural Language Query & Execution Status -->
-            <div class="preview-card-header">
-              <div class="preview-agent-query">
-                <div class="preview-agent-avatar">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4"></path><line x1="8" y1="16" x2="8" y2="16"></line><line x1="16" y1="16" x2="16" y2="16"></line></svg>
-                </div>
-                <span class="preview-query-text">"Find wireless mechanical keyboards with high ratings and check pricing."</span>
-              </div>
-              <span class="preview-status-pill">
-                <span class="status-indicator-dot"></span>
-                200 OK · 11ms
-              </span>
-            </div>
-
-            <!-- Protocol Flow Connector Ribbon -->
-            <div class="preview-flow-strip">
-              <div class="flow-pill-item agent">
-                <span>AI Agent</span>
-              </div>
-              <div class="flow-arrow-connector">➔</div>
-              <div class="flow-pill-item gateway">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                <span>Cartix Gateway</span>
-              </div>
-              <div class="flow-arrow-connector">➔</div>
-              <div class="flow-pill-item store">
-                <span>WooCommerce REST</span>
-              </div>
-            </div>
-
-            <!-- Active Guardrails Verification Strip -->
-            <div class="preview-guards-row">
-              <span class="guard-pill">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Read-Only Enforced
-              </span>
-              <span class="guard-pill">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                PII Redacted
-              </span>
-              <span class="guard-pill">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                Rate Limit: 98/100
-              </span>
-            </div>
-
-            <!-- Normalized JSON Output Code Block (Fit-to-Content, Zero Scrollbars) -->
-            <div class="preview-code-box">
-              <div class="preview-code-header">
-                <span class="code-header-title">Normalized MCP Response</span>
-                <span class="code-header-badge">JSON</span>
-              </div>
-              <pre class="preview-code-body"><code>{
-  <span class="code-key">"status"</span>: <span class="code-string">"success"</span>,
-  <span class="code-key">"total_results"</span>: <span class="code-number">2</span>,
-  <span class="code-key">"data"</span>: [
-    {
-      <span class="code-key">"id"</span>: <span class="code-number">87</span>,
-      <span class="code-key">"name"</span>: <span class="code-string">"Keychron Q1 Pro Wireless"</span>,
-      <span class="code-key">"sku"</span>: <span class="code-string">"KEY-Q1P-RGB"</span>,
-      <span class="code-key">"price"</span>: <span class="code-string">"$199.00"</span>,
-      <span class="code-key">"stock_status"</span>: <span class="code-string">"instock"</span>
-    },
-    {
-      <span class="code-key">"id"</span>: <span class="code-number">92</span>,
-      <span class="code-key">"name"</span>: <span class="code-string">"NuPhy Air75 V2"</span>,
-      <span class="code-key">"sku"</span>: <span class="code-string">"NUP-AIR75-V2"</span>,
-      <span class="code-key">"price"</span>: <span class="code-string">"$119.95"</span>,
-      <span class="code-key">"stock_status"</span>: <span class="code-string">"instock"</span>
-    }
-  ]
-}</code></pre>
-            </div>
-
-            <!-- Subtle Telemetry Status Footer -->
-            <div class="preview-card-footer">
-              <div class="preview-footer-info">
-                <span class="telemetry-dot"></span>
-                <span>MCP:search_products → 2 items formatted · 0 PII leaked</span>
-              </div>
-              <span class="preview-footer-tag">Type-Safe Zod</span>
-            </div>
-
-          </div>
-        </div>
       </div>
     </section>
 

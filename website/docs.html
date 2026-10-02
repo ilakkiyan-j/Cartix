@@ -104,7 +104,7 @@
       <li><a href="#mcp-tools" class="sidebar-nav-link">MCP Tools Specification</a></li>
       <li><a href="#security" class="sidebar-nav-link">Security & Privacy</a></li>
       <li><a href="#reliability" class="sidebar-nav-link">Rate Limiting & Retries</a></li>
-      <li><a href="#demo-agent" class="sidebar-nav-link">AI Demo Agent</a></li>
+      <li><a href="#agent-integration" class="sidebar-nav-link">Agent Studio Integration</a></li>
       <li><a href="#testing" class="sidebar-nav-link">Testing Suite (60 Tests)</a></li>
       <li><a href="#docker" class="sidebar-nav-link">Docker Deployment</a></li>
       <li><a href="#limitations" class="sidebar-nav-link">Operational Boundaries</a></li>
@@ -180,7 +180,7 @@
       <div class="sidebar-nav-group">
         <span class="sidebar-group-title">Engineering & QA</span>
         <ul class="sidebar-nav-list">
-          <li><a href="#demo-agent" class="sidebar-nav-link">AI Demo Agent</a></li>
+          <li><a href="#agent-integration" class="sidebar-nav-link">Agent Studio Integration</a></li>
           <li><a href="#testing" class="sidebar-nav-link">Testing Suite (60 Tests)</a></li>
           <li><a href="#docker" class="sidebar-nav-link">Docker Deployment</a></li>
           <li><a href="#limitations" class="sidebar-nav-link">Operational Boundaries</a></li>
@@ -262,7 +262,7 @@ npm start</code></pre>
               <tr><td><code>WOOCOMMERCE_URL</code></td><td>string</td><td><em>Required</em></td><td>Base HTTPS URL of the WooCommerce store (e.g. <code>https://store.example.com</code>)</td></tr>
               <tr><td><code>WOOCOMMERCE_CONSUMER_KEY</code></td><td>string</td><td><em>Required</em></td><td>Read-only consumer key (<code>ck_...</code>) generated from WooCommerce API settings</td></tr>
               <tr><td><code>WOOCOMMERCE_CONSUMER_SECRET</code></td><td>string</td><td><em>Required</em></td><td>Read-only consumer secret (<code>cs_...</code>)</td></tr>
-              <tr><td><code>MCP_TRANSPORT</code></td><td>enum</td><td><code>streamable-http</code></td><td>Transport protocol: <code>stdio</code>, <code>streamable-http</code>, or <code>sse</code></td></tr>
+              <tr><td><code>MCP_TRANSPORT</code></td><td>enum</td><td><code>stdio</code></td><td>Transport protocol: <code>stdio</code>, <code>streamable-http</code>, or <code>sse</code></td></tr>
               <tr><td><code>PORT</code></td><td>number</td><td><code>3000</code></td><td>HTTP port used when running <code>streamable-http</code> or <code>sse</code></td></tr>
               <tr><td><code>NODE_ENV</code></td><td>enum</td><td><code>development</code></td><td>Runtime mode: <code>development</code>, <code>production</code>, or <code>test</code></td></tr>
               <tr><td><code>MAX_RETRIES</code></td><td>number</td><td><code>3</code></td><td>Maximum retry attempts for transient 5xx or network errors</td></tr>
@@ -270,8 +270,6 @@ npm start</code></pre>
               <tr><td><code>REQUEST_TIMEOUT_MS</code></td><td>number</td><td><code>10000</code></td><td>Timeout in milliseconds for upstream WooCommerce REST calls</td></tr>
               <tr><td><code>MAX_PAGE_SIZE</code></td><td>number</td><td><code>100</code></td><td>Hard upper bound enforced on pagination <code>limit</code></td></tr>
               <tr><td><code>LOG_LEVEL</code></td><td>enum</td><td><code>info</code></td><td>Logging verbosity: <code>debug</code>, <code>info</code>, <code>warn</code>, or <code>error</code></td></tr>
-              <tr><td><code>LLM_API_KEY</code></td><td>string</td><td><em>Optional</em></td><td>Google Gemini API key for running the interactive demo agent</td></tr>
-              <tr><td><code>LLM_MODEL</code></td><td>string</td><td><code>gemini-2.5-flash</code></td><td>Gemini model identifier used by the demo agent</td></tr>
             </tbody>
           </table>
         </div>
@@ -605,24 +603,57 @@ npm start</code></pre>
         </div>
       </section>
 
-      <!-- CHAPTER 8: DEMO AGENT -->
-      <section class="docs-section" id="demo-agent">
-        <h2>AI Demo Agent <a href="#demo-agent" class="heading-anchor">#</a></h2>
+      <!-- CHAPTER 8: AGENT STUDIO & CLIENT INTEGRATION -->
+      <section class="docs-section" id="agent-integration">
+        <h2>Agent Studio & Client Integration <a href="#agent-integration" class="heading-anchor">#</a></h2>
         <p>
-          Cartix includes a runnable multi-turn AI agent in <code>demo/agent.ts</code>. The agent interacts over live MCP tools using Google Gemini (<code>gemini-2.5-flash</code>) with an automatic offline fallback to local heuristic reasoning when API keys are not provided.
+          Cartix conforms directly to the Model Context Protocol (MCP) standard, enabling plug-and-play connectivity with Razorpay Agent Studio, Claude Desktop, Cursor, LangChain, and custom autonomous agent workflows.
         </p>
 
+        <h3>1. Razorpay Agent Studio Setup</h3>
+        <p>
+          In Agent Studio, register Cartix as an external MCP tool server using either the direct HTTP connector or standard process invocation:
+        </p>
         <div class="code-window docs-code-block">
           <div class="code-window-header">
             <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
-            <span class="code-window-title">bash — run demo agent</span>
+            <span class="code-window-title">Agent Studio Connector Configuration (HTTP Endpoint)</span>
             <button class="copy-code-btn" onclick="copyCode(this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
           </div>
-          <pre><code><span class="code-comment"># Interactive multi-turn CLI agent</span>
-npm run demo
+          <pre><code>{
+  "name": "cartix-woocommerce-connector",
+  "transport": "streamable-http",
+  "endpoint": "http://localhost:3000/mcp",
+  "capabilities": ["tools"],
+  "healthCheck": "http://localhost:3000/health"
+}</code></pre>
+        </div>
 
-<span class="code-comment"># Execute all 6 automated evaluation scenarios</span>
-npm run demo -- --all</code></pre>
+        <h3>2. Programmatic Client Integration (TypeScript)</h3>
+        <p>
+          Connect any agent pipeline to Cartix via the official <code>@modelcontextprotocol/sdk</code>:
+        </p>
+        <div class="code-window docs-code-block">
+          <div class="code-window-header">
+            <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
+            <span class="code-window-title">typescript — client connection</span>
+            <button class="copy-code-btn" onclick="copyCode(this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+          </div>
+          <pre><code>import { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
+
+const transport = new StdioClientTransport({
+  command: "node",
+  args: ["dist/src/index.js"],
+  env: process.env,
+});
+
+const client = new Client({ name: "agent-studio-client", version: "1.0.0" }, { capabilities: {} });
+await client.connect(transport);
+
+<span class="code-comment">// Query available WooCommerce MCP tools</span>
+const tools = await client.listTools();
+console.log(`Discovered ${tools.tools.length} safe tools.`);</code></pre>
         </div>
       </section>
 
@@ -742,7 +773,7 @@ copies or substantial portions of the Software.</code></pre>
         <li><a href="#tool-search-products" class="toc-link h3-link">search_products</a></li>
         <li><a href="#tool-get-product" class="toc-link h3-link">get_product</a></li>
         <li><a href="#tool-get-inventory" class="toc-link h3-link">get_inventory</a></li>
-        <li><a href="#demo-agent" class="toc-link">AI Demo Agent</a></li>
+        <li><a href="#agent-integration" class="toc-link">Agent Studio Integration</a></li>
         <li><a href="#testing" class="toc-link">Testing Suite (60 Tests)</a></li>
         <li><a href="#docker" class="toc-link">Docker Deployment</a></li>
         <li><a href="#limitations" class="toc-link">Operational Boundaries</a></li>
