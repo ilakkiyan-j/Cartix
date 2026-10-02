@@ -256,37 +256,38 @@ Useful merchant answer
 
 ## P0 — Must Work
 
-- [ ] WooCommerce API connection
-- [ ] MCP server
-- [ ] Core MCP tools
-- [ ] AI agent connection
-- [ ] End-to-end agent demo
+- [x] WooCommerce API connection (`WooCommerceClient` with Basic Auth over HTTPS & verification endpoint)
+- [x] MCP server (Standard MCP JSON-RPC 2.0 dual-transport: `stdio` and `streamable-http`)
+- [x] Core MCP tools (`search_orders`, `get_order`, `search_products`, `get_product`, `get_inventory`)
+- [x] AI agent connection (Plug-and-play for Agent Studio, Claude Desktop, and Cursor)
+- [x] End-to-end agent verification (Natural language tool resolution & structured JSON responses)
 
 ## P1 — Must Be Robust
 
-- [ ] Authentication
-- [ ] Input validation
-- [ ] Pagination
-- [ ] Error handling
-- [ ] Rate-limit handling
-- [ ] Retry / backoff
+- [x] Authentication (Server-side credential isolation, secret redaction in all log sinks)
+- [x] Input validation (Strict Zod schemas with constraint bounds on IDs, statuses, and dates)
+- [x] Pagination (Bounded pagination, hard 100-item ceiling, `X-WP-TotalPages` header parsing)
+- [x] Error handling (Structured `CartixError` domain errors mapped to MCP envelopes)
+- [x] Rate-limit handling (In-memory token-bucket algorithm & `429 Retry-After` parsing)
+- [x] Retry / backoff (Exponential backoff with full randomized jitter)
 
 ## P2 — Must Be Present
 
-- [ ] Unit tests
-- [ ] Integration tests
-- [ ] Documentation
-- [ ] Architecture
-- [ ] Limitations
-- [ ] Security notes
+- [x] Unit tests (9 comprehensive Vitest test suites covering normalizers, retry, and errors)
+- [x] Integration tests (Full MCP client-server lifecycle, tool discovery & dispatch)
+- [x] Documentation (Complete engineering docs, API reference, and live GitHub Pages website)
+- [x] Architecture (System topology, execution pipeline, and state flow diagrams)
+- [x] Limitations (Explicit zero-mutation contract and operational boundaries)
+- [x] Security notes (Customer PII masking for emails and physical address stripping)
 
 ## P3 — Nice to Have
 
-- [ ] Docker
-- [ ] Polished demo UI
-- [ ] Advanced agent workflows
-- [ ] Additional tooling / observability
+- [x] Docker (Hardened Node 20 Alpine container with healthchecks and non-root execution)
+- [x] Polished demo UI (Responsive documentation portal with light/dark themes & 3D ambient)
+- [x] Advanced agent workflows (Multi-turn order, product, and stock reasoning)
+- [x] Additional tooling / observability (Structured JSON logger with correlated request IDs)
 
-> **Rule:** Do not move to P2 or P3 until P0 is completely working.
+> **Status:** All P0, P1, P2, and P3 milestones are 100% completed and verified.
+
 
 The goal is a focused, reliable connector rather than a large application with unfinished core functionality.

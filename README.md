@@ -21,7 +21,7 @@ Built for the **Razorpay Forward-Deployed Engineer, Agent Studio assessment**.
 5. [Security & Data Minimization](#5-security--data-minimization)
 6. [Prerequisites & Installation](#6-prerequisites--installation)
 7. [WooCommerce Setup & Credentials](#7-woocommerce-setup--credentials)
-8. [Sample Data Seeder](#8-sample-data-seeder)
+8. [Read-Only Connection Verification](#8-read-only-connection-verification)
 9. [Running the MCP Server](#9-running-the-mcp-server)
 10. [Connecting to MCP Clients](#10-connecting-to-mcp-clients)
 11. [Testing & Verification](#11-testing--verification)
@@ -224,16 +224,16 @@ NODE_ENV=development
 
 ---
 
-## 8. Sample Data Seeder
+## 8. Read-Only Connection Verification
 
-Cartix includes an automated seeder (`scripts/seed.ts`) that populates test stores with a realistic commerce dataset:
-- **20 Products:** 10 in-stock, 5 low-stock, 5 out-of-stock items across multiple categories.
-- **50 Orders:** Distributed across varied statuses (`pending`, `processing`, `completed`, `on-hold`, `failed`, `cancelled`) and timestamps referencing seeded products.
+Cartix provides a non-mutating diagnostic script (`scripts/verify-connection.ts`) to validate store connectivity, API credentials, and read access before connecting AI agents:
 
 ```bash
-# Run seeder (requires Read/Write key in .env or WOOCOMMERCE_SEED_CONSUMER_KEY)
-npm run seed
+# Verify read-only WooCommerce credentials and endpoint status
+npm run verify
 ```
+
+This diagnostic utility connects via HTTPS Basic Auth, queries `/wp-json/wc/v3/system_status`, lists sample products, and retrieves recent orders without writing or mutating any merchant records.
 
 ---
 
