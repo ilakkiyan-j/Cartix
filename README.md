@@ -27,8 +27,9 @@ Built for the **Razorpay Forward-Deployed Engineer, Agent Studio assessment**.
 12. [Demonstrated Merchant Scenarios](#12-demonstrated-merchant-scenarios)
 13. [Testing & Verification](#13-testing--verification)
 14. [Docker Deployment](#14-docker-deployment)
-15. [Assumptions & Limitations](#15-assumptions--limitations)
-16. [Future Evolution](#16-future-evolution)
+15. [Documentation Website & GitHub Pages Deployment](#15-documentation-website--github-pages-deployment)
+16. [Assumptions & Limitations](#16-assumptions--limitations)
+17. [Future Evolution](#17-future-evolution)
 
 ---
 
@@ -354,7 +355,22 @@ docker run -d \
 
 ---
 
-## 15. Assumptions & Limitations
+## 15. Documentation Website & GitHub Pages Deployment
+
+Cartix includes an interactive static documentation website and 3D architectural pipeline visualizer.
+
+- **Website Location:** `/website` (contains standalone HTML, CSS, Vanilla JS, and interactive canvas visualizer; no frontend frameworks or build steps required).
+- **GitHub Pages Source:** Configured as `GitHub Actions` in repository Settings → Pages.
+- **How Deployment Works:**
+  $$\text{Push to } \texttt{main} \longrightarrow \text{GitHub Actions } (\texttt{.github/workflows/deploy-pages.yml}) \longrightarrow \text{Uploads } \texttt{/website} \longrightarrow \text{Deploys to GitHub Pages}$$
+- **Expected Project URL:**
+  `https://<username>.github.io/Cartix/` (or `https://<username>.github.io/cartix/`)
+
+All static assets, stylesheets, scripts, and internal links in `/website` use root-agnostic relative paths to support subpath deployment seamlessly.
+
+---
+
+## 16. Assumptions & Limitations
 
 1. **Read-Only Scope:** Cartix intentionally does not perform write, refund, order modification, or product update operations for this assessment.
 2. **Deterministic Low-Stock:** A product is classified as low stock if `stock_status === 'outofstock'` or managed `stock_quantity <= (low_stock_amount || 5)`.
@@ -363,7 +379,7 @@ docker run -d \
 
 ---
 
-## 16. Future Evolution
+## 17. Future Evolution
 
 For production multi-tenant deployments, Cartix can evolve to include:
 - **OAuth 2.0 / WooCommerce App Authorization:** Enabling zero-credential one-click merchant onboarding.
