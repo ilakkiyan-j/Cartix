@@ -1,0 +1,45 @@
+{
+  "name": "cartix",
+  "version": "0.1.0",
+  "description": "Secure, read-only MCP connector enabling AI agents to access and reason over WooCommerce merchant data",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf dist",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/src/index.js",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "seed": "tsx scripts/seed.ts",
+    "demo": "tsx demo/agent.ts"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "woocommerce",
+    "agent",
+    "connector",
+    "razorpay"
+  ],
+  "author": "Cartix Team",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.6.1",
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.5",
+    "rimraf": "^6.0.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.7"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "cartix-mcp-pipeline-scene",
+  "version": "1.0.0",
+  "description": "Cartix 3D Architecture Pipeline Scene (WooCommerce -> Cartix MCP -> AI Agent)",
+  "nodes": [
+    {
+      "id": "node-woocommerce",
+      "type": "commerce-source",
+      "position": [-180, 0, 0],
+      "color": "#06b6d4",
+      "label": "WooCommerce Store (Orders, Products, Inventory)"
+    },
+    {
+      "id": "node-cartix-mcp",
+      "type": "mcp-core",
+      "position": [0, 0, 0],
+      "color": "#6366f1",
+      "label": "Cartix MCP Core (Read-Only Bridge, Rate Limiter, PII Sanitizer)"
+    },
+    {
+      "id": "node-ai-agent",
+      "type": "agent-sink",
+      "position": [180, 0, 0],
+      "color": "#10b981",
+      "label": "AI Agent (Natural Language Reasoning, Multi-Turn Tool Calling)"
+    }
+  ],
+  "camera": {
+    "fov": 45,
+    "position": [0, 0, 400]
+  }
+}
