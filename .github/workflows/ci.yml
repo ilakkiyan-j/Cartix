@@ -10,6 +10,11 @@ jobs:
   test-and-build:
     name: Vitest & Build Verification
     runs-on: ubuntu-latest
+    env:
+      WOOCOMMERCE_URL: https://store.example.com
+      WOOCOMMERCE_CONSUMER_KEY: ck_test_dummy_key
+      WOOCOMMERCE_CONSUMER_SECRET: cs_test_dummy_secret
+      NODE_ENV: test
 
     steps:
       - name: Checkout repository

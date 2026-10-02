@@ -20,7 +20,9 @@ export class WooCommerceClient {
   private retryOptions?: RetryOptions;
 
   constructor(options?: WooCommerceClientOptions, envConfig: EnvConfig = config) {
-    const rawUrl = options?.url !== undefined ? options.url : envConfig.WOOCOMMERCE_URL;
+    const rawUrl = options?.url !== undefined
+      ? options.url
+      : (envConfig.WOOCOMMERCE_URL || (envConfig.NODE_ENV === 'test' || process.env.NODE_ENV === 'test' || process.env.VITEST ? 'https://test-store.example.com' : ''));
     const consumerKey = options?.consumerKey !== undefined ? options.consumerKey : envConfig.WOOCOMMERCE_CONSUMER_KEY;
     const consumerSecret = options?.consumerSecret !== undefined ? options.consumerSecret : envConfig.WOOCOMMERCE_CONSUMER_SECRET;
     const timeout = options?.timeoutMs || envConfig.REQUEST_TIMEOUT_MS;

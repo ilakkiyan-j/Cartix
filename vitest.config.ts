@@ -17,5 +17,11 @@ export default defineConfig({
       ],
     },
     testTimeout: 10000,
+    env: {
+      WOOCOMMERCE_URL: 'https://test-store.example.com',
+      WOOCOMMERCE_CONSUMER_KEY: 'ck_test_consumer_key',
+      WOOCOMMERCE_CONSUMER_SECRET: 'cs_test_consumer_secret',
+      NODE_ENV: 'test',
+    },
   },
 });
