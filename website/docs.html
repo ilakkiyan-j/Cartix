@@ -3,25 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Documentation — Cartix WooCommerce Agent Connector</title>
-  <meta name="description" content="Complete developer documentation for Cartix: Architecture, MCP tools specification, authentication, security, rate limiting, and Claude Desktop integration.">
-  
+  <title>Documentation — Cartix Secure MCP Connector for WooCommerce</title>
+  <meta name="description" content="Comprehensive developer reference for Cartix: Architecture, MCP tools specification, authentication, security, rate limiting, and Claude Desktop integration.">
+  <meta property="og:title" content="Cartix Documentation — Developer Guide & MCP Reference">
+  <meta property="og:description" content="Complete engineering reference for building safe AI agents over WooCommerce data with Cartix.">
+  <meta property="og:type" content="website">
+
   <!-- Favicon / Brand Asset -->
   <link rel="icon" type="image/png" href="./assets/cartix_logo.png">
-  
+
   <!-- Google Fonts Preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap" rel="stylesheet">
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="./css/style.css?v=1.2.0">
-  <link rel="stylesheet" href="./css/docs.css?v=1.2.0">
+  <link rel="stylesheet" href="./css/style.css?v=2.0.0">
+  <link rel="stylesheet" href="./css/docs.css?v=2.0.0">
 </head>
 <body>
-  <!-- Header & Navigation -->
-  <header class="site-header">
+  <!-- Background Ambient Atmosphere -->
+  <div class="bg-glow-layer" aria-hidden="true"></div>
+  <div class="bg-grid-layer" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════
+       HEADER & NAVIGATION (UNIFIED PARITY)
+       ═══════════════════════════════════════ -->
+  <header class="site-header" id="site-header">
     <div class="container nav-container">
+
+      <!-- Brand Logo using actual PNG asset -->
       <a href="./index.html" class="brand-logo-link" aria-label="Cartix Home">
         <div class="brand-logo-mark">
           <img src="./assets/cartix_logo.png" alt="Cartix Logo" width="32" height="32" class="logo-img">
@@ -29,17 +40,22 @@
         <span class="brand-logo-text">Cartix</span>
         <span class="brand-version-pill">
           <span class="version-dot"></span>
-          Docs
+          v0.1.0
         </span>
       </a>
 
-      <ul class="nav-links">
-        <li><a href="./index.html" class="nav-link">Home</a></li>
-        <li><a href="./index.html#architecture" class="nav-link">Architecture</a></li>
-        <li><a href="./index.html#mcp-tools" class="nav-link">Tools</a></li>
-        <li><a href="./docs.html" class="nav-link active">Docs</a></li>
-      </ul>
+      <!-- Desktop Navigation -->
+      <nav aria-label="Primary navigation">
+        <ul class="nav-links">
+          <li><a href="./index.html#architecture" class="nav-link">Architecture</a></li>
+          <li><a href="./index.html#mcp-tools" class="nav-link">MCP Tools</a></li>
+          <li><a href="./index.html#security" class="nav-link">Security</a></li>
+          <li><a href="./index.html#quickstart" class="nav-link">Quick Start</a></li>
+          <li><a href="./docs.html" class="nav-link active">Docs</a></li>
+        </ul>
+      </nav>
 
+      <!-- Action Controls -->
       <div class="nav-actions">
         <button class="search-trigger-btn" aria-label="Search documentation" id="search-trigger-btn">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -48,19 +64,26 @@
         </button>
 
         <button class="theme-toggle-btn" aria-label="Toggle theme" id="theme-toggle-btn">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
         </button>
 
-        <a href="https://github.com/ilakkiyan-j/Cartix" target="_blank" rel="noopener noreferrer" class="btn btn-ghost-sm">GitHub</a>
+        <a href="https://github.com/ilakkiyan-j/Cartix" target="_blank" rel="noopener noreferrer" class="btn btn-ghost-sm" aria-label="View on GitHub">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          <span>GitHub</span>
+        </a>
+
+        <a href="./index.html#quickstart" class="btn btn-primary btn-sm">
+          Deploy Now
+        </a>
 
         <button class="mobile-menu-btn" aria-label="Open mobile menu" id="mobile-menu-btn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Mobile Drawer Backdrop & Menu -->
+  <!-- Mobile Drawer -->
   <div class="mobile-drawer-backdrop" aria-hidden="true"></div>
   <aside class="mobile-docs-drawer" aria-label="Mobile Navigation">
     <div class="mobile-drawer-header">
@@ -70,43 +93,52 @@
         </div>
         <span class="brand-logo-text">Cartix</span>
       </a>
-      <span class="brand-version-pill">Docs</span>
+      <span class="brand-version-pill">v0.1.0</span>
     </div>
     <ul class="sidebar-nav-list">
-      <li><a href="#overview" class="sidebar-nav-link">Overview</a></li>
-      <li><a href="#architecture" class="sidebar-nav-link">Architecture & Transports</a></li>
-      <li><a href="#mcp-tools" class="sidebar-nav-link">MCP Tools Specification</a></li>
-      <li><a href="#security" class="sidebar-nav-link">Authentication & Security</a></li>
-      <li><a href="#reliability" class="sidebar-nav-link">Rate Limiting & Reliability</a></li>
+      <li><a href="./index.html" class="sidebar-nav-link">Home</a></li>
+      <li><a href="#overview" class="sidebar-nav-link">Overview & Architecture</a></li>
       <li><a href="#quickstart" class="sidebar-nav-link">Quick Start & Setup</a></li>
-      <li><a href="#claude-desktop" class="sidebar-nav-link">Claude Desktop Integration</a></li>
-      <li><a href="#demo-agent" class="sidebar-nav-link">AI Agent Demo</a></li>
-      <li><a href="#testing" class="sidebar-nav-link">Testing Suite</a></li>
+      <li><a href="#env-vars" class="sidebar-nav-link">Environment Variables</a></li>
+      <li><a href="#claude-desktop" class="sidebar-nav-link">Claude Desktop Setup</a></li>
+      <li><a href="#mcp-tools" class="sidebar-nav-link">MCP Tools Specification</a></li>
+      <li><a href="#security" class="sidebar-nav-link">Security & Privacy</a></li>
+      <li><a href="#reliability" class="sidebar-nav-link">Rate Limiting & Retries</a></li>
+      <li><a href="#demo-agent" class="sidebar-nav-link">AI Demo Agent</a></li>
+      <li><a href="#testing" class="sidebar-nav-link">Testing Suite (60 Tests)</a></li>
       <li><a href="#docker" class="sidebar-nav-link">Docker Deployment</a></li>
-      <li><a href="#limitations" class="sidebar-nav-link">Boundaries & Limitations</a></li>
+      <li><a href="#limitations" class="sidebar-nav-link">Operational Boundaries</a></li>
+      <li><a href="#license" class="sidebar-nav-link">License</a></li>
     </ul>
+    <div class="mobile-drawer-footer">
+      <a href="https://github.com/ilakkiyan-j/Cartix" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="width:100%; justify-content:center;">View on GitHub</a>
+    </div>
   </aside>
 
-  <!-- ⌘K Search Modal -->
-  <div class="search-modal-backdrop" role="dialog" aria-modal="true" aria-label="Search documentation">
+  <!-- Command Palette / Search Modal -->
+  <div class="search-modal-backdrop" role="dialog" aria-modal="true" aria-label="Documentation search" id="search-modal">
     <div class="search-modal-dialog">
       <div class="search-input-box">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-muted);"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <input type="text" class="search-input" placeholder="Type a keyword, tool name, or topic..." autocomplete="off">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-muted);flex-shrink:0"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" class="search-input" id="search-input" placeholder="Search tools, schemas, configuration..." autocomplete="off">
         <kbd class="search-shortcut-badge">ESC</kbd>
       </div>
-      <div class="search-results-list"></div>
+      <div class="search-results-list" id="search-results"></div>
       <div class="search-footer">
-        <span>Press <kbd class="search-shortcut-badge">ESC</kbd> to exit</span>
-        <span>Cartix Docs Search</span>
+        <span>Navigate: <kbd class="search-shortcut-badge">↑</kbd> <kbd class="search-shortcut-badge">↓</kbd> &nbsp; Select: <kbd class="search-shortcut-badge">↵</kbd></span>
+        <span>Cartix Developer Docs</span>
       </div>
     </div>
   </div>
 
+  <!-- ═══════════════════════════════════════
+       DOCUMENTATION 3-COLUMN LAYOUT
+       ═══════════════════════════════════════ -->
   <div class="docs-layout">
+
     <!-- LEFT SIDEBAR -->
     <nav class="docs-sidebar" aria-label="Documentation Navigation">
-      <button class="sidebar-search-btn">
+      <button class="sidebar-search-btn" id="sidebar-search-btn">
         <span style="display: flex; align-items: center; gap: var(--space-2);">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
           Quick search...
@@ -118,13 +150,14 @@
         <span class="sidebar-group-title">Getting Started</span>
         <ul class="sidebar-nav-list">
           <li><a href="#overview" class="sidebar-nav-link active">Overview & Motivation</a></li>
-          <li><a href="#quickstart" class="sidebar-nav-link">Quick Start & Install</a></li>
+          <li><a href="#quickstart" class="sidebar-nav-link">Quick Start & Setup</a></li>
+          <li><a href="#env-vars" class="sidebar-nav-link">Environment Variables</a></li>
           <li><a href="#claude-desktop" class="sidebar-nav-link">Claude Desktop Setup</a></li>
         </ul>
       </div>
 
       <div class="sidebar-nav-group">
-        <span class="sidebar-group-title">Core Architecture</span>
+        <span class="sidebar-group-title">Architecture & Guards</span>
         <ul class="sidebar-nav-list">
           <li><a href="#architecture" class="sidebar-nav-link">System Topology</a></li>
           <li><a href="#transport-modes" class="sidebar-nav-link">Transport Protocols</a></li>
@@ -145,12 +178,13 @@
       </div>
 
       <div class="sidebar-nav-group">
-        <span class="sidebar-group-title">Operations & QA</span>
+        <span class="sidebar-group-title">Engineering & QA</span>
         <ul class="sidebar-nav-list">
           <li><a href="#demo-agent" class="sidebar-nav-link">AI Demo Agent</a></li>
-          <li><a href="#testing" class="sidebar-nav-link">Automated Testing</a></li>
-          <li><a href="#docker" class="sidebar-nav-link">Docker Container</a></li>
-          <li><a href="#limitations" class="sidebar-nav-link">Explicit Boundaries</a></li>
+          <li><a href="#testing" class="sidebar-nav-link">Testing Suite (60 Tests)</a></li>
+          <li><a href="#docker" class="sidebar-nav-link">Docker Deployment</a></li>
+          <li><a href="#limitations" class="sidebar-nav-link">Operational Boundaries</a></li>
+          <li><a href="#license" class="sidebar-nav-link">License</a></li>
         </ul>
       </div>
     </nav>
@@ -162,75 +196,82 @@
         <span>/</span>
         <span>Documentation</span>
         <span>/</span>
-        <span style="color: var(--text-primary);">Reference Guide</span>
+        <span style="color: var(--text-primary);">Developer Reference Guide</span>
       </nav>
 
-      <h1 class="docs-header-title">Cartix Documentation</h1>
+      <h1 class="docs-header-title">Cartix Engineering Documentation</h1>
       <p class="docs-lead-text">
-        Complete engineering reference for the Cartix Model Context Protocol (MCP) connector for WooCommerce.
+        Complete reference for the Cartix Model Context Protocol (MCP) server: Architecture, tool schemas, sanitization, rate limiting, and agent integration.
       </p>
 
       <!-- CHAPTER 1: OVERVIEW -->
       <section class="docs-section" id="overview">
-        <h2>Overview & Problem Statement <a href="#overview" class="heading-anchor">#</a></h2>
+        <h2>Overview & Motivation <a href="#overview" class="heading-anchor">#</a></h2>
         <p>
-          Modern merchants maintain their mission-critical business data inside e-commerce engines like WooCommerce. However, autonomous AI agents cannot directly query raw store databases without encountering massive security, reliability, and context-window limitations.
+          Modern merchants maintain their mission-critical business data inside e-commerce platforms like WooCommerce. However, autonomous AI agents cannot directly query raw store databases without encountering massive security risks, rate-limit bans, credential exposures, and context-window token overflows.
         </p>
         <p>
-          <strong>Cartix</strong> serves as the secure, read-only bridge between AI agents and WooCommerce REST endpoints.
+          <strong>Cartix</strong> serves as the secure, read-only Model Context Protocol (MCP) bridge between AI reasoning agents (Claude Desktop, Cursor, LangChain, custom agents) and WooCommerce REST endpoints.
         </p>
 
         <div class="docs-callout note">
           <div class="callout-title">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-            Strict Responsibility Split
+            Clean Separation of Concerns
           </div>
-          Cartix handles authentication, rate limiting, retries, input validation, and PII sanitization. The AI agent focuses purely on multi-turn reasoning and conversational delivery.
+          Cartix handles credential isolation, token bucket rate limiting, jittered retries, input schema validation, and customer PII sanitization. The AI agent focuses purely on reasoning, analysis, and user interaction.
         </div>
       </section>
 
       <!-- CHAPTER 2: QUICK START -->
       <section class="docs-section" id="quickstart">
-        <h2>Quick Start & Installation <a href="#quickstart" class="heading-anchor">#</a></h2>
-        <p>Follow these steps to run Cartix locally on your development machine:</p>
+        <h2>Quick Start & Setup <a href="#quickstart" class="heading-anchor">#</a></h2>
+        <p>Follow these steps to clone and run Cartix on your development machine:</p>
 
         <div class="code-window docs-code-block">
           <div class="code-window-header">
-            <div class="window-dots"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span></div>
+            <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
             <span class="code-window-title">bash — installation</span>
-            <button class="copy-code-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+            <button class="copy-code-btn" onclick="copyCode(this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
           </div>
-          <pre><code># 1. Clone repository
+          <pre><code><span class="code-comment"># 1. Clone repository & enter directory</span>
 git clone https://github.com/ilakkiyan-j/Cartix.git
 cd Cartix
 
-# 2. Install dependencies
+<span class="code-comment"># 2. Install dependencies</span>
 npm install
 
-# 3. Configure environment
+<span class="code-comment"># 3. Create environment configuration</span>
 cp .env.example .env
 
-# 4. Build TypeScript bundle
+<span class="code-comment"># 4. Build TypeScript bundle</span>
 npm run build
 
-# 5. Start the server
+<span class="code-comment"># 5. Start the server (runs streamable-http or stdio depending on MCP_TRANSPORT)</span>
 npm start</code></pre>
         </div>
 
-        <h3>Environment Variables Reference</h3>
+        <h3 id="env-vars">Environment Variables Reference <a href="#env-vars" class="heading-anchor">#</a></h3>
+        <p>All configuration is defined in <code>src/config/env.ts</code> and strictly validated with Zod at server startup:</p>
         <div class="docs-table-wrapper">
           <table class="docs-table">
             <thead>
-              <tr><th>Variable</th><th>Default</th><th>Description</th></tr>
+              <tr><th>Variable</th><th>Type</th><th>Default</th><th>Description</th></tr>
             </thead>
             <tbody>
-              <tr><td><code>WOOCOMMERCE_URL</code></td><td>Required</td><td>Base HTTPS URL of WooCommerce store</td></tr>
-              <tr><td><code>WOOCOMMERCE_CONSUMER_KEY</code></td><td>Required</td><td>Read-only consumer key (<code>ck_...</code>)</td></tr>
-              <tr><td><code>WOOCOMMERCE_CONSUMER_SECRET</code></td><td>Required</td><td>Read-only consumer secret (<code>cs_...</code>)</td></tr>
-              <tr><td><code>MCP_TRANSPORT</code></td><td><code>streamable-http</code></td><td><code>stdio</code>, <code>streamable-http</code>, or <code>sse</code></td></tr>
-              <tr><td><code>PORT</code></td><td><code>3000</code></td><td>HTTP port for streamable-http/sse transports</td></tr>
-              <tr><td><code>MAX_PAGE_SIZE</code></td><td><code>100</code></td><td>Strict boundary on pagination requests</td></tr>
-              <tr><td><code>LLM_API_KEY</code></td><td>Optional</td><td>Google Gemini API key for interactive demo agent</td></tr>
+              <tr><td><code>WOOCOMMERCE_URL</code></td><td>string</td><td><em>Required</em></td><td>Base HTTPS URL of the WooCommerce store (e.g. <code>https://store.example.com</code>)</td></tr>
+              <tr><td><code>WOOCOMMERCE_CONSUMER_KEY</code></td><td>string</td><td><em>Required</em></td><td>Read-only consumer key (<code>ck_...</code>) generated from WooCommerce API settings</td></tr>
+              <tr><td><code>WOOCOMMERCE_CONSUMER_SECRET</code></td><td>string</td><td><em>Required</em></td><td>Read-only consumer secret (<code>cs_...</code>)</td></tr>
+              <tr><td><code>MCP_TRANSPORT</code></td><td>enum</td><td><code>streamable-http</code></td><td>Transport protocol: <code>stdio</code>, <code>streamable-http</code>, or <code>sse</code></td></tr>
+              <tr><td><code>PORT</code></td><td>number</td><td><code>3000</code></td><td>HTTP port used when running <code>streamable-http</code> or <code>sse</code></td></tr>
+              <tr><td><code>NODE_ENV</code></td><td>enum</td><td><code>development</code></td><td>Runtime mode: <code>development</code>, <code>production</code>, or <code>test</code></td></tr>
+              <tr><td><code>MAX_RETRIES</code></td><td>number</td><td><code>3</code></td><td>Maximum retry attempts for transient 5xx or network errors</td></tr>
+              <tr><td><code>RETRY_BASE_DELAY_MS</code></td><td>number</td><td><code>500</code></td><td>Base backoff delay in milliseconds for exponential jitter</td></tr>
+              <tr><td><code>REQUEST_TIMEOUT_MS</code></td><td>number</td><td><code>10000</code></td><td>Timeout in milliseconds for upstream WooCommerce REST calls</td></tr>
+              <tr><td><code>MAX_PAGE_SIZE</code></td><td>number</td><td><code>100</code></td><td>Hard upper bound enforced on pagination <code>limit</code></td></tr>
+              <tr><td><code>LOG_LEVEL</code></td><td>enum</td><td><code>info</code></td><td>Logging verbosity: <code>debug</code>, <code>info</code>, <code>warn</code>, or <code>error</code></td></tr>
+              <tr><td><code>LLM_API_KEY</code></td><td>string</td><td><em>Optional</em></td><td>Google Gemini API key for running the interactive demo agent</td></tr>
+              <tr><td><code>LLM_MODEL</code></td><td>string</td><td><code>gemini-2.5-flash</code></td><td>Gemini model identifier used by the demo agent</td></tr>
             </tbody>
           </table>
         </div>
@@ -239,23 +280,30 @@ npm start</code></pre>
       <!-- CHAPTER 3: CLAUDE DESKTOP INTEGRATION -->
       <section class="docs-section" id="claude-desktop">
         <h2>Claude Desktop Integration <a href="#claude-desktop" class="heading-anchor">#</a></h2>
-        <p>To give Claude Desktop direct access to your WooCommerce store through Cartix, configure your <code>claude_desktop_config.json</code> file:</p>
+        <p>
+          Claude Desktop communicates with Cartix using the standard <code>stdio</code> transport. Add the server entry to your Claude Desktop configuration file:
+        </p>
+        <p><strong>Config Location:</strong></p>
+        <ul>
+          <li><strong>macOS:</strong> <code>~/Library/Application Support/Claude/claude_desktop_config.json</code></li>
+          <li><strong>Windows:</strong> <code>%APPDATA%\Claude\claude_desktop_config.json</code></li>
+        </ul>
 
         <div class="code-window docs-code-block">
           <div class="code-window-header">
-            <div class="window-dots"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span></div>
+            <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
             <span class="code-window-title">claude_desktop_config.json</span>
-            <button class="copy-code-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+            <button class="copy-code-btn" onclick="copyCode(this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
           </div>
           <pre><code>{
   "mcpServers": {
     "cartix": {
       "command": "node",
-      "args": ["/path/to/cartix/dist/src/index.js"],
+      "args": ["/absolute/path/to/Cartix/dist/src/index.js"],
       "env": {
         "WOOCOMMERCE_URL": "https://store.example.com",
-        "WOOCOMMERCE_CONSUMER_KEY": "ck_230682712bc9678bb7dbcaf0bbec12f210cbcca1",
-        "WOOCOMMERCE_CONSUMER_SECRET": "cs_99675a615d5023075f0ade63b2c5abace655191a",
+        "WOOCOMMERCE_CONSUMER_KEY": "ck_...",
+        "WOOCOMMERCE_CONSUMER_SECRET": "cs_...",
         "MCP_TRANSPORT": "stdio"
       }
     }
@@ -266,20 +314,20 @@ npm start</code></pre>
 
       <!-- CHAPTER 4: ARCHITECTURE & TRANSPORTS -->
       <section class="docs-section" id="architecture">
-        <h2>Architecture & Transports <a href="#architecture" class="heading-anchor">#</a></h2>
+        <h2>Architecture & Transport Protocols <a href="#architecture" class="heading-anchor">#</a></h2>
         <p>
-          Cartix conforms strictly to the Model Context Protocol specification published by Anthropic. Communication flows through standard JSON-RPC 2.0 messages across three selectable transports.
+          Cartix conforms strictly to the Model Context Protocol (MCP) specification. All tool requests and responses are encapsulated in standard JSON-RPC 2.0 frames across three supported transports:
         </p>
 
         <div class="docs-table-wrapper" id="transport-modes">
           <table class="docs-table">
             <thead>
-              <tr><th>Transport</th><th>Best For</th><th>Specification</th></tr>
+              <tr><th>Transport</th><th>Best For</th><th>Specification & Behavior</th></tr>
             </thead>
             <tbody>
-              <tr><td><code>stdio</code></td><td>Local Desktop AI (Claude Desktop, Cursor)</td><td>Standard input/output stream piping</td></tr>
-              <tr><td><code>streamable-http</code></td><td>Web agents, microservices, cloud deployments</td><td>Stateless chunked HTTP endpoint at <code>/mcp</code></td></tr>
-              <tr><td><code>sse</code></td><td>Browser agents, streaming interfaces</td><td>Server-Sent Events streaming at <code>/sse</code></td></tr>
+              <tr><td><code>stdio</code></td><td>Claude Desktop, Cursor IDE, CLI agents</td><td>Standard input/output piping over process spawn. Fast, zero network port overhead.</td></tr>
+              <tr><td><code>streamable-http</code></td><td>Web agents, microservices, Docker</td><td>Stateless chunked HTTP endpoint at <code>/mcp</code>. Highly scalable for multi-tenant setups.</td></tr>
+              <tr><td><code>sse</code></td><td>Browser agents, streaming interfaces</td><td>Server-Sent Events streaming at <code>/sse</code> with HTTP POST message forwarding.</td></tr>
             </tbody>
           </table>
         </div>
@@ -287,81 +335,273 @@ npm start</code></pre>
 
       <!-- CHAPTER 5: SECURITY & PRIVACY -->
       <section class="docs-section" id="security">
-        <h2>Authentication & Security Model <a href="#security" class="heading-anchor">#</a></h2>
+        <h2>Security & Privacy Guardrails <a href="#security" class="heading-anchor">#</a></h2>
         <p>
-          Cartix implements multi-layered security controls to protect merchant infrastructure:
+          Cartix enforces enterprise security at every layer of the proxy lifecycle:
         </p>
 
-        <h3>1. HTTPS Basic Auth</h3>
-        <p>Credentials are encoded into standard Basic Auth headers (<code>base64(consumer_key:consumer_secret)</code>) over encrypted TLS channels.</p>
+        <h3>1. Server-Side Credential Isolation</h3>
+        <p>
+          WooCommerce API keys are loaded once into server memory from environment variables. The MCP input schemas exposed to AI models require only business query parameters — keys are never passed through prompt contexts.
+        </p>
 
         <h3 id="pii-sanitization">2. Automatic PII Redaction</h3>
-        <p>Customer data is transformed before tool responses are returned:</p>
+        <p>
+          Customer records are sanitized before returning JSON payloads:
+        </p>
         <ul>
           <li><strong>Email Masking:</strong> <code>alexander@example.com</code> becomes <code>a***r@example.com</code>.</li>
-          <li><strong>Physical Address Stripping:</strong> Street names and apartment numbers are purged; only general country/state is retained if needed.</li>
+          <li><strong>Physical Address Stripping:</strong> Street addresses and apartment details are stripped; only country and state are preserved for shipping zone reasoning.</li>
         </ul>
 
         <h3>3. Secret Redaction in Logs</h3>
-        <p>All internal loggers scrub sensitive token patterns using regular expressions (<code>\bck_[a-zA-Z0-9_-]+</code> and <code>\bcs_[a-zA-Z0-9_-]+</code>) to prevent accidental disk or console leakages.</p>
+        <p>
+          All loggers automatically intercept and redact sensitive token patterns (<code>\bck_[a-zA-Z0-9_-]+</code> and <code>\bcs_[a-zA-Z0-9_-]+</code>) to guarantee secrets are never written to disk, console, or observability sinks.
+        </p>
       </section>
 
       <!-- CHAPTER 6: RELIABILITY & RATE LIMITING -->
       <section class="docs-section" id="reliability">
         <h2>Rate Limiting & Reliability <a href="#reliability" class="heading-anchor">#</a></h2>
         <p>
-          To prevent crashing upstream store servers, Cartix features:
+          To safeguard store infrastructure from high-concurrency agent loops:
         </p>
         <ul>
-          <li><strong>In-Memory Token Bucket:</strong> Configurable capacity and refill rates regulate outbound request bursts.</li>
-          <li><strong>Exponential Backoff with Full Jitter:</strong> Retries transient 5xx errors and network timeouts with randomized sleep delays.</li>
-          <li><strong>429 Retry-After Parsing:</strong> Honors upstream WooCommerce rate limit headers explicitly.</li>
+          <li><strong>In-Memory Token Bucket:</strong> Regulates outbound request bursts with configurable capacity and refill intervals.</li>
+          <li><strong>Exponential Backoff with Full Jitter:</strong> Transient network errors and 5xx responses are retried using randomized jitter delays (<code>sleep = rand(0, min(max_delay, base * 2^attempt))</code>).</li>
+          <li><strong>429 Retry-After Header Parsing:</strong> Explicitly respects upstream WooCommerce throttling directives.</li>
         </ul>
       </section>
 
       <!-- CHAPTER 7: MCP TOOLS SPECIFICATION -->
       <section class="docs-section" id="mcp-tools">
         <h2>MCP Tools Specification <a href="#mcp-tools" class="heading-anchor">#</a></h2>
+        <p>
+          Cartix registers 5 production-ready, read-only MCP tools implemented in TypeScript with Zod validation.
+        </p>
 
         <!-- TOOL 1: search_orders -->
         <div class="docs-section" id="tool-search-orders">
-          <h3><code>search_orders</code> <a href="#tool-search-orders" class="heading-anchor">#</a></h3>
-          <p>Search WooCommerce orders with status filters, customer queries, and date ranges.</p>
+          <h3><code>search_orders</code> <span class="tool-panel-badge read-only">READ-ONLY</span> <a href="#tool-search-orders" class="heading-anchor">#</a></h3>
+          <p>Search and filter WooCommerce merchant orders by status, date range, and pagination with automatically sanitized customer records.</p>
 
+          <h4>Input Schema Parameters</h4>
           <div class="docs-table-wrapper">
             <table class="docs-table">
-              <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+              <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Default</th><th>Description</th></tr></thead>
               <tbody>
-                <tr><td><code>status</code></td><td>string (optional)</td><td>pending, processing, on-hold, completed, cancelled</td></tr>
-                <tr><td><code>after</code></td><td>string (optional)</td><td>ISO 8601 date cutoff</td></tr>
-                <tr><td><code>limit</code></td><td>number (optional)</td><td>1–100 (default: 20)</td></tr>
+                <tr><td><code>status</code></td><td>string</td><td>No</td><td>—</td><td>Filter by status: <code>pending</code>, <code>processing</code>, <code>on-hold</code>, <code>completed</code>, <code>cancelled</code>, <code>refunded</code>, <code>failed</code>, <code>any</code></td></tr>
+                <tr><td><code>date_from</code></td><td>string</td><td>No</td><td>—</td><td>Inclusive start datetime in ISO 8601 format (e.g. <code>2026-10-01T00:00:00Z</code>)</td></tr>
+                <tr><td><code>date_to</code></td><td>string</td><td>No</td><td>—</td><td>Inclusive end datetime in ISO 8601 format (e.g. <code>2026-10-02T23:59:59Z</code>)</td></tr>
+                <tr><td><code>page</code></td><td>integer</td><td>No</td><td><code>1</code></td><td>Page number for pagination (minimum: 1)</td></tr>
+                <tr><td><code>limit</code></td><td>integer</td><td>No</td><td><code>20</code></td><td>Maximum number of orders to return (1–100)</td></tr>
               </tbody>
             </table>
+          </div>
+
+          <div class="code-window docs-code-block">
+            <div class="code-window-header">
+              <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
+              <span class="code-window-title">search_orders Response Payload (Sanitized)</span>
+              <button class="copy-code-btn" onclick="copyCode(this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+            </div>
+            <pre><code>{
+  "orders": [
+    {
+      "id": 1042,
+      "status": "pending",
+      "total": "49.99",
+      "currency": "USD",
+      "created_at": "2026-10-01T14:20:00Z",
+      "customer": {
+        "email": "a***e@example.com"
+      },
+      "item_count": 2
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 20,
+    "total": 1,
+    "total_pages": 1
+  }
+}</code></pre>
           </div>
         </div>
 
         <!-- TOOL 2: get_order -->
         <div class="docs-section" id="tool-get-order">
-          <h3><code>get_order</code> <a href="#tool-get-order" class="heading-anchor">#</a></h3>
-          <p>Retrieve detailed order information by ID, including items and sanitized billing.</p>
+          <h3><code>get_order</code> <span class="tool-panel-badge read-only">READ-ONLY</span> <a href="#tool-get-order" class="heading-anchor">#</a></h3>
+          <p>Retrieve complete normalized details for a specific WooCommerce order by its integer ID, including line items, prices, status, and sanitized billing details.</p>
+
+          <h4>Input Schema Parameters</h4>
+          <div class="docs-table-wrapper">
+            <table class="docs-table">
+              <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+              <tbody>
+                <tr><td><code>order_id</code></td><td>integer</td><td>Yes</td><td>The unique positive integer ID of the WooCommerce order to retrieve</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="code-window docs-code-block">
+            <div class="code-window-header">
+              <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
+              <span class="code-window-title">get_order Response Payload</span>
+              <button class="copy-code-btn" onclick="copyCode(this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+            </div>
+            <pre><code>{
+  "id": 1004,
+  "status": "processing",
+  "currency": "USD",
+  "total": "129.50",
+  "created_at": "2026-10-02T09:15:00Z",
+  "line_items": [
+    {
+      "id": 88,
+      "product_id": 45,
+      "name": "Mechanical Keyboard RGB",
+      "quantity": 1,
+      "price": "129.50",
+      "total": "129.50"
+    }
+  ],
+  "customer": {
+    "email": "j***n@company.org"
+  }
+}</code></pre>
+          </div>
         </div>
 
         <!-- TOOL 3: search_products -->
         <div class="docs-section" id="tool-search-products">
-          <h3><code>search_products</code> <a href="#tool-search-products" class="heading-anchor">#</a></h3>
-          <p>Query store products by title, keyword, or SKU code.</p>
+          <h3><code>search_products</code> <span class="tool-panel-badge read-only">READ-ONLY</span> <a href="#tool-search-products" class="heading-anchor">#</a></h3>
+          <p>Search the WooCommerce product catalog by text keyword or SKU. Returns normalized products including pricing, stock quantity, stock status, and pagination metadata.</p>
+
+          <h4>Input Schema Parameters</h4>
+          <div class="docs-table-wrapper">
+            <table class="docs-table">
+              <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Default</th><th>Description</th></tr></thead>
+              <tbody>
+                <tr><td><code>query</code></td><td>string</td><td>No</td><td>—</td><td>Optional search keyword to match against titles, descriptions, or SKUs</td></tr>
+                <tr><td><code>page</code></td><td>integer</td><td>No</td><td><code>1</code></td><td>Page number for pagination (minimum: 1)</td></tr>
+                <tr><td><code>limit</code></td><td>integer</td><td>No</td><td><code>20</code></td><td>Maximum number of products to return (1–100)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="code-window docs-code-block">
+            <div class="code-window-header">
+              <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
+              <span class="code-window-title">search_products Response Payload</span>
+              <button class="copy-code-btn" onclick="copyCode(this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+            </div>
+            <pre><code>{
+  "products": [
+    {
+      "id": 87,
+      "name": "Ergonomic Wireless Mechanical Keyboard",
+      "sku": "KB-001",
+      "price": "49.99",
+      "stock_status": "instock",
+      "stock_quantity": 45
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 20,
+    "total": 1,
+    "total_pages": 1
+  }
+}</code></pre>
+          </div>
         </div>
 
         <!-- TOOL 4: get_product -->
         <div class="docs-section" id="tool-get-product">
-          <h3><code>get_product</code> <a href="#tool-get-product" class="heading-anchor">#</a></h3>
-          <p>Retrieve single product specifications, inventory count, and pricing.</p>
+          <h3><code>get_product</code> <span class="tool-panel-badge read-only">READ-ONLY</span> <a href="#tool-get-product" class="heading-anchor">#</a></h3>
+          <p>Retrieve full normalized specifications for a specific WooCommerce product by its integer ID, including SKU, price, sale price, stock quantity, and stock status.</p>
+
+          <h4>Input Schema Parameters</h4>
+          <div class="docs-table-wrapper">
+            <table class="docs-table">
+              <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+              <tbody>
+                <tr><td><code>product_id</code></td><td>integer</td><td>Yes</td><td>The unique positive integer ID of the WooCommerce product to retrieve</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="code-window docs-code-block">
+            <div class="code-window-header">
+              <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
+              <span class="code-window-title">get_product Response Payload</span>
+              <button class="copy-code-btn" onclick="copyCode(this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+            </div>
+            <pre><code>{
+  "id": 87,
+  "name": "Ergonomic Wireless Mechanical Keyboard",
+  "sku": "KB-001",
+  "price": "49.99",
+  "regular_price": "59.99",
+  "sale_price": "49.99",
+  "stock_status": "instock",
+  "stock_quantity": 45,
+  "manage_stock": true
+}</code></pre>
+          </div>
         </div>
 
         <!-- TOOL 5: get_inventory -->
         <div class="docs-section" id="tool-get-inventory">
-          <h3><code>get_inventory</code> <a href="#tool-get-inventory" class="heading-anchor">#</a></h3>
-          <p>Inspect store-wide stock levels with deterministic <code>low_stock_only</code> filtering.</p>
+          <h3><code>get_inventory</code> <span class="tool-panel-badge read-only">READ-ONLY</span> <a href="#tool-get-inventory" class="heading-anchor">#</a></h3>
+          <p>Retrieve store inventory levels and stock status with deterministic low-stock filtering (quantity &le; 5 or out-of-stock).</p>
+
+          <h4>Input Schema Parameters</h4>
+          <div class="docs-table-wrapper">
+            <table class="docs-table">
+              <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Default</th><th>Description</th></tr></thead>
+              <tbody>
+                <tr><td><code>low_stock_only</code></td><td>boolean</td><td>No</td><td><code>false</code></td><td>When true, only returns products that are out of stock or have quantity &le; 5</td></tr>
+                <tr><td><code>page</code></td><td>integer</td><td>No</td><td><code>1</code></td><td>Page number for pagination (minimum: 1)</td></tr>
+                <tr><td><code>limit</code></td><td>integer</td><td>No</td><td><code>20</code></td><td>Maximum number of items to return (1–100)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="code-window docs-code-block">
+            <div class="code-window-header">
+              <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
+              <span class="code-window-title">get_inventory Response Payload</span>
+              <button class="copy-code-btn" onclick="copyCode(this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+            </div>
+            <pre><code>{
+  "inventory": [
+    {
+      "product_id": 92,
+      "sku": "MC-011",
+      "name": "Studio Condenser Microphone",
+      "stock_quantity": 3,
+      "stock_status": "instock",
+      "is_low_stock": true
+    },
+    {
+      "product_id": 97,
+      "sku": "KC-016",
+      "name": "Artisan Keycap Resin Galaxy",
+      "stock_quantity": 0,
+      "stock_status": "outofstock",
+      "is_low_stock": true
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 20,
+    "total": 2,
+    "total_pages": 1
+  }
+}</code></pre>
+          </div>
         </div>
       </section>
 
@@ -369,19 +609,19 @@ npm start</code></pre>
       <section class="docs-section" id="demo-agent">
         <h2>AI Demo Agent <a href="#demo-agent" class="heading-anchor">#</a></h2>
         <p>
-          Cartix includes a ready-to-run multi-turn AI agent in <code>demo/agent.ts</code>. The agent interacts over live MCP tools using Google Gemini (<code>gemini-3.8-flash</code>) with automatic fallback to local heuristic reasoning.
+          Cartix includes a runnable multi-turn AI agent in <code>demo/agent.ts</code>. The agent interacts over live MCP tools using Google Gemini (<code>gemini-2.5-flash</code>) with an automatic offline fallback to local heuristic reasoning when API keys are not provided.
         </p>
 
         <div class="code-window docs-code-block">
           <div class="code-window-header">
-            <div class="window-dots"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span></div>
-            <span class="code-window-title">bash — run demo</span>
-            <button class="copy-code-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+            <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
+            <span class="code-window-title">bash — run demo agent</span>
+            <button class="copy-code-btn" onclick="copyCode(this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
           </div>
-          <pre><code># Run interactive demo
+          <pre><code><span class="code-comment"># Interactive multi-turn CLI agent</span>
 npm run demo
 
-# Run all 6 evaluation scenarios automatically
+<span class="code-comment"># Execute all 6 automated evaluation scenarios</span>
 npm run demo -- --all</code></pre>
         </div>
       </section>
@@ -390,67 +630,82 @@ npm run demo -- --all</code></pre>
       <section class="docs-section" id="testing">
         <h2>Testing & Quality Assurance <a href="#testing" class="heading-anchor">#</a></h2>
         <p>
-          The test suite contains <strong>60 automated tests</strong> across 10 test suites, covering schema validation, error mapping, pagination bounding, rate limiting, and end-to-end MCP integration.
+          The automated test suite runs on <strong>Vitest</strong> and contains <strong>60 automated tests</strong> across 10 test files, guaranteeing comprehensive coverage:
         </p>
+        <ul>
+          <li><strong>Schema & Input Validation:</strong> Strict Zod constraint checks for IDs, status enums, date strings, and pagination.</li>
+          <li><strong>Error Mapping:</strong> Deterministic HTTP 400, 401, 404, 429, and 500 error code translations into MCP error envelopes.</li>
+          <li><strong>PII Sanitization:</strong> Regular expression tests verifying zero email or address leakage.</li>
+          <li><strong>Token Bucket & Backoff:</strong> Simulating upstream 429 responses and verifying jittered exponential retry delays.</li>
+          <li><strong>End-to-End MCP Handshake:</strong> Verification over stdio and streamable-http JSON-RPC 2.0 endpoints.</li>
+        </ul>
 
         <div class="code-window docs-code-block">
           <div class="code-window-header">
-            <div class="window-dots"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span></div>
-            <span class="code-window-title">bash — vitest</span>
-            <button class="copy-code-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+            <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
+            <span class="code-window-title">bash — vitest test runner</span>
+            <button class="copy-code-btn" onclick="copyCode(this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
           </div>
-          <pre><code># Run all unit and integration tests
+          <pre><code><span class="code-comment"># Execute complete test suite</span>
 npm test
 
-# Run tests in watch mode
+<span class="code-comment"># Run tests in watch mode during development</span>
 npm run test:watch</code></pre>
         </div>
       </section>
 
       <!-- CHAPTER 10: DOCKER -->
       <section class="docs-section" id="docker">
-        <h2>Docker Deployment <a href="#docker" class="heading-anchor">#</a></h2>
-        <p>Deploy Cartix inside a hardened, unprivileged Node 20 Alpine container:</p>
+        <h2>Docker Containerization <a href="#docker" class="heading-anchor">#</a></h2>
+        <p>
+          Deploy Cartix inside a hardened, unprivileged Node 20 Alpine container for cloud or internal microservice environments:
+        </p>
 
         <div class="code-window docs-code-block">
           <div class="code-window-header">
-            <div class="window-dots"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span></div>
-            <span class="code-window-title">bash — docker</span>
-            <button class="copy-code-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+            <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
+            <span class="code-window-title">bash — docker deployment</span>
+            <button class="copy-code-btn" onclick="copyCode(this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
           </div>
-          <pre><code># Build container image
+          <pre><code><span class="code-comment"># Build optimized container image</span>
 docker build -t cartix-mcp .
 
-# Run container with environment variables
-docker run -p 3000:3000 \
+<span class="code-comment"># Run container with environment configuration</span>
+docker run -d -p 3000:3000 \
   -e WOOCOMMERCE_URL=https://store.example.com \
   -e WOOCOMMERCE_CONSUMER_KEY=ck_... \
   -e WOOCOMMERCE_CONSUMER_SECRET=cs_... \
+  -e MCP_TRANSPORT=streamable-http \
+  --name cartix-mcp-server \
   cartix-mcp</code></pre>
         </div>
       </section>
 
-      <!-- CHAPTER 11: LIMITATIONS -->
+      <!-- CHAPTER 11: OPERATIONAL BOUNDARIES -->
       <section class="docs-section" id="limitations">
-        <h2>Explicit Boundaries & Limitations <a href="#limitations" class="heading-anchor">#</a></h2>
+        <h2>Explicit Operational Boundaries <a href="#limitations" class="heading-anchor">#</a></h2>
+        <p>
+          Cartix is architected with a strict <strong>zero-mutation security contract</strong>. The server does not register any tools capable of modifying merchant data.
+        </p>
+
         <div class="docs-callout warning">
           <div class="callout-title">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-            Zero Mutation Guarantee
+            Immutable Guarantee
           </div>
-          Cartix will strictly refuse any requests to create or update orders, delete inventory items, issue refunds, or execute unvalidated writes.
+          Cartix will strictly refuse any operations attempting to create orders, modify customer accounts, alter inventory stocks, capture payments, or execute raw unvalidated REST calls.
         </div>
       </section>
 
       <!-- CHAPTER 12: LICENSE -->
       <section class="docs-section" id="license">
-        <h2>License <a href="#license" class="heading-anchor">#</a></h2>
+        <h2>License & Attribution <a href="#license" class="heading-anchor">#</a></h2>
         <p>
           Cartix is open-source software licensed under the <strong>MIT License</strong>.
         </p>
         <div class="code-window docs-code-block">
           <div class="code-window-header">
-            <div class="window-dots"><span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span></div>
+            <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
             <span class="code-window-title">LICENSE</span>
           </div>
           <pre><code>MIT License
@@ -474,22 +729,23 @@ copies or substantial portions of the Software.</code></pre>
     <aside class="docs-toc" aria-label="Table of Contents">
       <span class="toc-title">On this page</span>
       <ul class="toc-list">
-        <li><a href="#overview" class="toc-link">Overview</a></li>
-        <li><a href="#quickstart" class="toc-link">Quick Start</a></li>
-        <li><a href="#claude-desktop" class="toc-link">Claude Desktop</a></li>
-        <li><a href="#architecture" class="toc-link">Architecture</a></li>
-        <li><a href="#security" class="toc-link">Security Model</a></li>
-        <li><a href="#reliability" class="toc-link">Rate Limiting</a></li>
-        <li><a href="#mcp-tools" class="toc-link">MCP Tools</a></li>
+        <li><a href="#overview" class="toc-link">Overview & Motivation</a></li>
+        <li><a href="#quickstart" class="toc-link">Quick Start & Setup</a></li>
+        <li><a href="#env-vars" class="toc-link">Environment Variables</a></li>
+        <li><a href="#claude-desktop" class="toc-link">Claude Desktop Setup</a></li>
+        <li><a href="#architecture" class="toc-link">Architecture & Transports</a></li>
+        <li><a href="#security" class="toc-link">Security & Privacy</a></li>
+        <li><a href="#reliability" class="toc-link">Rate Limiting & Retries</a></li>
+        <li><a href="#mcp-tools" class="toc-link">MCP Tools Specification</a></li>
         <li><a href="#tool-search-orders" class="toc-link h3-link">search_orders</a></li>
         <li><a href="#tool-get-order" class="toc-link h3-link">get_order</a></li>
         <li><a href="#tool-search-products" class="toc-link h3-link">search_products</a></li>
         <li><a href="#tool-get-product" class="toc-link h3-link">get_product</a></li>
         <li><a href="#tool-get-inventory" class="toc-link h3-link">get_inventory</a></li>
         <li><a href="#demo-agent" class="toc-link">AI Demo Agent</a></li>
-        <li><a href="#testing" class="toc-link">Testing Suite</a></li>
-        <li><a href="#docker" class="toc-link">Docker</a></li>
-        <li><a href="#limitations" class="toc-link">Limitations</a></li>
+        <li><a href="#testing" class="toc-link">Testing Suite (60 Tests)</a></li>
+        <li><a href="#docker" class="toc-link">Docker Deployment</a></li>
+        <li><a href="#limitations" class="toc-link">Operational Boundaries</a></li>
         <li><a href="#license" class="toc-link">License</a></li>
       </ul>
     </aside>
@@ -499,15 +755,32 @@ copies or substantial portions of the Software.</code></pre>
   <footer class="site-footer">
     <div class="container">
       <div class="footer-bottom">
-        <span>Cartix — Open Source Developer Infrastructure</span>
+        <span>© 2026 Cartix — Open Source Developer Infrastructure</span>
         <span><a href="./index.html">← Return to Home</a></span>
       </div>
     </div>
   </footer>
 
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" aria-live="polite"></div>
+
   <!-- Scripts -->
-  <script src="./js/navigation.js?v=1.2.0"></script>
-  <script src="./js/main.js?v=1.2.0"></script>
-  <script src="./js/docs.js?v=1.2.0"></script>
+  <script src="./js/navigation.js?v=2.0.0"></script>
+  <script src="./js/main.js?v=2.0.0"></script>
+  <script src="./js/docs.js?v=2.0.0"></script>
+  <script>
+    function copyCode(btn) {
+      const pre = btn.closest('.code-window')?.querySelector('pre');
+      if (!pre) return;
+      navigator.clipboard.writeText(pre.innerText).then(() => {
+        const toast = document.getElementById('toast');
+        if (toast) {
+          toast.textContent = 'Copied to clipboard';
+          toast.classList.add('show');
+          setTimeout(() => toast.classList.remove('show'), 2200);
+        }
+      });
+    }
+  </script>
 </body>
 </html>
