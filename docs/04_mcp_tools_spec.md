@@ -44,13 +44,15 @@ Tool failures should return structured, understandable errors rather than raw fr
 
 # 3. Tool Overview
 
-| Tool | Purpose | Access |
-|---|---|---|
-| `search_orders` | Search and filter merchant orders | Read |
-| `get_order` | Retrieve a specific order | Read |
-| `search_products` | Search merchant products | Read |
-| `get_product` | Retrieve a specific product | Read |
-| `get_inventory` | Retrieve product stock information | Read |
+| Tool | Purpose | Access | `readOnlyHint` | `destructiveHint` | `idempotentHint` | `openWorldHint` |
+|---|---|---|---|---|---|---|
+| `search_orders` | Search and filter merchant orders | Read | `true` | `false` | `true` | `false` |
+| `get_order` | Retrieve a specific order | Read | `true` | `false` | `true` | `false` |
+| `search_products` | Search merchant products | Read | `true` | `false` | `true` | `false` |
+| `get_product` | Retrieve a specific product | Read | `true` | `false` | `true` | `false` |
+| `get_inventory` | Retrieve product stock information | Read | `true` | `false` | `true` | `false` |
+
+All 5 tools declare explicit boolean annotations according to the MCP specification (`ToolAnnotations`) to allow hosts (OpenAI, Claude Desktop, Agent Studio) to enforce read-only safety guarantees without false warnings.
 
 ---
 

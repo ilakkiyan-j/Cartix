@@ -5,6 +5,12 @@ export const searchOrdersTool: Tool = {
   name: 'search_orders',
   description:
     'Search and filter WooCommerce merchant orders by status and date range. Returns compact, normalized order summaries with total amounts, item counts, status, and pagination metadata.',
+  annotations: {
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: false,
+  },
   inputSchema: {
     type: 'object',
     properties: {
@@ -41,6 +47,12 @@ export const getOrderTool: Tool = {
   name: 'get_order',
   description:
     'Retrieve complete normalized details for a specific WooCommerce order by its integer ID, including line items, prices, status, and customer notes. Returns NOT_FOUND error if order does not exist.',
+  annotations: {
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: false,
+  },
   inputSchema: {
     type: 'object',
     properties: {

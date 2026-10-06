@@ -54,6 +54,19 @@ describe('MCP Server Integration', () => {
       expect(searchOrders.inputSchema.properties).toHaveProperty('status');
       expect(searchOrders.inputSchema.properties).toHaveProperty('limit');
     });
+
+    it('declares explicit boolean safety and capability hints on all 5 tools', async () => {
+      const response = await client.listTools();
+      expect(response.tools).toHaveLength(5);
+
+      for (const tool of response.tools) {
+        expect(tool.annotations).toBeDefined();
+        expect(tool.annotations?.readOnlyHint).toBe(true);
+        expect(tool.annotations?.destructiveHint).toBe(false);
+        expect(tool.annotations?.idempotentHint).toBe(true);
+        expect(tool.annotations?.openWorldHint).toBe(false);
+      }
+    });
   });
 
   describe('Tool Execution (tools/call)', () => {

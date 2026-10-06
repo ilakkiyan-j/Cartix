@@ -5,6 +5,12 @@ export const getInventoryTool: Tool = {
   name: 'get_inventory',
   description:
     'Retrieve inventory levels and stock status for products in the WooCommerce store. Supports filtering for low-stock and out-of-stock items (deterministic low stock threshold <= 5).',
+  annotations: {
+    readOnlyHint: true,
+    destructiveHint: false,
+    idempotentHint: true,
+    openWorldHint: false,
+  },
   inputSchema: {
     type: 'object',
     properties: {
