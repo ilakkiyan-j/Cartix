@@ -1,7 +1,7 @@
 # Cartix — WooCommerce Agent Connector
 
 [![CI](https://github.com/ilakkiyan-j/Cartix/actions/workflows/ci.yml/badge.svg)](https://github.com/ilakkiyan-j/Cartix/actions/workflows/ci.yml)
-[![M8ven Score](https://m8ven.ai/badge/mcp/ilakkiyan-j/cartix)](https://m8ven.ai/mcp/ilakkiyan-j/cartix?s=readme)
+[![M8ven Score](https://m8ven.ai/badge/mcp/ilakkiyan-j-cartix-1udmh9?v=a32ac3b049c2ab86754aa8a92a364cec)](https://m8ven.ai/mcp/ilakkiyan-j-cartix-1udmh9?s=readme)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue.svg)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-20%2B-green.svg)](https://nodejs.org/)
 [![MCP](https://img.shields.io/badge/MCP-Standard-purple.svg)](https://modelcontextprotocol.io/)
