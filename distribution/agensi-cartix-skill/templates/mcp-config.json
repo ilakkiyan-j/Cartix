@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "cartix": {
+      "command": "node",
+      "args": [
+        "/ABSOLUTE/PATH/TO/Cartix/dist/src/index.js"
+      ],
+      "env": {
+        "WOOCOMMERCE_URL": "https://your-store.example.com",
+        "WOOCOMMERCE_CONSUMER_KEY": "ck_your_read_only_consumer_key",
+        "WOOCOMMERCE_CONSUMER_SECRET": "cs_your_read_only_consumer_secret",
+        "MCP_TRANSPORT": "stdio",
+        "LOG_LEVEL": "error"
+      }
+    }
+  }
+}
