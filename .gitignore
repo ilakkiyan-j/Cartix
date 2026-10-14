@@ -3,6 +3,7 @@ node_modules/
 
 # Production output
 dist/
+distribution/
 
 # Environment and sensitive configuration
 .env
