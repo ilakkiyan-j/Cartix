@@ -410,28 +410,52 @@
             <!-- Panel: search_orders -->
             <div class="tool-panel active" id="panel-search_orders">
               <div class="tool-panel-header">
-                <h3 class="tool-panel-name">search_orders</h3>
+                <div>
+                  <h3 class="tool-panel-name">search_orders</h3>
+                  <p class="tool-panel-desc">Searches and filters WooCommerce orders with pagination, status filtering, and automatically sanitized customer records.</p>
+                </div>
                 <span class="tool-panel-badge read-only">READ-ONLY</span>
               </div>
-              <p class="tool-panel-desc">Searches and filters WooCommerce orders with pagination, status filtering, and automatically sanitized customer records.</p>
-              <h4 class="tool-param-heading">Parameters</h4>
-              <table class="tool-params-table">
-                <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
-                <tbody>
-                  <tr><td><code>status</code></td><td>string</td><td>pending, processing, on-hold, completed, cancelled, refunded, failed</td></tr>
-                  <tr><td><code>date_from</code></td><td>string</td><td>ISO 8601 start date (e.g. 2026-10-01T00:00:00Z)</td></tr>
-                  <tr><td><code>date_to</code></td><td>string</td><td>ISO 8601 end date (e.g. 2026-10-02T23:59:59Z)</td></tr>
-                  <tr><td><code>page</code></td><td>number</td><td>Page number (default: 1)</td></tr>
-                  <tr><td><code>limit</code></td><td>number</td><td>Results per page (1–100, default: 20)</td></tr>
-                </tbody>
-              </table>
-              <div class="code-window">
-                <div class="code-window-header">
-                  <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
-                  <span class="code-window-title">Tool Response Payload (Sanitized)</span>
-                  <button class="copy-code-btn" onclick="copyCode(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+
+              <!-- Segmented View Switcher -->
+              <div class="tool-view-nav" role="tablist" aria-label="Tool details view">
+                <button class="tool-view-tab active" data-subtab="params" role="tab" aria-selected="true" id="tab-search_orders-params">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
+                  <span>Parameters</span>
+                  <span class="tab-badge">5</span>
+                </button>
+                <button class="tool-view-tab" data-subtab="response" role="tab" aria-selected="false" id="tab-search_orders-response">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  <span>Response Payload</span>
+                  <span class="tab-badge format">JSON</span>
+                </button>
+              </div>
+
+              <!-- View Content (Single Section Active) -->
+              <div class="tool-view-content">
+                <div class="tool-view-pane active" data-pane="params" role="tabpanel" aria-labelledby="tab-search_orders-params">
+                  <div class="tool-params-scroll">
+                    <table class="tool-params-table">
+                      <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                      <tbody>
+                        <tr><td><code>status</code></td><td class="param-type">string</td><td class="param-desc">pending, processing, on-hold, completed, cancelled, refunded, failed</td></tr>
+                        <tr><td><code>date_from</code></td><td class="param-type">string</td><td class="param-desc">ISO 8601 start date (e.g. 2026-10-01T00:00:00Z)</td></tr>
+                        <tr><td><code>date_to</code></td><td class="param-type">string</td><td class="param-desc">ISO 8601 end date (e.g. 2026-10-02T23:59:59Z)</td></tr>
+                        <tr><td><code>page</code></td><td class="param-type">number</td><td class="param-desc">Page number (default: 1)</td></tr>
+                        <tr><td><code>limit</code></td><td class="param-type">number</td><td class="param-desc">Results per page (1–100, default: 20)</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-                <pre><code>{
+
+                <div class="tool-view-pane" data-pane="response" role="tabpanel" aria-labelledby="tab-search_orders-response">
+                  <div class="code-window">
+                    <div class="code-window-header">
+                      <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
+                      <span class="code-window-title">search_orders Response (Sanitized)</span>
+                      <button class="copy-code-btn" onclick="copyCode(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+                    </div>
+                    <pre><code>{
   "orders": [
     {
       "id": 1042,
@@ -443,98 +467,199 @@
       "item_count": 2
     }
   ],
-  "pagination": { "page": 1, "limit": 20, "total": 1 }
+  "pagination": {
+    "page": 1,
+    "limit": 20,
+    "total": 1
+  }
 }</code></pre>
+                  </div>
+                </div>
               </div>
             </div>
 
             <!-- Panel: get_order -->
             <div class="tool-panel" id="panel-get_order">
               <div class="tool-panel-header">
-                <h3 class="tool-panel-name">get_order</h3>
+                <div>
+                  <h3 class="tool-panel-name">get_order</h3>
+                  <p class="tool-panel-desc">Retrieves a single order by ID with full line items, financial breakdown, and sanitized billing details.</p>
+                </div>
                 <span class="tool-panel-badge read-only">READ-ONLY</span>
               </div>
-              <p class="tool-panel-desc">Retrieves a single order by ID with full line items, financial breakdown, and sanitized billing details.</p>
-              <h4 class="tool-param-heading">Parameters</h4>
-              <table class="tool-params-table">
-                <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
-                <tbody>
-                  <tr><td><code>order_id</code></td><td>number</td><td>WooCommerce order ID (required)</td></tr>
-                </tbody>
-              </table>
-              <div class="code-window">
-                <div class="code-window-header">
-                  <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
-                  <span class="code-window-title">get_order Response</span>
-                  <button class="copy-code-btn" onclick="copyCode(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+
+              <!-- Segmented View Switcher -->
+              <div class="tool-view-nav" role="tablist" aria-label="Tool details view">
+                <button class="tool-view-tab active" data-subtab="params" role="tab" aria-selected="true" id="tab-get_order-params">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
+                  <span>Parameters</span>
+                  <span class="tab-badge">1</span>
+                </button>
+                <button class="tool-view-tab" data-subtab="response" role="tab" aria-selected="false" id="tab-get_order-response">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  <span>Response Payload</span>
+                  <span class="tab-badge format">JSON</span>
+                </button>
+              </div>
+
+              <!-- View Content (Single Section Active) -->
+              <div class="tool-view-content">
+                <div class="tool-view-pane active" data-pane="params" role="tabpanel" aria-labelledby="tab-get_order-params">
+                  <div class="tool-params-scroll">
+                    <table class="tool-params-table">
+                      <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                      <tbody>
+                        <tr><td><code>order_id</code></td><td class="param-type">number</td><td class="param-desc">WooCommerce order positive integer ID (required)</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-                <pre><code>{
+
+                <div class="tool-view-pane" data-pane="response" role="tabpanel" aria-labelledby="tab-get_order-response">
+                  <div class="code-window">
+                    <div class="code-window-header">
+                      <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
+                      <span class="code-window-title">get_order Response</span>
+                      <button class="copy-code-btn" onclick="copyCode(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+                    </div>
+                    <pre><code>{
   "id": 1004,
   "status": "processing",
   "currency": "USD",
   "total": "129.50",
   "line_items": [
-    { "id": 88, "product_id": 45, "name": "Mechanical Keyboard RGB", "quantity": 1, "price": "129.50" }
+    {
+      "id": 88,
+      "product_id": 45,
+      "name": "Mechanical Keyboard RGB",
+      "quantity": 1,
+      "price": "129.50"
+    }
   ],
-  "customer": { "email": "j***n@company.org" }
+  "customer": {
+    "email": "j***n@company.org"
+  }
 }</code></pre>
+                  </div>
+                </div>
               </div>
             </div>
 
             <!-- Panel: search_products -->
             <div class="tool-panel" id="panel-search_products">
               <div class="tool-panel-header">
-                <h3 class="tool-panel-name">search_products</h3>
+                <div>
+                  <h3 class="tool-panel-name">search_products</h3>
+                  <p class="tool-panel-desc">Searches the store catalog by keyword, SKU, or category with bounded pagination and normalized output.</p>
+                </div>
                 <span class="tool-panel-badge read-only">READ-ONLY</span>
               </div>
-              <p class="tool-panel-desc">Searches the store catalog by keyword, SKU, or category with bounded pagination and normalized output.</p>
-              <h4 class="tool-param-heading">Parameters</h4>
-              <table class="tool-params-table">
-                <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
-                <tbody>
-                  <tr><td><code>query</code></td><td>string</td><td>Search keyword to match against titles, descriptions, or SKUs</td></tr>
-                  <tr><td><code>page</code></td><td>number</td><td>Page number (default: 1)</td></tr>
-                  <tr><td><code>limit</code></td><td>number</td><td>Results per page (1–100, default: 20)</td></tr>
-                </tbody>
-              </table>
-              <div class="code-window">
-                <div class="code-window-header">
-                  <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
-                  <span class="code-window-title">search_products Response</span>
-                  <button class="copy-code-btn" onclick="copyCode(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+
+              <!-- Segmented View Switcher -->
+              <div class="tool-view-nav" role="tablist" aria-label="Tool details view">
+                <button class="tool-view-tab active" data-subtab="params" role="tab" aria-selected="true" id="tab-search_products-params">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
+                  <span>Parameters</span>
+                  <span class="tab-badge">3</span>
+                </button>
+                <button class="tool-view-tab" data-subtab="response" role="tab" aria-selected="false" id="tab-search_products-response">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  <span>Response Payload</span>
+                  <span class="tab-badge format">JSON</span>
+                </button>
+              </div>
+
+              <!-- View Content (Single Section Active) -->
+              <div class="tool-view-content">
+                <div class="tool-view-pane active" data-pane="params" role="tabpanel" aria-labelledby="tab-search_products-params">
+                  <div class="tool-params-scroll">
+                    <table class="tool-params-table">
+                      <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                      <tbody>
+                        <tr><td><code>query</code></td><td class="param-type">string</td><td class="param-desc">Search keyword to match against titles, descriptions, or SKUs</td></tr>
+                        <tr><td><code>page</code></td><td class="param-type">number</td><td class="param-desc">Page number (default: 1)</td></tr>
+                        <tr><td><code>limit</code></td><td class="param-type">number</td><td class="param-desc">Results per page (1–100, default: 20)</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-                <pre><code>{
+
+                <div class="tool-view-pane" data-pane="response" role="tabpanel" aria-labelledby="tab-search_products-response">
+                  <div class="code-window">
+                    <div class="code-window-header">
+                      <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
+                      <span class="code-window-title">search_products Response</span>
+                      <button class="copy-code-btn" onclick="copyCode(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+                    </div>
+                    <pre><code>{
   "products": [
-    { "id": 87, "name": "Ergonomic Wireless Mechanical Keyboard", "sku": "KB-001", "price": "49.99", "stock_status": "instock", "stock_quantity": 45 }
+    {
+      "id": 87,
+      "name": "Wireless Mechanical Keyboard",
+      "sku": "KB-001",
+      "price": "49.99",
+      "stock_status": "instock",
+      "stock_quantity": 45
+    }
   ],
-  "pagination": { "page": 1, "limit": 20, "total": 1 }
+  "pagination": {
+    "page": 1,
+    "limit": 20,
+    "total": 1
+  }
 }</code></pre>
+                  </div>
+                </div>
               </div>
             </div>
 
             <!-- Panel: get_product -->
             <div class="tool-panel" id="panel-get_product">
               <div class="tool-panel-header">
-                <h3 class="tool-panel-name">get_product</h3>
+                <div>
+                  <h3 class="tool-panel-name">get_product</h3>
+                  <p class="tool-panel-desc">Fetches full product specifications including SKU, pricing, stock status, and description for a specific product ID.</p>
+                </div>
                 <span class="tool-panel-badge read-only">READ-ONLY</span>
               </div>
-              <p class="tool-panel-desc">Fetches full product specifications including SKU, pricing, stock status, and description for a specific product ID.</p>
-              <h4 class="tool-param-heading">Parameters</h4>
-              <table class="tool-params-table">
-                <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
-                <tbody>
-                  <tr><td><code>product_id</code></td><td>number</td><td>WooCommerce product ID (required)</td></tr>
-                </tbody>
-              </table>
-              <div class="code-window">
-                <div class="code-window-header">
-                  <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
-                  <span class="code-window-title">get_product Response</span>
-                  <button class="copy-code-btn" onclick="copyCode(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+
+              <!-- Segmented View Switcher -->
+              <div class="tool-view-nav" role="tablist" aria-label="Tool details view">
+                <button class="tool-view-tab active" data-subtab="params" role="tab" aria-selected="true" id="tab-get_product-params">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
+                  <span>Parameters</span>
+                  <span class="tab-badge">1</span>
+                </button>
+                <button class="tool-view-tab" data-subtab="response" role="tab" aria-selected="false" id="tab-get_product-response">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  <span>Response Payload</span>
+                  <span class="tab-badge format">JSON</span>
+                </button>
+              </div>
+
+              <!-- View Content (Single Section Active) -->
+              <div class="tool-view-content">
+                <div class="tool-view-pane active" data-pane="params" role="tabpanel" aria-labelledby="tab-get_product-params">
+                  <div class="tool-params-scroll">
+                    <table class="tool-params-table">
+                      <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                      <tbody>
+                        <tr><td><code>product_id</code></td><td class="param-type">number</td><td class="param-desc">WooCommerce product positive integer ID (required)</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-                <pre><code>{
+
+                <div class="tool-view-pane" data-pane="response" role="tabpanel" aria-labelledby="tab-get_product-response">
+                  <div class="code-window">
+                    <div class="code-window-header">
+                      <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
+                      <span class="code-window-title">get_product Response</span>
+                      <button class="copy-code-btn" onclick="copyCode(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+                    </div>
+                    <pre><code>{
   "id": 87,
-  "name": "Ergonomic Wireless Mechanical Keyboard",
+  "name": "Wireless Mechanical Keyboard",
   "sku": "KB-001",
   "price": "49.99",
   "regular_price": "59.99",
@@ -543,38 +668,84 @@
   "stock_quantity": 45,
   "manage_stock": true
 }</code></pre>
+                  </div>
+                </div>
               </div>
             </div>
 
             <!-- Panel: get_inventory -->
             <div class="tool-panel" id="panel-get_inventory">
               <div class="tool-panel-header">
-                <h3 class="tool-panel-name">get_inventory</h3>
+                <div>
+                  <h3 class="tool-panel-name">get_inventory</h3>
+                  <p class="tool-panel-desc">Retrieves store-wide inventory levels with deterministic low-stock detection (quantity &le; 5 or below threshold).</p>
+                </div>
                 <span class="tool-panel-badge read-only">READ-ONLY</span>
               </div>
-              <p class="tool-panel-desc">Retrieves store-wide inventory levels with deterministic low-stock detection (quantity ≤ 5 or below low-stock threshold).</p>
-              <h4 class="tool-param-heading">Parameters</h4>
-              <table class="tool-params-table">
-                <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
-                <tbody>
-                  <tr><td><code>low_stock_only</code></td><td>boolean</td><td>If true, filters to low-stock or out-of-stock items (default: false)</td></tr>
-                  <tr><td><code>page</code></td><td>number</td><td>Page number (default: 1)</td></tr>
-                  <tr><td><code>limit</code></td><td>number</td><td>Batch limit (1–100, default: 20)</td></tr>
-                </tbody>
-              </table>
-              <div class="code-window">
-                <div class="code-window-header">
-                  <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
-                  <span class="code-window-title">get_inventory Response</span>
-                  <button class="copy-code-btn" onclick="copyCode(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+
+              <!-- Segmented View Switcher -->
+              <div class="tool-view-nav" role="tablist" aria-label="Tool details view">
+                <button class="tool-view-tab active" data-subtab="params" role="tab" aria-selected="true" id="tab-get_inventory-params">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
+                  <span>Parameters</span>
+                  <span class="tab-badge">3</span>
+                </button>
+                <button class="tool-view-tab" data-subtab="response" role="tab" aria-selected="false" id="tab-get_inventory-response">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  <span>Response Payload</span>
+                  <span class="tab-badge format">JSON</span>
+                </button>
+              </div>
+
+              <!-- View Content (Single Section Active) -->
+              <div class="tool-view-content">
+                <div class="tool-view-pane active" data-pane="params" role="tabpanel" aria-labelledby="tab-get_inventory-params">
+                  <div class="tool-params-scroll">
+                    <table class="tool-params-table">
+                      <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                      <tbody>
+                        <tr><td><code>low_stock_only</code></td><td class="param-type">boolean</td><td class="param-desc">If true, filters to low-stock or out-of-stock items (default: false)</td></tr>
+                        <tr><td><code>page</code></td><td class="param-type">number</td><td class="param-desc">Page number (default: 1)</td></tr>
+                        <tr><td><code>limit</code></td><td class="param-type">number</td><td class="param-desc">Batch limit (1–100, default: 20)</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-                <pre><code>{
+
+                <div class="tool-view-pane" data-pane="response" role="tabpanel" aria-labelledby="tab-get_inventory-response">
+                  <div class="code-window">
+                    <div class="code-window-header">
+                      <div class="window-dots"><span class="window-dot red"></span><span class="window-dot yellow"></span><span class="window-dot green"></span></div>
+                      <span class="code-window-title">get_inventory Response</span>
+                      <button class="copy-code-btn" onclick="copyCode(this)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy</button>
+                    </div>
+                    <pre><code>{
   "inventory": [
-    { "product_id": 92, "sku": "MC-011", "name": "Studio Condenser Microphone", "stock_quantity": 3, "is_low_stock": true },
-    { "product_id": 97, "sku": "KC-016", "name": "Artisan Keycap Resin Galaxy", "stock_quantity": 0, "stock_status": "outofstock", "is_low_stock": true }
+    {
+      "product_id": 92,
+      "sku": "MC-011",
+      "name": "Condenser Microphone",
+      "stock_quantity": 3,
+      "stock_status": "instock",
+      "is_low_stock": true
+    },
+    {
+      "product_id": 97,
+      "sku": "KC-016",
+      "name": "Artisan Keycap Galaxy",
+      "stock_quantity": 0,
+      "stock_status": "outofstock",
+      "is_low_stock": true
+    }
   ],
-  "pagination": { "page": 1, "limit": 20, "total": 2 }
+  "pagination": {
+    "page": 1,
+    "limit": 20,
+    "total": 2
+  }
 }</code></pre>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -961,14 +1132,50 @@ docker run --rm \
       });
     });
 
-    // ─── Tool Explorer Tabs ─────────────────────────────────────────
+    // ─── Tool Explorer Tabs & Subtab Switcher ───────────────────────
+    let currentToolSubtab = 'params';
+
+    function setToolSubtab(subtab) {
+      currentToolSubtab = subtab;
+      document.querySelectorAll('.tool-panel').forEach(panel => {
+        const tabs = panel.querySelectorAll('.tool-view-tab');
+        const panes = panel.querySelectorAll('.tool-view-pane');
+        tabs.forEach(tab => {
+          const isActive = tab.dataset.subtab === subtab;
+          tab.classList.toggle('active', isActive);
+          tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+        panes.forEach(pane => {
+          pane.classList.toggle('active', pane.dataset.pane === subtab);
+        });
+      });
+      const explorer = document.querySelector('.tools-explorer');
+      if (explorer) explorer.scrollLeft = 0;
+    }
+
+    document.querySelectorAll('.tool-view-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const subtab = tab.dataset.subtab;
+        if (subtab) {
+          setToolSubtab(subtab);
+        }
+      });
+    });
+
     document.querySelectorAll('.tool-sidebar-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const tool = btn.dataset.tool;
         document.querySelectorAll('.tool-sidebar-btn').forEach(b => b.classList.remove('active'));
         document.querySelectorAll('.tool-panel').forEach(p => p.classList.remove('active'));
         btn.classList.add('active');
-        document.getElementById('panel-' + tool)?.classList.add('active');
+        const targetPanel = document.getElementById('panel-' + tool);
+        if (targetPanel) {
+          targetPanel.classList.add('active');
+          setToolSubtab(currentToolSubtab);
+          targetPanel.scrollTop = 0;
+        }
+        const explorer = document.querySelector('.tools-explorer');
+        if (explorer) explorer.scrollLeft = 0;
       });
     });
 
